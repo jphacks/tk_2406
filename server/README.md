@@ -20,7 +20,7 @@
 | カラム名   | データ型          | 説明                |
 |------------|-------------------|---------------------|
 | `r_id`     | INT (Primary Key)  | レストランの一意の識別子 |
-| `password` | VARCHAR(255)       | レストランの名前   |
+| `r_name` | VARCHAR(255)       | レストランの名前   |
 | `password` | VARCHAR(255)       | レストランのパスワード   |
 
 ## Table: `foods`
@@ -43,12 +43,13 @@
 | `degree`     | FLOAT              | アルコール度数               |
 | `f_quantity` | INT                | アルコールの量               |
 
-## Table: `guests`
+## Table: `customers`
 - **説明**: 客の情報を保存するテーブル
 
 | カラム名   | データ型          | 説明                        |
 |------------|-------------------|-----------------------------|
-| `g_id`     | INT (Primary Key)  | 客の一意の識別子         |
+| `c_id`     | INT (Primary Key)  | 客の一意の識別子         |
+| `c_name` | VARCHAR(255)       | レストランの名前   |
 | `email`    | VARCHAR(255)       | 客のメールアドレス       |
 | `password` | VARCHAR(255)       | 客のパスワード           |
 
@@ -58,7 +59,7 @@
 | カラム名  | データ型          | 説明                        |
 |-----------|-------------------|-----------------------------|
 | `o_id`    | INT (Primary Key)  | 注文の一意の識別子           |
-| `g_id`    | INT (Foreign Key)  | 注文した客のID           |
+| `c_id`    | INT (Foreign Key)  | 注文した客のID           |
 | `r_id`    | INT (Foreign Key)  | 注文したレストランのID       |
 | `o_datetime`  | DATETIME           | 注文日時                       |
 
@@ -78,7 +79,7 @@
 | カラム名          | データ型          | 説明                        |
 |-------------------|-------------------|-----------------------------|
 | `e_id`            | INT (Primary Key)  | 評価の一意の識別子           |
-| `g_id`            | INT (Foreign Key)  | 評価した評価のID           |
+| `c_id`            | INT (Foreign Key)  | 客の一意の識別子         |
 | `e_day`           | DATETIME           | 評価された日                       |
 | `evaluation`      | TEXT               | 評価内容                     |
 | `total_quantity`  | INT                | 評価されたアルコールの総量  
