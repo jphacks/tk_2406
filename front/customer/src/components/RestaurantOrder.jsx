@@ -102,7 +102,7 @@ function RestaurantOrder() {
   };
 
   const decreaseQuantity = (item) => {
-    if (item.quantity > 1) {
+    if (item.quantity > 0) {
       setOrder((prevOrder) =>
         prevOrder.map((orderItem) =>
           orderItem.id === item.id
