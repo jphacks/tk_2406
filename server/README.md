@@ -1,4 +1,4 @@
-# DB Documentation
+ # DB Documentation
 
 ## Database Configuration
 - **Database Type**: PostgreSQL
@@ -35,6 +35,7 @@
 | `f_name`    | VARCHAR(255)       | 1~255文字, 重複なし |  食品の名前                   |
 | `price`   | INT     | 非負整数 |  価格                         |
 | `t_id`     | INT (Foreign Key)  | 非負整数 |  提供するレストランのID        |
+| `is_alcohol`     | BOOLEAN  | |  アルコールかどうかの判別子       |
 
 ## Table: `food_alcohol`
 - **説明**: アルコール含有食品の詳細を保存するテーブル
