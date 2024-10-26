@@ -130,9 +130,7 @@ function RestaurantOrder() {
       {/* カテゴリ選択部分 */}
       <div className="category-buttons">
         <button onClick={() => setSelectedCategory("donburi")}>どんぶり</button>
-        <button onClick={() => setSelectedCategory("chicken")}>
-          鶏系
-        </button>
+        <button onClick={() => setSelectedCategory("chicken")}>鶏系</button>
         <button onClick={() => setSelectedCategory("otsumami")}>
           おつまみ
         </button>
@@ -194,10 +192,14 @@ function RestaurantOrder() {
                 </button>
               </div>
             ))}
-            <h2>合計額: ¥{total}</h2>
-            <button onClick={confirmOrder} className="confirm-button">
-              注文確定
-            </button>
+
+            {/* 合計額を固定表示 */}
+            <div className="fixed-footer">
+              <h2>合計額: ¥{total}</h2>
+              <button onClick={confirmOrder} className="confirm-button">
+                注文確定
+              </button>
+            </div>
           </div>
         ) : (
           <p>注文する料理はまだありません</p>

@@ -69,3 +69,35 @@
 .remove-button:hover {
   background-color: #d32f2f;
 }
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  padding: 10px 20px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.fixed-footer h2 {
+  margin: 0;
+}
+
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; /* 合計金額との間隔を調整 */
+}
+
+.confirm-button:hover {
+  background-color: #1976d2;
+}
