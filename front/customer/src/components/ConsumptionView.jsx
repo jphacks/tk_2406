@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const getFaceImage = (level) => {
   switch (level) {
     case 0:
@@ -26,10 +24,10 @@ const getBackgroundColor = (level) => {
   }
 };
 
-const ConsumptionView = ({ alcoholStatusLevel }) => {
-  const [level, setLevel] = useState(alcoholStatusLevel);
-  const faceImage = getFaceImage(level);
-  const backgroundColor = getBackgroundColor(level);
+// eslint-disable-next-line react/prop-types
+const ConsumptionView = ({ alcLev, setAlcoLev }) => {
+  const faceImage = getFaceImage(alcLev);
+  const backgroundColor = getBackgroundColor(alcLev);
 
   const containerStyle = {
     display: "flex",
@@ -50,19 +48,9 @@ const ConsumptionView = ({ alcoholStatusLevel }) => {
 
   return (
     <div style={containerStyle}>
-      <img
-        src={faceImage}
-        alt={`${alcoholStatusLevel} face`}
-        style={imageStyle}
-      />
-      <span>
-        {level === 0
-          ? "Safe"
-          : level === 1
-          ? "Caution"
-          : "Danger"}
-      </span>
-      <button onClick={() => setLevel((level+1)%3)}>for debug</button>
+      <img src={faceImage} alt={`${alcLev} face`} style={imageStyle} />
+      <span>{alcLev === 0 ? "Safe" : alcLev === 1 ? "Caution" : "Danger"}</span>
+      <button onClick={() => setAlcoLev((alcLev + 1) % 3)}>for debug</button>
     </div>
   );
 };

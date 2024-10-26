@@ -63,6 +63,7 @@ function RestaurantOrder() {
     );
     setTotal((prevTotal) => prevTotal - item.price * item.quantity);
   };
+  const [allev, setallev] = useState(0);
 
   return (
     <div className="app-container">
@@ -76,12 +77,13 @@ function RestaurantOrder() {
           setOrder={setOrder}
           setTotal={setTotal}
           onClose={togglePopupCart}
+          setAlcohoLev={setallev}
         />
       )}
       <h1 className="app-title">Restaurant Order System</h1>
 
       <div className="horizontal-container">
-        <ConsumptionView alcoholStatusLevel={1} />
+        <ConsumptionView alcoholStatusLevel={allev} setAlco={setallev}/>
         <CartButton
           togglePopupCart={togglePopupCart}
           isPopupCart={isPopupCart}

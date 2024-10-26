@@ -23,6 +23,7 @@ function Cart({
   setOrder,
   setTotal,
   onClose,
+  setAlcohoLev
 }) {
   const [isFinalConfirmPopup, setFinalConfirmPopup] = useState(false);
 
@@ -51,6 +52,7 @@ function Cart({
   const checkOrder = () => {
     // 注文を送信する関数
     const alcoholLevel = getAlcoholLevel(order);
+    setAlcohoLev(alcoholLevel);
     console.log("lev", alcoholLevel);
 
     if (alcoholLevel == 2) {
