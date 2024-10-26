@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./RestaurantOrder.css";
+import ConsumptionView from "./ConsumptionView";
+import axios from "axios";
+
 const menuCategories = {
   donburi: [
     {
@@ -65,7 +68,25 @@ function RestaurantOrder() {
   const [total, setTotal] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const currentMenuItems = menuCategories[selectedCategory];
+
+  const sendOrder = async () => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/calculate-alcohol/",
+        {
+          items: order,
+        }
+      );
+      console.log(response.data.intensity);
+      //   setAlcoholIntensity(response.data.intensity);
+    } catch (error) {
+      console.error("Error sending order:", error);
+    }
+  };
+
   const confirmOrder = () => {
+    // 注文を送信する関数
+    sendOrder();
     setIsPopupVisible(true);
     setTimeout(() => {
       setIsPopupVisible(false);
@@ -125,6 +146,8 @@ function RestaurantOrder() {
 
   return (
     <div className="app-container">
+      <ConsumptionView alcoholStatusLevel={1} />
+
       <h1 className="app-title">Restaurant Order System</h1>
 
       {/* カテゴリ選択部分 */}

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Login from "./components/Login";
-import ConsumptionView from "./components/ConsumptionView";
 
 import "./App.css";
 
@@ -18,7 +17,6 @@ function App() {
     <div className="app-container">
       {isLoggedIn ? (
         <div>
-          <ConsumptionView alcoholStatusLevel={1} />
           <RestaurantOrder />
         </div>
       ) : (
