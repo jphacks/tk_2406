@@ -1,17 +1,17 @@
-from fastapi import APIRouter, Path, Query, HTTPException, Depends
-from fastapi.security import OAuth2PasswordRequestForm
-from app.cruds import auth as auth_cruds
-from starlette import status
-from app.schemas import UserCreate, UserResponse, Token
-from sqlalchemy.orm import Session
-from app.database import get_db
-from typing import Annotated
-from datetime import timedelta
+# from fastapi import APIRouter, Path, Query, HTTPException, Depends
+# from fastapi.security import OAuth2PasswordRequestForm
+# from app.cruds import auth as auth_cruds
+# from starlette import status
+# from app.schemas import UserCreate, UserResponse, Token
+# from sqlalchemy.orm import Session
+# from app.database import get_db
+# from typing import Annotated
+# from datetime import timedelta
 
-DbDependency = Annotated[Session, Depends(get_db)]
-FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
+# DbDependency = Annotated[Session, Depends(get_db)]
+# FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+# router = APIRouter(prefix="/auth", tags=["auth"])
 
 # @router.post("/signup", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 # async def create_user(db: DbDependency, user_create: UserCreate):
