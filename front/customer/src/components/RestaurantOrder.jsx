@@ -1,9 +1,8 @@
 import { useState } from "react";
-import "./RestaurantOrder.css";
+import styles from "./RestaurantOrder.module.css"; // CSS Modules のインポート
 import ConsumptionView from "./ConsumptionView";
 import Cart from "./Cart";
 import CartButton from "./CartButton";
-
 import menuCategories from "./data";
 
 function RestaurantOrder() {
@@ -11,6 +10,7 @@ function RestaurantOrder() {
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
   const [isPopupCart, togglePopupCart] = useState(false);
+  const [allev, setallev] = useState(0);
 
   const currentMenuItems = menuCategories[selectedCategory];
 
@@ -63,10 +63,9 @@ function RestaurantOrder() {
     );
     setTotal((prevTotal) => prevTotal - item.price * item.quantity);
   };
-  const [allev, setallev] = useState(0);
 
   return (
-    <div className="app-container">
+    <div className={styles.appContainer}>
       {isPopupCart && (
         <Cart
           order={order}
@@ -81,8 +80,8 @@ function RestaurantOrder() {
         />
       )}
 
-      <div className="horizontal-container">
-        <ConsumptionView alcLev={allev} setAlcoLev={setallev}/>
+      <div className={styles.horizontalContainer}>
+        <ConsumptionView alcLev={allev} setAlcoLev={setallev} />
         <CartButton
           togglePopupCart={togglePopupCart}
           isPopupCart={isPopupCart}
@@ -93,28 +92,52 @@ function RestaurantOrder() {
       </div>
 
       {/* カテゴリ選択部分 */}
-      <div className="category-buttons">
-        <button onClick={() => setSelectedCategory("donburi")}>どんぶり</button>
-        <button onClick={() => setSelectedCategory("chicken")}>鶏系</button>
-        <button onClick={() => setSelectedCategory("otsumami")}>
+      <div className={styles.categoryButtons}>
+        <button
+          className={styles.categoryButton}
+          onClick={() => setSelectedCategory("donburi")}
+        >
+          どんぶり
+        </button>
+        <button
+          className={styles.categoryButton}
+          onClick={() => setSelectedCategory("chicken")}
+        >
+          鶏系
+        </button>
+        <button
+          className={styles.categoryButton}
+          onClick={() => setSelectedCategory("otsumami")}
+        >
           おつまみ
         </button>
-        <button onClick={() => setSelectedCategory("alcohol")}>酒類</button>
-        <button onClick={() => setSelectedCategory("nonAlcohol")}>
+        <button
+          className={styles.categoryButton}
+          onClick={() => setSelectedCategory("alcohol")}
+        >
+          酒類
+        </button>
+        <button
+          className={styles.categoryButton}
+          onClick={() => setSelectedCategory("nonAlcohol")}
+        >
           ノンアル
         </button>
       </div>
 
       {/* メニュー表示部分 */}
-      <div className="menu-grid">
+      <div className={styles.menuGrid}>
         {currentMenuItems.map((item) => (
-          <div className="menu-card" key={item.id}>
-            <img src={item.img} alt={item.name} className="menu-img" />
-            <div className="menu-details">
-              <h3 className="menu-name">{item.name}</h3>
-              <p className="menu-price">¥{item.price}</p>
+          <div className={styles.menuCard} key={item.id}>
+            <img src={item.img} alt={item.name} className={styles.menuImg} />
+            <div className={styles.menuDetails}>
+              <h3 className={styles.menuName}>{item.name}</h3>
+              <p className={styles.menuPrice}>¥{item.price}</p>
 
-              <button onClick={() => addToOrder(item)} className="add-button">
+              <button
+                onClick={() => addToOrder(item)}
+                className={styles.addButton}
+              >
                 追加
               </button>
             </div>

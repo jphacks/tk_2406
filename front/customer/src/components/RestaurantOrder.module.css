@@ -1,0 +1,97 @@
+/* 全体のアプリコンテナ */
+.appContainer {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+/* カートのボタンと飲酒量の水平配置 */
+.horizontalContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* カテゴリボタン部分 */
+.categoryButtons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.categoryButton {
+  margin: 0 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.categoryButton:hover {
+  background-color: #45a049;
+}
+.menuGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 幅を小さく */
+  gap: 15px; /* ギャップを小さく */
+}
+
+/* メニューカード */
+.menuCard {
+  background-color: #ffffff;
+  border-radius: 8px; /* 角の丸みを小さく */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* シャドウを控えめに */
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s;
+  padding: 8px; /* カード内のパディングを小さく */
+}
+
+.menuCard:hover {
+  transform: scale(1.05);
+}
+
+/* メニューの画像 */
+.menuImg {
+  width: 100%;
+  height: 120px; /* 高さを小さく */
+  object-fit: cover;
+  border-bottom: 2px solid #4caf50;
+}
+
+/* メニューの詳細 */
+.menuDetails {
+  padding: 8px; /* パディングを小さく */
+}
+
+.menuName {
+  font-size: 1rem; /* フォントサイズを小さく */
+  margin: 8px 0; /* マージンを小さく */
+  color: #333;
+}
+
+.menuPrice {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* 追加ボタン */
+.addButton {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addButton:hover {
+  background-color: #45a049;
+}
