@@ -1,4 +1,6 @@
-
+/server/migrations
+/server/migrations/*
+/server/migrations/*/*
 /server/docker/*
 venv
 *.pyc
