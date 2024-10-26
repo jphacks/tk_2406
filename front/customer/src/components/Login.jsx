@@ -1,12 +1,31 @@
 import { useState } from "react";
 import "./Login.css";
+import axios from "axios";
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      axios
+        .post(
+          "http://10.10.2.47:8000/customer/login",
+          new URLSearchParams({ username: username, password: password }), // データをフォーム形式で送信
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        });
+    } catch (error) {
+      console.log("Error sending order:", error);
+    }
+
     if (username && password) {
       onLogin();
     } else {
@@ -38,6 +57,10 @@ function Login({ onLogin }) {
         </div>
         <button type="submit" className="login-button">
           Login
+        </button>
+        <p></p>
+        <button type="submit" className="login-button">
+          Sign up
         </button>
       </form>
     </div>
