@@ -1,7 +1,15 @@
 /* eslint-disable react/prop-types */
 import "./Cart.css";
-import axios from "axios";
+import { useState } from "react";
 
+import FinalConfirm from "./FinalConfirm";
+import axios from "axios";
+function getAlcoholLevel(order) {
+  if (order.length > 0) {
+    console.log(order[0]);
+  }
+  return Math.floor(Math.random() * 3);
+}
 function Cart({
   order,
   total,
@@ -12,6 +20,8 @@ function Cart({
   setTotal,
   onClose,
 }) {
+  const [isFinalConfirmPopup, setFinalConfirmPopup] = useState(false);
+
   const sendOrder = async () => {
     try {
       const response = await axios.post(
@@ -27,71 +37,92 @@ function Cart({
     }
   };
   const confirmOrder = () => {
-    // 注文を送信する関数
     sendOrder();
-    // setIsPopupVisible(true);
+    console.log("注文しました");
     setTimeout(() => {
-      //   setIsPopupVisible(false);
       setOrder([]);
       setTotal(0);
-    }, 2000); // ポップアップが2秒間表示される
+    }, 1000);
   };
+  const checkOrder = () => {
+    // 注文を送信する関数
+    const alcoholLevel = getAlcoholLevel(order);
+    console.log("lev", alcoholLevel);
+
+    if (alcoholLevel == 2) {
+      console.log("final");
+      setFinalConfirmPopup(true);
+    } else {
+      confirmOrder();
+    }
+  };
+
   return (
     <div className="cart-popup">
-        <button
-          className="cart-close-button"
-          onClick={() => {
-            onClose(false);
+      {isFinalConfirmPopup && (
+        <FinalConfirm
+          onClose={() => {
+            setFinalConfirmPopup(false);
           }}
-        >
-          ✕
-        </button>
-        <div>
-          <h2>合計額: ¥{total}</h2>
-          <button onClick={confirmOrder} className="confirm-button">
-            注文確定
-          </button>
-        </div>
+          confirmOrder={confirmOrder}
+        />
+      )}
+      {/* バツボタン */}
+      <button className="cart-close-btn" onClick={() => onClose(false)}>
+        ✕
+      </button>
 
+      {/* ヘッダー */}
+      <div className="cart-header">
+        <h2 className="cart-title">注文リスト</h2>
+      </div>
+
+      {/* 注文商品リスト */}
+      <div className="cart-item-list">
         {order.length > 0 ? (
-          <div className="cart-popup-body">
-            <h2>注文リスト</h2>
-
-            {order.map((item, index) => (
-              <div key={index} className="order-card">
-                <img src={item.img} alt={item.name} className="order-img" />
-                <div className="order-details">
-                  <h3 className="order-name">{item.name}</h3>
-                  <p className="order-price">¥{item.price}</p>
-                </div>
-                <div className="quantity-control">
-                  <button
-                    onClick={() => decreaseQuantity(item)}
-                    className="quantity-button"
-                  >
-                    -
-                  </button>
-                  <span className="quantity">{item.quantity}</span>
-                  <button
-                    onClick={() => increaseQuantity(item)}
-                    className="quantity-button"
-                  >
-                    +
-                  </button>
-                </div>
+          order.map((item, index) => (
+            <div key={index} className="cart-item">
+              <img src={item.img} alt={item.name} className="cart-item-img" />
+              <div className="cart-item-details">
+                <h3 className="cart-item-name">{item.name}</h3>
+                <p className="cart-item-price">¥{item.price}</p>
+              </div>
+              <div className="cart-quantity-control">
                 <button
-                  onClick={() => removeFromOrder(item)}
-                  className="remove-button"
+                  onClick={() => decreaseQuantity(item)}
+                  className="cart-quantity-btn"
                 >
-                  削除
+                  -
+                </button>
+                <span className="cart-quantity">{item.quantity}</span>
+                <button
+                  onClick={() => increaseQuantity(item)}
+                  className="cart-quantity-btn"
+                >
+                  +
                 </button>
               </div>
-            ))}
-          </div>
+              <button
+                onClick={() => removeFromOrder(item)}
+                className="cart-remove-btn"
+              >
+                削除
+              </button>
+            </div>
+          ))
         ) : (
-          <p>注文する料理はまだありません</p>
+          <p className="cart-empty-msg">注文する料理はまだありません</p>
         )}
       </div>
+
+      {/* フッター */}
+      <div className="cart-footer">
+        <h2 className="cart-total">合計額: ¥{total}</h2>
+        <button onClick={checkOrder} className="cart-confirm-btn">
+          注文確定
+        </button>
+      </div>
+    </div>
   );
 }
 
