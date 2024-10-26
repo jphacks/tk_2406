@@ -3,7 +3,7 @@ import "./Cart.css";
 import { useState } from "react";
 
 import FinalConfirm from "./FinalConfirm";
-import axios from "axios";
+import sendOrder from "./comm";
 
 function getAlcoholLevel(order) {
   if (order.length > 0) {
@@ -27,23 +27,9 @@ function Cart({
 }) {
   const [isFinalConfirmPopup, setFinalConfirmPopup] = useState(false);
 
-  const sendOrder = async () => {
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/calculate-alcohol/",
-        {
-          items: order,
-        }
-      );
-      console.log(response.data.intensity);
-      //   setAlcoholIntensity(response.data.intensity);
-    } catch (error) {
-      console.error("Error sending order:", error);
-    }
-  };
+
   const confirmOrder = () => {
-    sendOrder();
-    console.log("注文しました");
+    sendOrder(order);
     setTimeout(() => {
       setOrder([]);
       setTotal(0);
@@ -67,7 +53,10 @@ function Cart({
   const handleOrderClick = () => {
     checkOrder();
     setIsOrderComplete(true);
-    setTimeout(() => setIsOrderComplete(false), 3000); // 3秒後にアニメーションを非表示に
+    setTimeout(() => {
+      setIsOrderComplete(false);
+      onClose();
+    }, 2000); // 購入完了アニメーション
   };
 
   return (
