@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, Boolean, Foreig
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
+
 class Restaurant(Base):
     __tablename__ = "restaurants"
     r_id = Column(Integer, primary_key=True)
@@ -12,13 +13,15 @@ class Restaurant(Base):
 
 class Food(Base):
     __tablename__ = "foods"
+    __table_args__ = {'extend_existing': True}
     f_id = Column(Integer, primary_key=True)
     r_id = Column(Integer, ForeignKey("restaurants.r_id", ondelete="CASCADE"), nullable=False)
     f_name = Column(String(255), nullable=False, unique=True)
     price = Column(Integer, nullable=False)
-    tag = Column(String(255), nullable=True)
+    t_id = Column(Integer, ForeignKey("tags.t_id", ondelete="CASCADE"), nullable=False)
     is_alcohol = Column(Boolean, nullable=False)
     restaurant = relationship("Restaurant", back_populates="foods")
+    tag = relationship("Tag", back_populates="foods")
 
 Restaurant.foods = relationship("Food", order_by=Food.f_id, back_populates="restaurant")
 
@@ -31,6 +34,16 @@ class FoodAlcohol(Base):
     food = relationship("Food", back_populates="alcohol")
 
 Food.alcohol = relationship("FoodAlcohol", uselist=False, back_populates="food")
+
+class Tag(Base):
+    __tablename__ = "tags"
+    __table_args__ = {'extend_existing': True}
+    t_id = Column(Integer, primary_key=True)
+    r_id = Column(Integer, ForeignKey("restaurants.r_id", ondelete="CASCADE"), nullable=False)
+    t_name = Column(String(255), nullable=False, unique=True)
+    food = relationship("Food", back_populates="tag") 
+
+Food.tag = relationship("Tag", uselist=False, back_populates="food")
 
 class Customer(Base):
     __tablename__ = "customers"
