@@ -1,4 +1,4 @@
-
+x
 
 # API Documentation
 
@@ -94,7 +94,7 @@ http://0.0.0.0:8000
     - **ステータスコード**: 201 Created
     - **ボディ**:
         {
-            "r_id", "access_token", "token_type"
+            "access_token", "token_type"
         }
 
 ### 'POST customer/login'
