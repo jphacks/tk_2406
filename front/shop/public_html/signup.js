@@ -66,7 +66,6 @@ function login() {
     xhr.send(`{\"r_name\":\"${id}\",\"password\":\"${pw}\"}`)
 
     //入力値クリア
-    document.getElementById("pass").value = ""
     setMessage("登録中...", "black")
 
     

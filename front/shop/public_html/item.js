@@ -15,12 +15,73 @@ if (cookie_dict["access_token"] === undefined || cookie_dict["token_type"] === u
 }
 
 console.log(cookie_dict)
+const ele_reload = document.getElementById("reload")
+const ele_foods = document.getElementById("foods")
 
+
+dummy=[]
+for(let i=0;i<100;i++){
+    dummy.push({f_name:"ねname"+(i+1),price:100*(i+1)})
+}
+setFood(dummy)
+
+function reload() {
+    getAllItems()
+}
+
+
+function setFood(data) {
+    let html = ""
+
+    let i=0
+    for (const food of data) {
+
+        html += `
+        <div class="box2" id="food${i}">
+        <div style="font-size: 4vh;padding-top:5vh;margin-top:0;padding-left:15vh;">
+        <span>${food.f_name}</span>
+        </div>
+
+        <span style="text-align: right;">
+        <span>
+        ${food.price}
+        </span>
+        </span>
+
+        </div>
+        `
+        i++
+    }
+
+    ele_foods.innerHTML = html
+}
 function getAllItems() {
     const xhr = new XMLHttpRequest()
-    xhr.open("GET", config.server_ip + ":" + config.server_port + "/restaurant/dish", true)
+
+    xhr.onload = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                const data = JSON.parse(xhr.responseText)
+                console.log(data)
+            } else {
+                alert(xhr.responseText)
+            }
+        }
+    }
+
+    xhr.onerror = () => {
+
+    }
+
+    xhr.open("GET", config.server_ip + ":" + config.server_port + "/restaurant/dish")
     xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.setRequestHeader("access_token", cookie_dict["access_token"])
+    xhr.setRequestHeader("token_type", cookie_dict["token_type"])
     xhr.send()
+}
+
+function add() {
+    window.location.href = "add.html"
 }
 
 function setMessage(str, color = "red") {

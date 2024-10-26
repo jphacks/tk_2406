@@ -1,20 +1,25 @@
 body {
-    font-family: "メイリオ",sans-serif;
+    font-family: "メイリオ", sans-serif;
     margin: 0em 0em;
+}
+
+.title p {
+    margin: 0em 0em;
+    font-size: 3.6vw;
 }
 
 .title {
     padding: 0.5em 1em;
-    margin: 0em 0em;
+    margin: 0 0 0 0;
     color: #ffffff;
     background: #000000;
-    font-size: 2em;
+    height: 6vw;
 }
 
 .login {
     padding: 0em 0em;
     margin-top: 10vh;
-    margin-left:  20vw;
+    margin-left: 20vw;
     width: 60vw;
     margin-bottom: 4%;
     border: solid 0.2vw #000000;
@@ -33,118 +38,46 @@ body {
 }
 
 
-.title p {
-    margin: 0; 
-    padding: 0;
-}
-
-
-.box1 p {
-    margin: 0; 
-    padding: 0;
-}
-.box1 h3 {
-    margin: 0; 
-    padding: 0;
-    font-weight: bold;
-}
-.box1 li {
-    margin: 0; 
-    padding: 0;
-    font-weight: bold;
-}
-
-.box1 ul {
-    margin: 0em 1em;
-    padding: 0;
-}
-
-.box2{
-    padding: 0.5em 1em;
-    margin: 2em 1em;
-    color: #404068;
-    background: white;
-    border-top: solid 5px #404068;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
-}
-.box2 p {
-    margin: 0; 
-    padding: 0;
-}
-
-.box2 ul {
-    margin: 0em 1em;
-    padding: 0;
-}
-
-.box2 li {
-    margin: 0.2em 0em;
-    padding: 0;
-}
-
-.box3 {
-    margin: 2em 0;
-    background: #d8e1e7;
-}
-.box3 .box-title {
-    font-size: 1.2em;
-    background: #08385c;
-    padding: 4px;
-    text-align: center;
-    color: #FFF;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-}
-.box3 p {
-    padding: 15px 20px;
-    margin: 0;
-}
-
-.box3 ul {
-    margin: 0em 1em;
-    padding: 0;
-}
-
-.box3 li {
-    margin: 0.2em 0em;
-    padding: 0;
-}
-
-
-.box4 {
-    margin: 2em 0;
-    background: #e7d8d8;
-}
-.box4 .box-title {
-    font-size: 1.2em;
-    background: #db0000;
-    padding: 4px;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    letter-spacing: 0.05em;
-}
-.box4 p {
-    padding: 15px 20px;
-    margin: 0;
-}
-
-.box4 ul {
-    margin: 0em 1em;
-    padding: 0;
-}
-
-.box4 li {
-    margin: 0.2em 0em;
-    padding: 0;
-}
-
-.submit_btn{
-    margin-top: 1%;
-    width:min(40vh,40vw);
-}
- 
-.submit_btn:hover{
+.login_btn:hover {
     cursor: pointer;
-    opacity:0.7;
+    opacity: 0.7;
+}
+
+.add_btn {
+    margin-top: 1vw;
+    width: 10em;
+    height: 3em;
+    background-color: #333377;
+    color: #FFFFFF;
+    border: #7777ee 0.2vw solid;
+    border-radius: 1vw;
+}
+
+.add_btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.box1 {
+    margin-top: 2vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    padding-top: 0;
+    padding-bottom: 1vw;
+    padding-left: 0;
+    padding-right: 0;
+    overflow: scroll;
+    height: calc(98vh - 8vw - 4em);
+    background-color: beige;
+}
+
+.box2 {
+    margin-top: 1vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    padding: 0;
+    overflow: hidden;
+    height: 15vh;
+    font-size: 8vh;
+    background-color: #ffffff;
 }

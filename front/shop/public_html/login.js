@@ -49,6 +49,7 @@ function login() {
             } else {
                 //ログイン失敗時
                 setMessage('ログインに失敗しました。店舗ネームまたはパスワードを確認してください。');
+                document.getElementById("pass").value = ""
                 button.disabled = false
             }
         }
@@ -56,8 +57,6 @@ function login() {
 
     xhr.onerror = () => {
         //通信失敗時
-        alert(xhr.readyState)
-        alert(xhr.status)
         setMessage('サーバーに接続できません。ネットワーク環境をご確認ください。');
         button.disabled = false
 
@@ -69,7 +68,6 @@ function login() {
     xhr.send("username=" + id + "&password=" + pw)
 
     //表示
-    document.getElementById("pass").value = ""
     setMessage("ログイン中...", "black")
 
 }
