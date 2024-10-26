@@ -1,0 +1,150 @@
+body {
+    font-family: "メイリオ",sans-serif;
+    margin: 0em 0em;
+}
+
+.title {
+    padding: 0.5em 1em;
+    margin: 0em 0em;
+    color: #ffffff;
+    background: #000000;
+    font-size: 2em;
+}
+
+.login {
+    padding: 0em 0em;
+    margin-top: 10vh;
+    margin-left:  20vw;
+    width: 60vw;
+    margin-bottom: 4%;
+    border: solid 0.2vw #000000;
+    border-radius: 1vw;
+}
+
+.login_btn {
+    font-size: 1.4em;
+    margin-left: 20vw;
+    width: 20vw;
+    height: 6vw;
+    background-color: #333377;
+    color: #FFFFFF;
+    border: #7777ee 0.2vw solid;
+    border-radius: 1vw;
+}
+
+
+.title p {
+    margin: 0; 
+    padding: 0;
+}
+
+
+.box1 p {
+    margin: 0; 
+    padding: 0;
+}
+.box1 h3 {
+    margin: 0; 
+    padding: 0;
+    font-weight: bold;
+}
+.box1 li {
+    margin: 0; 
+    padding: 0;
+    font-weight: bold;
+}
+
+.box1 ul {
+    margin: 0em 1em;
+    padding: 0;
+}
+
+.box2{
+    padding: 0.5em 1em;
+    margin: 2em 1em;
+    color: #404068;
+    background: white;
+    border-top: solid 5px #404068;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+}
+.box2 p {
+    margin: 0; 
+    padding: 0;
+}
+
+.box2 ul {
+    margin: 0em 1em;
+    padding: 0;
+}
+
+.box2 li {
+    margin: 0.2em 0em;
+    padding: 0;
+}
+
+.box3 {
+    margin: 2em 0;
+    background: #d8e1e7;
+}
+.box3 .box-title {
+    font-size: 1.2em;
+    background: #08385c;
+    padding: 4px;
+    text-align: center;
+    color: #FFF;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+.box3 p {
+    padding: 15px 20px;
+    margin: 0;
+}
+
+.box3 ul {
+    margin: 0em 1em;
+    padding: 0;
+}
+
+.box3 li {
+    margin: 0.2em 0em;
+    padding: 0;
+}
+
+
+.box4 {
+    margin: 2em 0;
+    background: #e7d8d8;
+}
+.box4 .box-title {
+    font-size: 1.2em;
+    background: #db0000;
+    padding: 4px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+.box4 p {
+    padding: 15px 20px;
+    margin: 0;
+}
+
+.box4 ul {
+    margin: 0em 1em;
+    padding: 0;
+}
+
+.box4 li {
+    margin: 0.2em 0em;
+    padding: 0;
+}
+
+.submit_btn{
+    margin-top: 1%;
+    width:min(40vh,40vw);
+}
+ 
+.submit_btn:hover{
+    cursor: pointer;
+    opacity:0.7;
+}

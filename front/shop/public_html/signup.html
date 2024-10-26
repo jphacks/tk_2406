@@ -1,0 +1,33 @@
+<html>
+<meta charset='utf-8' />
+<title>店舗 サインアップ</title>
+<!--<link rel="icon" href="favicon.ico">-->
+<link rel="stylesheet" href="style.css">
+
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="signup.js">
+</script>
+
+<body id="body">
+    <div class="title">
+        <p style="font-size: min(1em,5vw);">店舗 新規登録</p>
+    </div>
+    <form>
+        <div class="login">
+            <h4 style="margin-left: 2vw;margin-bottom: 0.3em;">新規店舗名</h4>
+            <input type="text" id="user" style="margin-left: 2vw;width: 56vw;">
+            <h4 style="margin-left: 2vw;margin-bottom: 0.3em;">新規パスワード</h4>
+            <input type="password" id="pass" style="margin-left: 2vw;width: 56vw;">
+            <p>
+                <input type="button" id="login_btn" value="新規作成" class="login_btn" onclick="login()">
+            </p>
+            <div style="text-align: center;">
+                <span id="message"></span>
+                <p>既にアカウントをお持ちですか？ <a href="javascript:moveLogin()">ログイン</a></p>
+            </div>
+        </div>
+    </form>
+
+</body>
+
+</html>
