@@ -31,4 +31,4 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 app.include_router(restaurant.router)
-app.include_router(customer.router
+app.include_router(customer.router)

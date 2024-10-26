@@ -33,6 +33,11 @@ class RestaurantCreate(BaseModel):
     r_name: str = Field(min_length=2, examples=["user1"])
     password: str = Field(min_length=8, examples=["test1234"])
 
+class CustomerCreate(BaseModel):
+    c_name: str = Field(min_length=2, examples=["user1"])
+    email: str = Field(examples=["test@example.com"])
+    password: str = Field(min_length=8, examples=["test1234"])
+
 # class UserResponse(BaseModel):
 #     id: int = Field(gt=0, examples=[1])
 #     username: str = Field(min_length=2, examples=["user1"])
