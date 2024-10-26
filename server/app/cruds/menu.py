@@ -55,6 +55,25 @@ def get_dishes_by_tag(db: Session, r_id: int, t_id: int):
     )
     return dishes_by_tag
 
+def get_dishes_by_id(db: Session, r_id: int, f_id: int):
+    dishes_by_id = (
+    db.query(
+        Food.f_id, 
+        Food.f_name,
+        Food.price,
+        Food.is_alcohol,
+        Food.r_id,
+        Tag.t_name,
+        FoodAlcohol.degree,
+        FoodAlcohol.f_quantity
+    )
+    .outerjoin(FoodAlcohol, Food.f_id == FoodAlcohol.f_id)
+    .outerjoin(Tag, Food.t_id == Tag.t_id)
+    .filter(Food.f_id == f_id)  # Filter by f_id
+    .first()  # Get only one result
+    )
+    return dishes_by_id
+
 def create_tag(db: Session, r_id: int, t_name: str):
     # Create a new tag for a restaurant ID
     existing_tag = db.query(Tag).filter(Tag.r_id == r_id, Tag.t_name == t_name).first()
@@ -74,15 +93,14 @@ def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_a
     new_dish = Food(r_id=r_id, f_name=f_name, price=price, t_id=t_id, is_alcohol=is_alcohol)
     db.add(new_dish)
     db.commit()
-    print(new_dish.f_id)
+
     if is_alcohol:      
         new_alcohol = FoodAlcohol(f_id=new_dish.f_id, degree=degree, f_quantity=0)
         db.add(new_alcohol)
     db.commit()
     db.refresh(new_dish)
-    
 
-    return new_dish
+    return new_dish.f_id
 
 def update_dish(db: Session, r_id: int, f_id: int, f_name: str, price: int, tag: str):
     # Update a dish for a restaurant ID

@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app.cruds import restaurant_auth as restaurant_auth_cruds
 from app.cruds import menu
 from starlette import status
-from app.schemas import Token, RestaurantCreate, DishCreate, FoodResponse, TagCreate, DishView, DishResponse
+from app.schemas import Token, RestaurantCreate, DishCreate, TagCreate, DishView, DishResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from typing import Annotated, List, Optional
@@ -63,19 +63,30 @@ async def get_dish(db:DbDependency, token: Annotated[str, Depends(restaurant_aut
     ]
     return dishes
 
-@router.post("/dish",response_model=FoodResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/dish",response_model=DishResponse, status_code=status.HTTP_201_CREATED)
 async def create_dish(db: DbDependency, token: Annotated[str, Depends(restaurant_auth_cruds.oauth2_schema)], dish_create: DishCreate):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     f_name, price, t_id, is_alcohol,degree = dish_create.f_name, dish_create.price, dish_create.t_id, dish_create.is_alcohol, dish_create.degree
-    dish = menu.create_dish(db, r_id[1], f_name, price, t_id, is_alcohol, degree)
-
-    if not dish:
+    new_dish = menu.create_dish(db, r_id[1], f_name, price, t_id, is_alcohol, degree)
+    if isinstance(new_dish, int):
+        new_dish = menu.get_dishes_by_id(db, r_id[1], new_dish)
+       
+        return  DishResponse(
+            f_id = new_dish[0],
+            f_name = new_dish[1],
+            price = new_dish[2],
+            is_alcohol = new_dish[3],
+            r_id = new_dish[4],
+            tag = new_dish[5],
+            degree = new_dish[6],
+            f_quantity = new_dish[7]
+        )
+    else:
         raise HTTPException(status_code=409, detail="Dish already exists")
-    return dish
 
-@router.put("/dishxx/{f_id}", response_model=FoodResponse, status_code=status.HTTP_200_OK)
+@router.put("/dishxx/{f_id}", response_model=DishResponse, status_code=status.HTTP_200_OK)
 async def update_dish(db: DbDependency, token: Annotated[str, Depends(restaurant_auth_cruds.oauth2_schema)], t_id: int, f_id: int = Path(..., title="Food ID"), f_name: Optional[str] = None, price: Optional[int] = None):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:

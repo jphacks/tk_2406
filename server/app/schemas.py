@@ -68,14 +68,6 @@ class DishResponse(BaseModel):
 #     updated_at: datetime
 #     model_config = ConfigDict(from_attributes=True)
 
-class FoodResponse(BaseModel):
-    f_id: int = Field(gt=0, examples=[1])
-    r_id: int = Field(gt=0, examples=[1])
-    f_name: str = Field(min_length=2, examples=["Beer"])
-    price: int = Field(gt=0, examples=[500])
-    t_id: int = Field(gt=0, examples=[1])
-    is_alcohol: bool = Field(examples=[True], default=False)
-
 class Token(BaseModel):
     access_token: str
     token_type: str
