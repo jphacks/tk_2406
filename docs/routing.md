@@ -111,7 +111,7 @@ http://0.0.0.0:8000
             "access_token", "token_type"
         }
     
-### 'POST restaurant/sighup'
+### 'POST customer/sighup'
 - **説明**: 客の新規登録
 - **リクエスト**:
     - **ボディ**
