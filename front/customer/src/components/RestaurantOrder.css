@@ -1,0 +1,224 @@
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.menu-card {
+  background-color: #f9f9f9; /* カードの背景色を少し暗くしてコントラストを高める */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.menu-card:hover {
+  transform: scale(1.05);
+}
+
+.menu-img {
+  width: 70%;
+  object-fit: cover;
+}
+
+.menu-details {
+  padding: 10px;
+}
+
+.menu-name {
+  font-size: 1.2rem;
+  /* margin: 10px 0; */
+  color: #333; /* 文字色を濃い色に変更 */
+}
+
+.menu-price {
+  color: #555; /* 価格の文字色を濃い色に変更 */
+  /* margin-bottom: 10px; */
+}
+
+.order-card {
+  display: flex;
+  align-items: center;
+  background-color: #1e1e1e;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.order-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.order-details {
+  flex: 1;
+}
+
+.order-name {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.order-price {
+  margin: 5px 0;
+  color: #ccc;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.quantity-button {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.quantity-button:hover {
+  background-color: #45a049;
+}
+
+.quantity {
+  font-size: 1.2rem;
+  color: white;
+}
+
+.remove-button {
+  padding: 5px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.remove-button:hover {
+  background-color: #d32f2f;
+}
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  padding: 10px 20px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.fixed-footer h2 {
+  margin: 0;
+}
+
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; /* 合計金額との間隔を調整 */
+}
+
+.confirm-button:hover {
+  background-color: #1976d2;
+}
+
+.add-button {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.order-list {
+  margin-top: 20px;
+}
+
+.order-item {
+  margin-bottom: 10px;
+  color: white; /* 注文リストの文字色を白に変更 */
+}
+
+.remove-button {
+  margin-left: 10px;
+  padding: 5px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background-color: #d32f2f;
+}
+
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.confirm-button:hover {
+  background-color: #1976d2;
+}
+
+.category-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.category-buttons button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category-buttons button:hover {
+  background-color: #45a049;
+}
+
+.horizontal-container {
+  display: flex; /* Flexboxを有効にする */
+  justify-content: flex-start; /* アイテムを左揃え */
+  align-items: center; /* アイテムを垂直方向に中央揃え */
+  gap: 10px; /* アイテム間の間隔 */
+  padding: 20px; /* コンテナの内側の余白 */
+}
+
+
