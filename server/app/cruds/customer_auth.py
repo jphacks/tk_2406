@@ -17,8 +17,8 @@ SECRET_KEY = get_settings().secret_key
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def create_customer(db: Session, customer_create: CustomerCreate):
-    existing_user = db.query(Customer).filter(Customer.c_name == customer_create.c_name).first()
-    if existing_user:
+    existing_customer = db.query(Customer).filter(Customer.c_name == customer_create.c_name).first()
+    if existing_customer:
         return None
     salt = base64.b64encode(os.urandom(32))
     hashed_password = hashlib.pbkdf2_hmac("sha256", customer_create.password.encode(), salt, 10).hex()

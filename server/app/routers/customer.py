@@ -20,7 +20,7 @@ SECRET_KEY =get_settings().secret_key
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, form_data: FormDependency):
-    customer = customer_auth_cruds.authenticate_user(db, form_data.c_name, form_data.password)
+    customer = customer_auth_cruds.authenticate_customer(db, form_data.username, form_data.password)
     if not customer:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
     token = customer_auth_cruds.create_access_token(customer.c_name, customer.c_id, timedelta(minutes=240))
