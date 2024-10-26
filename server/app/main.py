@@ -5,12 +5,20 @@ import time
 
 app = FastAPI()
 
+origins = [
+    "http://10.10.2.46:80",  # フロントエンドのオリジン
+    "http://localhost:5173",
+    # 他に許可したいオリジンがあれば追加
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=origins,  # 許可するオリジンのリスト
+    allow_credentials=True,
+    allow_methods=["*"],  # 許可するHTTPメソッド（GET, POSTなど）
+    allow_headers=["*"],  # 許可するHTTPヘッダー
 )
+
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
