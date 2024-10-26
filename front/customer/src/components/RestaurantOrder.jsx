@@ -66,6 +66,8 @@ function RestaurantOrder() {
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isPopupCart, togglePopupCart] = useState(false);
+
   const currentMenuItems = menuCategories[selectedCategory];
 
   const addToOrder = (item) => {
@@ -121,6 +123,25 @@ function RestaurantOrder() {
   return (
     <div className="app-container">
       <ConsumptionView alcoholStatusLevel={1} />
+      <div>
+        <button onClick={() => togglePopupCart(!isPopupCart)}> helaooo </button>
+        {order.reduce((accumulator, orderItem) => {
+          return accumulator + orderItem.quantity;
+        }, 0)}
+      </div>
+
+      {isPopupCart && (
+        <Cart
+          order={order}
+          total={total}
+          decreaseQuantity={decreaseQuantity}
+          increaseQuantity={increaseQuantity}
+          removeFromOrder={removeFromOrder}
+          setOrder={setOrder}
+          setTotal={setTotal}
+          onClose={togglePopupCart}
+        />
+      )}
 
       <h1 className="app-title">Restaurant Order System</h1>
 
@@ -153,15 +174,6 @@ function RestaurantOrder() {
           </div>
         ))}
       </div>
-      <Cart
-        order={order}
-        total={total}
-        decreaseQuantity={decreaseQuantity}
-        increaseQuantity={increaseQuantity}
-        removeFromOrder={removeFromOrder}
-        setOrder={setOrder}
-        setTotal={setTotal}
-      />
 
       {isPopupVisible && <div className="popup">Order has been sent!</div>}
     </div>
