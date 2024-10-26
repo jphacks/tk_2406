@@ -25,9 +25,16 @@ def create_access_token(data: dict):
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, form_data: FormDependency):
-    user = auth_cruds.authenticate_user(db, form_data.c_name, form_data.password)
-    if not user:
+    customer = auth_cruds.authenticate_user(db, form_data.c_name, form_data.password)
+    if not customer:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
-    token = auth_cruds.create_access_token(user.username, user.id, timedelta(minutes=120))
+    token = auth_cruds.create_access_token(customer.username, customer.id, timedelta(minutes=120))
     return {"access_token": token, "token_type": "bearer"}
-    
+
+@router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
+async def signup(db: DbDependency, user: UserCreate):
+    customer = auth_cruds.create_user(db, user)
+    token = auth_cruds.create_access_token(customer.username, customer.id, timedelta(minutes=120))
+    return {"c_id": customer.c_id, "access_token": token, "token_type": "bearer"}
+
+# @router.post("/order/{r_id}", status_code=status.HTTP_200_OK)
