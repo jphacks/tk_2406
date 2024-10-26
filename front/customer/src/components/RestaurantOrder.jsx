@@ -191,21 +191,21 @@ function RestaurantOrder() {
                 <div className="order-details">
                   <h3 className="order-name">{item.name}</h3>
                   <p className="order-price">¥{item.price}</p>
-                  <div className="quantity-control">
-                    <button
-                      onClick={() => decreaseQuantity(item)}
-                      className="quantity-button"
-                    >
-                      -
-                    </button>
-                    <span className="quantity">{item.quantity}</span>
-                    <button
-                      onClick={() => increaseQuantity(item)}
-                      className="quantity-button"
-                    >
-                      +
-                    </button>
-                  </div>
+                </div>
+                <div className="quantity-control">
+                  <button
+                    onClick={() => decreaseQuantity(item)}
+                    className="quantity-button"
+                  >
+                    -
+                  </button>
+                  <span className="quantity">{item.quantity}</span>
+                  <button
+                    onClick={() => increaseQuantity(item)}
+                    className="quantity-button"
+                  >
+                    +
+                  </button>
                 </div>
                 <button
                   onClick={() => removeFromOrder(item)}
