@@ -15,7 +15,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # 許可するオリジンのリスト
+    allow_origins=["*"],  # 許可するオリジンのリスト
     allow_credentials=True,
     allow_methods=["*"],  # 許可するHTTPメソッド（GET, POSTなど）
     allow_headers=["*"],  # 許可するHTTPヘッダー

@@ -15,15 +15,16 @@ router = APIRouter(prefix="/restaurant", tags=["auth"])
 
 @router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
 async def create_restaurant(db: DbDependency, restaurant_create: RestaurantCreate):
-     restaurant = restaurant_auth_cruds.create_restaurant(db, restaurant_create)
-     if not restaurant:
-         raise HTTPException(status_code=409, detail="Restaurant already has")
-     return restaurant
+    restaurant = restaurant_auth_cruds.create_restaurant(db, restaurant_create)
+    if not restaurant:
+        raise HTTPException(status_code=409, detail="Restaurant already has")
+    token = restaurant_auth_cruds.create_access_token(restaurant.r_name, restaurant.r_id, timedelta(minutes=240))
+    return {"access_token": token, "token_type": "bearer"}
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, form_data: FormDependency):
     restaurant = restaurant_auth_cruds.authenticate_restaurant(db, form_data.username, form_data.password)
     if not restaurant:
-        raise HTTPException(status_code=401, detail="Incorrect username or password")
+        raise HTTPException(status_code=401, detail="Incorrect rname or password")
     token = restaurant_auth_cruds.create_access_token(restaurant.r_name, restaurant.r_id, timedelta(minutes=240))
     return {"access_token": token, "token_type": "bearer"}
