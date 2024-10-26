@@ -22,8 +22,8 @@ class Food(Base):
     is_alcohol = Column(Boolean, nullable=False)
     restaurant = relationship("Restaurant", back_populates="foods")
     tag = relationship("Tag", back_populates="foods")
-    alchohol = relationship("FoodAlcohol", back_populates="food")
-
+    alcohol = relationship("FoodAlcohol", back_populates="food")
+    
 Restaurant.foods = relationship("Food", order_by=Food.f_id, back_populates="restaurant")
 
 class FoodAlcohol(Base):
