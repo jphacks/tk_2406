@@ -14,5 +14,5 @@ http://0.0.0.0:5173
 ### 1. **/restaurant**
 レストランの管理画面
 
-### 2. **/cutomer/order/{r_id}**
+### 2. **/cutomer/order/?r_id=XXX&check=YYY**
 客の注文画面
