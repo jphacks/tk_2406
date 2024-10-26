@@ -22,7 +22,7 @@ SECRET_KEY =get_settings().secret_key
 async def login(db: DbDependency, form_data: FormDependency):
     customer = customer_auth_cruds.authenticate_customer(db, form_data.username, form_data.password)
     if not customer:
-        raise HTTPException(status_code=401, detail="Incorrect username or password")
+        raise HTTPException(status_code=401, detail="Incorrect name or password")
     token = customer_auth_cruds.create_access_token(customer.c_name, customer.c_id, timedelta(minutes=240))
     return {"access_token": token, "token_type": "bearer"}
 
@@ -30,7 +30,7 @@ async def login(db: DbDependency, form_data: FormDependency):
 async def signup(db: DbDependency, customer: CustomerCreate):
     customer = customer_auth_cruds.create_customer(db, customer)
     if customer is None:
-        raise HTTPException(status_code=400, detail="User already exists")
+        raise HTTPException(status_code=400, detail="Account already exists")
     token = customer_auth_cruds.create_access_token(customer.c_name, customer.c_id, timedelta(minutes=240))
     return {"c_id": customer.c_id, "access_token": token, "token_type": "bearer"}
 
