@@ -14,7 +14,7 @@ import os
 ALGORITHM = "HS256"
 SECRET_KEY = get_settings().secret_key
 
-oauth2_schema = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_schema = OAuth2PasswordBearer(tokenUrl="/customer/login")
 
 def create_customer(db: Session, restaurant_create: RestaurantCreate):
     existing_restaurant = db.query(Restaurant).filter(Restaurant.r_name == restaurant_create.r_name).first()
