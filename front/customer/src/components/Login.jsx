@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Login.css";
 import axios from "axios";
 
+// eslint-disable-next-line react/prop-types
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
