@@ -31,8 +31,8 @@ def create_restaurant(db: Session, restaurant_create: RestaurantCreate):
     db.commit()
     return new_restaurant
 
-def authenticate_restaurant(db: Session, restaurant_name: str, password: str):
-    restaurant = db.query(Restaurant).filter(Restaurant.r_name == restaurant_name).first()
+def authenticate_restaurant(db: Session, r_name: str, password: str):
+    restaurant = db.query(Restaurant).filter(Restaurant.r_name == r_name).first()
     if not restaurant:
         return None
     hashed_password = hashlib.pbkdf2_hmac("sha256", password.encode(), restaurant.salt.encode(), 10).hex()
