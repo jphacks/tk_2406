@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Path, Query, HTTPException, Depends
+from fastapi import APIRouter, Path, Query, HTTPException, Header, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from app.cruds import auth as auth_cruds
 from starlette import status
@@ -25,6 +25,7 @@ def create_access_token(data: dict):
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, form_data: FormDependency):
+    print(form_data)
     customer = auth_cruds.authenticate_user(db, form_data.c_name, form_data.password)
     if not customer:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
@@ -38,3 +39,6 @@ async def signup(db: DbDependency, user: UserCreate):
     return {"c_id": customer.c_id, "access_token": token, "token_type": "bearer"}
 
 # @router.post("/order/{r_id}", status_code=status.HTTP_200_OK)
+# async def order(r_id:str,authorization: Header([str])):
+#     if not authorization and authorization.split(" ")[0] != "Bearer":
+#         raise HTTPException(status_code=401, detail="Invalid token")
