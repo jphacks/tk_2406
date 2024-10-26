@@ -1,6 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 # class ItemStatus(Enum):
@@ -38,12 +38,14 @@ class CustomerCreate(BaseModel):
     email: str = Field(examples=["test@example.com"])
     password: str = Field(min_length=8, examples=["test1234"])
 
-# class UserResponse(BaseModel):
-#     id: int = Field(gt=0, examples=[1])
-#     username: str = Field(min_length=2, examples=["user1"])
-#     created_at: datetime
-#     updated_at: datetime
-#     model_config = ConfigDict(from_attributes=True)
+class OrderCreate(BaseModel):
+    # c_id: int(ここは、customerDependencyで補えるので要らないかも)
+    f_ids: List[int] = Field(default_factory=list, examples=[[1]])
+    quantity: int = Field(gt=0, examples=[1])
+
+
+class OrderResponse(BaseModel):
+    pass
 
 class Token(BaseModel):
     access_token: str
