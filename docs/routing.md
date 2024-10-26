@@ -5,6 +5,28 @@
 ## Base URL
 http://0.0.0.0:8000
 
+### 'GET restaurant/url'
+- **説明**: urlのcheck項目の取得
+- **リクエスト**:
+    - **ヘッダ**: JWTトークン 
+- **レスポンス**: 
+    - **ステータスコード**: 200 OK
+    - **ボディ**:
+        {
+              "check"
+          }
+
+### 'POST restaurant/url'
+- **説明**: check項目の検証
+- **リクエスト**:
+    - **ヘッダ**: JWTトークン
+    - **ボディ**:
+        {
+            "check"
+        }
+- **レスポンス**: 
+    - **ステータスコード**: 200 OK
+
 ### 'GET restaurant/dish'
 - **説明**: 料理の全取得
 - **リクエスト**:
@@ -61,7 +83,6 @@ http://0.0.0.0:8000
 - **説明**: 料理の削除
 - **リクエスト**:
     - **ヘッダ**: JWTトークン 
-
 - **レスポンス**: 
     - **ステータスコード**: 202 Successful Response
     - **ボディ**:
@@ -94,7 +115,7 @@ http://0.0.0.0:8000
     - **ステータスコード**: 201 Created
     - **ボディ**:
         {
-            "r_id", "access_token", "token_type"
+            "access_token", "token_type"
         }
 
 ### 'POST customer/login'
@@ -116,13 +137,13 @@ http://0.0.0.0:8000
 - **リクエスト**:
     - **ボディ**
         {
-            "pasword", "email"
+            "c_name", "pasword", "email"
         }
 - **レスポンス**: 
     - **ステータスコード**: 201 Created
     - **ボディ**:
         {
-            "c_id", "access_token", "token_type"
+            "access_token", "token_type"
         }
 
 ### 'POST customer/order/{r_id}'
@@ -131,7 +152,6 @@ http://0.0.0.0:8000
     - **ヘッダ**: JWTトークン 
     - **ボディ**:
         {
-            "c_id", 
             [{
             "f_id", "quantity"
         },]}
