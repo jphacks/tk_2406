@@ -6,102 +6,28 @@
 
 <script type="text/javascript" src="config.js"></script>
 
-<body id="body">
+<body id="body" style="background-color: #FFFFFF;">
     <div class="title">
         <p>店舗 料理一覧</p>
+        <button id="back" class="qr_btn" onclick="qr()" style="right: 0;top:0;position: absolute;">QR表示</button>
     </div>
 
+    <div style="position: absolute;">
+        <div class="boxtag" id="tags">
+        </div>
+    </div>
+
+
     <div class="box1" id="foods">
-        <button id="reload" onclick="reload()">リロード</button>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
-        <p>A</p>
     </div>
 
     <div style="
         text-align: right;
         padding-left: 2vw;
         padding-right: 2vw;
+        position: relative;
         ">
-        <button id="next" class="add_btn" onclick="add()">新規追加</button>
+        <button id="add_btn" class="add_btn" onclick="newItem()">新規追加</button>
 
     </div>
 

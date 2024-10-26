@@ -1,8 +1,12 @@
 config = Config()
 
+let tags=[]
+let foods=[]
+
+
+
 //cookie取得
 let cookie_dict = {}
-console.log(document.cookie)
 const cookies = document.cookie;
 const array = cookies.split('; ');
 array.forEach(function (value) {
@@ -17,45 +21,154 @@ if (cookie_dict["access_token"] === undefined || cookie_dict["token_type"] === u
 console.log(cookie_dict)
 const ele_reload = document.getElementById("reload")
 const ele_foods = document.getElementById("foods")
+const ele_tags = document.getElementById("tags")
+const ele_addbtn = document.getElementById("add_btn")
+let addbtn_edit = false
 
-
-dummy=[]
+//仮
 for(let i=0;i<100;i++){
-    dummy.push({f_name:"ねname"+(i+1),price:100*(i+1)})
+    foods.push({f_name:i+"ねnameあああああああああああああああああああああああああああああああああああああああああああああああああああああ"+(i+1),price:100*(i+1)})
 }
-setFood(dummy)
+setFood()
+tags=["A","BB","CCC","DDDD","BB","CCC","DDDD","BB","CCC","DDDD","BB","CCC","DDDD"]
+setTags()
 
-function reload() {
-    getAllItems()
+
+getAllTags()
+
+function del(id){
+    const res=window.confirm(""+id+": 削除しますか?")
+    alert(res)
 }
 
 
-function setFood(data) {
+function edit(id){
+    ele_addbtn.innerHTML = "更新"
+    addbtn_edit = true
+    alert("edit"+id)
+}
+
+function setTags(){
+
     let html = ""
 
     let i=0
-    for (const food of data) {
+    for (const tag of tags) {
 
         html += `
-        <div class="box2" id="food${i}">
-        <div style="font-size: 4vh;padding-top:5vh;margin-top:0;padding-left:15vh;">
-        <span>${food.f_name}</span>
-        </div>
+        <div class="box4" id="tag${i}" style="left:0;position:relative;">
 
-        <span style="text-align: right;">
-        <span>
-        ${food.price}
-        </span>
-        </span>
+        <div style="
+        font-size: 2.7vh;
+        margin-top:1vw;
+        margin-left:0;
+        padding-top:1vh;
+        position: absolute;
+        width: 20vw;
+        height: 8vh;
+        overflow-wrap: break-word;
+        overflow: hidden;
+        " onclick="clickTag('${i}')">
+        ${tag}
+        </div>
 
         </div>
         `
+
         i++
     }
 
+    ele_tags.innerHTML = html
+
+}
+
+function getAllTags(){
+
+}
+
+function setFood() {
+    let html = ""
+
+    let i=0
+    for (const food of foods) {
+        let pos="49.5%"
+        if(i%2==0){
+            html+=`<div style="position: relative">`
+            pos="0%"
+        }
+
+        const top=""+(Math.floor(i/2)*14)+"vh"
+
+        html += `
+        <div class="box2" id="food${i}" style="left:${pos};top:${top};position:absolute;">
+
+        <div style="
+        left: 0.5vh;
+        top: 0.5vh;
+        position: absolute;
+        ">
+        <img src="img/food.png" style="width: 12vh; height: 12vh;">
+        </div>
+
+        <div style="
+        right: 0.5vh;
+        top: 2vh;
+        position: absolute;
+        ">
+        <img src="img/del.png" style="width: 4vh; height: 4vh;" onclick="del(${i})" class="imgbtn">
+        </div>
+
+        <div style="
+        right: 5vh;
+        top: 2vh;
+        position: absolute;
+        ">
+        <img src="img/edit.png" style="width: 4vh; height: 4vh;" onclick="edit(${i})" class="imgbtn">
+        </div>
+
+        <div style="
+        font-size: 2.7vh;
+        margin-top:0;
+        margin-left:15vh;
+        padding-top:1vh;
+        position: absolute;
+        width: calc(100% - 13vh - 12vh);
+        height: 10vh;
+        overflow-wrap: break-word;
+        overflow: hidden;
+        ">
+        ${food.f_name}
+        </div>
+
+        <div style="
+        font-size: 3vh;
+        position: absolute;
+        bottom: 2vh;
+        right: 1vh;
+        ">
+        ￥${food.price}
+        </div>
+
+        </div>
+        `
+
+        if(i%2==1){
+            html+="</div>"
+        }
+        i++
+    }
+    if(i%2==1){
+        html+="</div>"
+    }
+    const top2=""+(Math.floor(1+(i-1)/2)*14)+"vh"
+
+    html+=`<div style='height: 5vh;top:${top2};position:absolute;'>　</div>`
+
+
+
     ele_foods.innerHTML = html
 }
-function getAllItems() {
+function getAllItems(tag) {
     const xhr = new XMLHttpRequest()
 
     xhr.onload = function () {
@@ -70,7 +183,7 @@ function getAllItems() {
     }
 
     xhr.onerror = () => {
-
+        ele_foods.innerHTML = "<div style='color:red;font-size: 5vh;'>サーバーに接続できません。ネットワーク環境をご確認ください。</div>"
     }
 
     xhr.open("GET", config.server_ip + ":" + config.server_port + "/restaurant/dish")
@@ -80,8 +193,17 @@ function getAllItems() {
     xhr.send()
 }
 
-function add() {
-    window.location.href = "add.html"
+function clickTag(tag) {
+    alert(tag)
+}
+
+function newItem() {
+    addbtn_edit = false
+    ele_addbtn.innerHTML = "新規追加"
+}
+
+function qr() {
+    window.location.href = "qr.html"
 }
 
 function setMessage(str, color = "red") {
