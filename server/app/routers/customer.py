@@ -12,7 +12,7 @@ from config import get_settings
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 
-router = APIRouter(prefix="/customers", tags=["Customers"])
+router = APIRouter(prefix="/customer", tags=["Customers"])
 
 SECRET_KEY =get_settings().secret_key
 
