@@ -30,7 +30,7 @@ def create(db: Session, order_create: OrderCreate, r_id: int, c_id: int):
         quantity = order["quantity"]
         new_order_item = OrderItem(o_id=new_order.o_id, f_id=f_id, o_quantity=quantity)
         db.add(new_order_item)
-        db.commit()
+    db.commit()
     return new_order
 
 # def update(db: Session, id: int, order_update: OrderUpdate, user_id: int):
