@@ -71,7 +71,6 @@ class Evaluation(Base):
     e_day = Column(DateTime, default=datetime.now)
     evaluation = Column(Boolean, nullable=False)
     total_quantity = Column(Integer, nullable=False)
-
     customer = relationship("Customer", back_populates="evaluations")
 
 Customer.evaluations = relationship("Evaluation", order_by=Evaluation.e_id, back_populates="customer")
