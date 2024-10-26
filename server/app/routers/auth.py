@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from cruds import auth as auth_cruds
+from app.cruds import auth as auth_cruds
 from starlette import status
-from server.app.schemas import UserCreate, UserResponse, Token
+from app.schemas import UserCreate, UserResponse, Token
 from sqlalchemy.orm import Session
-from server.app.database import get_db
+from app.database import get_db
 from typing import Annotated
 from datetime import timedelta
 
