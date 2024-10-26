@@ -221,29 +221,4 @@
   padding: 20px; /* コンテナの内側の余白 */
 }
 
-.cart-button {
-  position: relative; /* 子要素の絶対配置の基準にする */
-  display: inline-block; /* 画像サイズに合わせてコンテナを調整 */
-}
 
-.cart-img-button {
-  display: block; /* 画像が上下の余白を持たないようにする */
-  width: 200px; /* 画像の幅を指定 */
-  height: 200px; /* 画像の高さを指定 */
-}
-
-.badge {
-  position: absolute; /* 親要素内で絶対配置 */
-  top: 10px; /* 上から10pxの位置 */
-  right: 10px; /* 右から10pxの位置 */
-  background-color: red; /* バッジの背景色を赤に */
-  color: white; /* 文字色を白に */
-  width: 30px; /* バッジの幅 */
-  height: 30px; /* バッジの高さ */
-  border-radius: 50%; /* 丸くする */
-  display: flex; /* 中央揃えのためにフレックスボックスを使用 */
-  justify-content: center; /* 水平中央揃え */
-  align-items: center; /* 垂直中央揃え */
-  font-size: 1rem; /* フォントサイズを指定 */
-  font-weight: bold; /* 太字にする */
-}
