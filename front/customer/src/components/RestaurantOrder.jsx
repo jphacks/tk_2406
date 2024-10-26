@@ -80,10 +80,9 @@ function RestaurantOrder() {
           setAlcohoLev={setallev}
         />
       )}
-      <h1 className="app-title">Restaurant Order System</h1>
 
       <div className="horizontal-container">
-        <ConsumptionView alcoholStatusLevel={allev} setAlco={setallev}/>
+        <ConsumptionView alcLev={allev} setAlcoLev={setallev}/>
         <CartButton
           togglePopupCart={togglePopupCart}
           isPopupCart={isPopupCart}

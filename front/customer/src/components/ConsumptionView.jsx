@@ -50,7 +50,14 @@ const ConsumptionView = ({ alcLev, setAlcoLev }) => {
     <div style={containerStyle}>
       <img src={faceImage} alt={`${alcLev} face`} style={imageStyle} />
       <span>{alcLev === 0 ? "Safe" : alcLev === 1 ? "Caution" : "Danger"}</span>
-      <button onClick={() => setAlcoLev((alcLev + 1) % 3)}>for debug</button>
+      <button
+        onClick={() => {
+          console.log("fjdsaklfao", alcLev);
+          setAlcoLev((alcLev + 1) % 3);
+        }}
+      >
+        for debug
+      </button>
     </div>
   );
 };

@@ -23,7 +23,7 @@ function Cart({
   setOrder,
   setTotal,
   onClose,
-  setAlcohoLev
+  setAlcohoLev,
 }) {
   const [isFinalConfirmPopup, setFinalConfirmPopup] = useState(false);
 
@@ -61,6 +61,13 @@ function Cart({
     } else {
       confirmOrder();
     }
+  };
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
+
+  const handleOrderClick = () => {
+    checkOrder();
+    setIsOrderComplete(true);
+    setTimeout(() => setIsOrderComplete(false), 3000); // 3秒後にアニメーションを非表示に
   };
 
   return (
@@ -124,9 +131,34 @@ function Cart({
       {/* フッター */}
       <div className="cart-footer">
         <h2 className="cart-total">合計額: ¥{total}</h2>
-        <button onClick={checkOrder} className="cart-confirm-btn">
+        <button onClick={handleOrderClick} className="cart-confirm-btn">
           注文確定
         </button>
+        {isOrderComplete && (
+          <div className="order-complete">
+            <div className="checkmark-animation">
+              <svg
+                className="checkmark"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 52 52"
+              >
+                <circle
+                  className="checkmark-circle"
+                  cx="26"
+                  cy="26"
+                  r="25"
+                  fill="none"
+                />
+                <path
+                  className="checkmark-check"
+                  fill="none"
+                  d="M14 27l7 7 16-16"
+                />
+              </svg>
+            </div>
+            <p className="complete-message">注文完了しました！</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -168,3 +168,81 @@
   font-size: 1rem;
   color: black;
 }
+
+/* 注文完了メッセージ */
+.order-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fadeIn 0.5s; /* フェードインアニメーション */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.complete-message {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: green;
+}
+
+/* チェックマークアニメーション */
+.checkmark {
+  width: 52px;
+  height: 52px;
+  stroke-width: 2;
+  stroke: green;
+  fill: none;
+  stroke-linecap: round;
+  animation: checkmarkAnimation 0.5s ease forwards;
+}
+
+@keyframes checkmarkAnimation {
+  0% {
+    stroke-dashoffset: 65;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: circleAnimation 0.6s ease forwards;
+}
+
+@keyframes circleAnimation {
+  0% {
+    stroke-dashoffset: 166;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.checkmark-check {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: checkAnimation 0.4s 0.3s ease forwards;
+}
+
+@keyframes checkAnimation {
+  0% {
+    stroke-dashoffset: 48;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
