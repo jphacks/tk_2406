@@ -4,41 +4,25 @@ import "./App.css";
 // カテゴリごとのメニュー項目
 const menuCategories = {
   donburi: [
-    {
-      id: 1,
-      name: "Gyudon (Beef Bowl)",
-      price: 7.99,
-      img: "/images/gyudon.webp",
-    },
-    {
-      id: 2,
-      name: "Katsudon (Pork Cutlet Bowl)",
-      price: 8.99,
-      img: "/images/katsudon.webp",
-    },
+    { id: 1, name: "Gyudon (Beef Bowl)", price: 7.99, img: "/images/gyudon.webp" },
+    { id: 2, name: "Katsudon (Pork Cutlet Bowl)", price: 8.99, img: "/images/katsudon.webp" },
   ],
   chicken: [
-    {
-      id: 3,
-      name: "Chicken Karaage",
-      price: 6.99,
-      img: "/images/karaage.webp",
-    },
-    {
-      id: 4,
-      name: "Teriyaki Chicken",
-      price: 9.99,
-      img: "/images/teriyaki.webp",
-    },
+    { id: 3, name: "Chicken Karaage", price: 6.99, img: "/images/karaage.webp" },
+    { id: 4, name: "Teriyaki Chicken", price: 9.99, img: "/images/teriyaki.webp" },
   ],
   otsumami: [
     { id: 5, name: "Edamame", price: 4.99, img: "/images/edamame.webp" },
-    {
-      id: 6,
-      name: "Gyoza (Dumplings)",
-      price: 5.99,
-      img: "/images/gyoza.webp",
-    },
+    { id: 6, name: "Gyoza (Dumplings)", price: 5.99, img: "/images/gyoza.webp" },
+  ],
+  alcohol: [
+    { id: 7, name: "Sake", price: 12.99, img: "/images/drink/Sake.webp" },
+    { id: 8, name: "Red Wine", price: 9.99, img: "/images/drink/redWine.webp" },
+    { id: 9, name: "White Wine", price: 9.99, img: "/images/drink/whiteWine.webp" },
+  ],
+  nonAlcohol: [
+    { id: 10, name: "コーラ", price: 4.99, img: "/images/drink/cola.webp" },
+    { id: 11, name: "オレンジジュース", price: 3.99, img: "/images/drink/orangeJuice.webp" },
   ],
 };
 
@@ -82,12 +66,10 @@ function App() {
       {/* カテゴリ選択部分 */}
       <div className="category-buttons">
         <button onClick={() => setSelectedCategory("donburi")}>Donburi</button>
-        <button onClick={() => setSelectedCategory("chicken")}>
-          Chicken Dishes
-        </button>
-        <button onClick={() => setSelectedCategory("otsumami")}>
-          Otsumami
-        </button>
+        <button onClick={() => setSelectedCategory("chicken")}>Chicken Dishes</button>
+        <button onClick={() => setSelectedCategory("otsumami")}>Otsumami</button>
+        <button onClick={() => setSelectedCategory("alcohol")}>Alcohol</button>
+        <button onClick={() => setSelectedCategory("nonAlcohol")}>Non-Alcohol</button>
       </div>
 
       {/* メニュー表示部分 */}
@@ -113,13 +95,8 @@ function App() {
           <div>
             {order.map((item, index) => (
               <div key={index} className="order-item">
-                <span>
-                  {item.name} - ${item.price.toFixed(2)}
-                </span>
-                <button
-                  onClick={() => removeFromOrder(item)}
-                  className="remove-button"
-                >
+                <span>{item.name} - ${item.price.toFixed(2)}</span>
+                <button onClick={() => removeFromOrder(item)} className="remove-button">
                   Remove
                 </button>
               </div>
@@ -135,7 +112,11 @@ function App() {
       </div>
 
       {/* ポップアップ表示部分 */}
-      {isPopupVisible && <div className="popup">Order has been sent!</div>}
+      {isPopupVisible && (
+        <div className="popup">
+          Order has been sent!
+        </div>
+      )}
     </div>
   );
 }

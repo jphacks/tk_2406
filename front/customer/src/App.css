@@ -1,14 +1,15 @@
 .app-container {
     padding: 20px;
     font-family: Arial, sans-serif;
-    background-color: #000;
+    background-color: #000; /* 背景色を黒に変更 */
     min-height: 100vh;
   }
   
   .app-title {
-     text-align: center;
+    text-align: center;
     font-size: 2.5rem;
     margin-bottom: 20px;
+    color: white; /* タイトルの文字色を白に */
   }
   
   .category-buttons {
@@ -92,7 +93,7 @@
   
   .order-item {
     margin-bottom: 10px;
-    color: #333; /* 注文リストの文字色を濃い色に変更 */
+    color: white; /* 注文リストの文字色を白に変更 */
   }
   
   .remove-button {
