@@ -38,10 +38,15 @@ class CustomerCreate(BaseModel):
     email: str = Field(examples=["test@example.com"])
     password: str = Field(min_length=8, examples=["test1234"])
 
-class OrderCreate(BaseModel):
-    # c_id: int(ここは、customerDependencyで補えるので要らないかも)
-    f_ids: List[int] = Field(default_factory=list, examples=[[1]])
+class OrderUnit(BaseModel):
+    f_id: int = Field(gt=0, examples=[1])
     quantity: int = Field(gt=0, examples=[1])
+
+class OrderCreate(BaseModel):
+    orders: List[OrderUnit] = Field(default_factory=list, examples=[[
+        {"f_id": 1, "quantity": 1},
+        {"f_id": 2, "quantity": 10}
+    ]])
 
 
 class OrderResponse(BaseModel):

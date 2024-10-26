@@ -12,17 +12,22 @@ def find_all(db: Session):
 #     return db.query(Order).filter(Order.name.like(f"%{name}%")).all()
 
 def create(db: Session, order_create: OrderCreate, r_id: int, c_id: int):
-    order_data = order_create.model_dump() # order_data = {f_ids: [1], quantity: 1}
-    quantity = order_data["quantity"]
-    f_ids = order_data["f_ids"]
-    
+    order_data = order_create.model_dump()
+    # order_data = {orders: [
+    #    {"f_id": 1, "quantity": 1},
+    #    {"f_id": 2, "quantity": 1},
+    #    {"f_id": 3, "quantity": 2}
+    # ]}
+    orders = order_data["orders"]
     new_order = Order(c_id=c_id, r_id=r_id)
-    
     db.add(new_order)
     db.commit()
     db.refresh(new_order)
-    
-    for f_id in f_ids:
+
+    for order in orders:
+        print(order["quantity"])
+        f_id = order["f_id"]
+        quantity = order["quantity"]
         new_order_item = OrderItem(o_id=new_order.o_id, f_id=f_id, o_quantity=quantity)
         db.add(new_order_item)
     db.commit()
