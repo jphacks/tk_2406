@@ -8,25 +8,18 @@ from app.database import get_db
 from typing import Annotated
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-import os
+from config import get_settings
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 
 router = APIRouter(prefix="/customers", tags=["Customers"])
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY =get_settings().secret_key
 
-def create_access_token(data: dict):
-    to_encode = data.copy()
-    expire = datetime.now(datetime.timezone.utc) + timedelta(minutes=240)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
-    return encoded_jwt
 
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, form_data: FormDependency):
-    print(form_data)
     customer = customer_auth_cruds.authenticate_user(db, form_data.c_name, form_data.password)
     if not customer:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
@@ -36,7 +29,11 @@ async def login(db: DbDependency, form_data: FormDependency):
 @router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
 async def signup(db: DbDependency, customer: CustomerCreate):
     customer = customer_auth_cruds.create_customer(db, customer)
+    if customer is None:
+        raise HTTPException(status_code=400, detail="User already exists")
     token = customer_auth_cruds.create_access_token(customer.c_name, customer.c_id, timedelta(minutes=240))
     return {"c_id": customer.c_id, "access_token": token, "token_type": "bearer"}
+
+
 
 
