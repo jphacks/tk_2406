@@ -1,37 +1,31 @@
 .cart-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  z-index: 100330;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-}
-.popup-overlay {
+  width: 50vw;
+  background-color: rgb(135, 135, 135); /* 半透明の背景 */
+
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
   height: auto;
   display: flex;
   justify-content: center;
   z-index: 1000; /* 他の要素より前に表示 */
-  background-color: rgba(0, 0, 0, 0.5); /* 半透明の背景 */
+  /* background-color: rgba(0, 0, 0, 0.5); 半透明の背景 */
 }
+
+.cart-popup-body {
+  padding: 20px;
+  overflow-y: auto; /* 縦方向にスクロール可能にする */
+  max-height: calc(80vh - 40px); /* ポップアップ全体の高さを考慮 */
+}
+
 .cart-close-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: black;
-  font-size: 2.0rem;
-  cursor: pointer;
+  top: 10px; /* 上から10pxの位置 */
+  right: 10px; /* 右から10pxの位置 */
+
+  z-index: 10; /* 他の要素より前に表示 */
 }
+
 .cart-header {
   display: flex;
   justify-content: space-between;
@@ -41,7 +35,7 @@
   color: white;
 }
 
-.close-button {
+.close-popup-button {
   background: none;
   border: none;
   color: white;

@@ -37,61 +37,61 @@ function Cart({
     }, 2000); // ポップアップが2秒間表示される
   };
   return (
-    <div className="popup-overlay">
-      <button
-        className="close-button"
-        onClick={() => {
-          onClose(false);
-        }}
-      >
-        ✕
-      </button>
-      <h2>注文リスト</h2>
-      {order.length > 0 ? (
+    <div className="cart-popup">
+        <button
+          className="cart-close-button"
+          onClick={() => {
+            onClose(false);
+          }}
+        >
+          ✕
+        </button>
         <div>
-          {order.map((item, index) => (
-            <div key={index} className="order-card">
-              <img src={item.img} alt={item.name} className="order-img" />
-              <div className="order-details">
-                <h3 className="order-name">{item.name}</h3>
-                <p className="order-price">¥{item.price}</p>
-              </div>
-              <div className="quantity-control">
-                <button
-                  onClick={() => decreaseQuantity(item)}
-                  className="quantity-button"
-                >
-                  -
-                </button>
-                <span className="quantity">{item.quantity}</span>
-                <button
-                  onClick={() => increaseQuantity(item)}
-                  className="quantity-button"
-                >
-                  +
-                </button>
-              </div>
-              <button
-                onClick={() => removeFromOrder(item)}
-                className="remove-button"
-              >
-                削除
-              </button>
-            </div>
-          ))}
-
-          {/* 合計額を固定表示 */}
-          <div>
-            <h2>合計額: ¥{total}</h2>
-            <button onClick={confirmOrder} className="confirm-button">
-              注文確定
-            </button>
-          </div>
+          <h2>合計額: ¥{total}</h2>
+          <button onClick={confirmOrder} className="confirm-button">
+            注文確定
+          </button>
         </div>
-      ) : (
-        <p>注文する料理はまだありません</p>
-      )}
-    </div>
+
+        {order.length > 0 ? (
+          <div className="cart-popup-body">
+            <h2>注文リスト</h2>
+
+            {order.map((item, index) => (
+              <div key={index} className="order-card">
+                <img src={item.img} alt={item.name} className="order-img" />
+                <div className="order-details">
+                  <h3 className="order-name">{item.name}</h3>
+                  <p className="order-price">¥{item.price}</p>
+                </div>
+                <div className="quantity-control">
+                  <button
+                    onClick={() => decreaseQuantity(item)}
+                    className="quantity-button"
+                  >
+                    -
+                  </button>
+                  <span className="quantity">{item.quantity}</span>
+                  <button
+                    onClick={() => increaseQuantity(item)}
+                    className="quantity-button"
+                  >
+                    +
+                  </button>
+                </div>
+                <button
+                  onClick={() => removeFromOrder(item)}
+                  className="remove-button"
+                >
+                  削除
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>注文する料理はまだありません</p>
+        )}
+      </div>
   );
 }
 
