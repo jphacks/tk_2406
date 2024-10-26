@@ -44,7 +44,7 @@ async def create_tag(db: DbDependency, token: Annotated[str, Depends(restaurant_
 async def get_dish(db:DbDependency, token: Annotated[str, Depends(restaurant_auth_cruds.oauth2_schema)], dish_view: DishView):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if dish_view.t_id:
-        dishes = menu.get_dish_by_tag(db, r_id[1], dish_view.t_id)
+        dishes = menu.get_dishes_by_tag(db, r_id[1], dish_view.t_id)
     else:
         dishes = menu.get_dish_all(db, r_id[1])
     
