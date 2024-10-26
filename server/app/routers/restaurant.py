@@ -25,5 +25,5 @@ async def login(db: DbDependency, form_data: FormDependency):
     restaurant = restaurant_auth_cruds.authenticate_restaurant(db, form_data.username, form_data.password)
     if not restaurant:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
-    token = restaurant_auth_cruds.create_access_token(restaurant.r_name, restaurant.id, timedelta(minutes=240))
+    token = restaurant_auth_cruds.create_access_token(restaurant.r_name, restaurant.r_id, timedelta(minutes=240))
     return {"access_token": token, "token_type": "bearer"}
