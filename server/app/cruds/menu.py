@@ -1,6 +1,6 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.schemas import  DecodedToken
-from app.models import Food, FoodAlcohol
+from app.models import Food, FoodAlcohol, Tag
 from datetime import datetime, timedelta
 from typing import Annotated
 from fastapi import Depends
@@ -17,7 +17,22 @@ SECRET_KEY = get_settings().secret_key
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="/restaurant/login")
 
 def get_dish_all(db:Session, r_id: int):
-    dishes_all = db.query(Food).filter(Food.r_id == r_id).all()
+    dishes_all = (
+        db.query(
+            Food.f_id, 
+            Food.f_name,
+            Food.price,
+            Food.is_alcohol,
+            Food.r_id,
+            Tag.t_name,
+            FoodAlcohol.degree,
+            FoodAlcohol.f_quantity
+        )
+        .outerjoin(FoodAlcohol, Food.f_id == FoodAlcohol.f_id)
+        .outerjoin(Tag, Food.t_id == Tag.t_id)
+        .filter(Food.r_id == r_id)
+        .all()
+    )
     return dishes_all
 
 def get_dishes_by_tag(db: Session, r_id: int, tag: str):
@@ -25,15 +40,32 @@ def get_dishes_by_tag(db: Session, r_id: int, tag: str):
     dishes_by_tag = db.query(Food).filter(Food.r_id == r_id, Food.tag == tag).all()
     return dishes_by_tag
 
-def create_dish(db: Session, r_id: int, f_name: str, price: int, tag: str, is_alcohol: bool, degree: float):
+def create_tag(db: Session, r_id: int, t_name: str):
+    # Create a new tag for a restaurant ID
+    new_tag = Tag(r_id=r_id, t_name=t_name)
+    if new_tag:
+        return None
+    db.add(new_tag)
+    db.commit()
+    db.refresh(new_tag)
+    return new_tag
+
+def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_alcohol: bool, degree: float):
+    existing_dish = db.query(Food).filter(Food.r_id == r_id, Food.f_name == f_name).first()
+    if existing_dish:
+        return None
     # Create a new dish for a restaurant ID
-    new_dish = Food(r_id=r_id, f_name=f_name, price=price, tag=tag, is_alcohol=is_alcohol)
-    if is_alcohol:
-        new_alcohol = FoodAlcohol(f_id=new_dish.f_id, degree=degree, f_quantity=0)
-    
+    new_dish = Food(r_id=r_id, f_name=f_name, price=price, t_id=t_id, is_alcohol=is_alcohol)
     db.add(new_dish)
     db.commit()
+    print(new_dish.f_id)
+    if is_alcohol:      
+        new_alcohol = FoodAlcohol(f_id=new_dish.f_id, degree=degree, f_quantity=0)
+        db.add(new_alcohol)
+    db.commit()
     db.refresh(new_dish)
+    
+
     return new_dish
 
 def update_dish(db: Session, r_id: int, f_id: int, f_name: str, price: int, tag: str):
