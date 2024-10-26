@@ -11,7 +11,7 @@ from datetime import timedelta
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(prefix="/restaurant", tags=["auth"])
 
 # @router.post("/signup", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 # async def create_user(db: DbDependency, user_create: UserCreate):
@@ -22,8 +22,8 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, form_data: FormDependency):
-    user = auth_cruds.authenticate_user(db, form_data.username, form_data.password)
+    user = restaurant_auth_cruds.authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=401, detail="Incorrect username or password")
-    token = auth_cruds.create_access_token(user.username, user.id, timedelta(minutes=120))
+    token = restaurant_auth_cruds.create_access_token(user.username, user.id, timedelta(minutes=120))
     return {"access_token": token, "token_type": "bearer"}
