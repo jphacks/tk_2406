@@ -1,5 +1,5 @@
 services:
-  todoapi:
+  yoiapi:
       build:
         context: .
       volumes:

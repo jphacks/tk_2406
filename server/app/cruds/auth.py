@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from server.schemas import UserCreate, DecodedToken
-from server.models import User
+from server.app.schemas import UserCreate, DecodedToken
+from server.app.models import User
 from datetime import datetime, timedelta
 from typing import Annotated
 from fastapi import Depends

@@ -1,7 +1,7 @@
-from server.database import Base
+from server.app.database import Base
 from sqlalchemy import Column, Integer, String, Enum, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from server.schemas import ItemStatus
+from server.app.schemas import ItemStatus
 from datetime import datetime
 
 # class Item(Base):

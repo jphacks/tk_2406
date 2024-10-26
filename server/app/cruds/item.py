@@ -1,6 +1,6 @@
-from server.schemas import ItemCreate, ItemStatus, ItemUpdate
+from server.app.schemas import ItemCreate, ItemStatus, ItemUpdate
 from sqlalchemy.orm import Session
-from server.models import Item
+from server.app.models import Item
 
 # def find_all(db: Session):
 #     return db.query(Item).all()

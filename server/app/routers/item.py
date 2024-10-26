@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from cruds import item as item_cruds, auth as auth_cruds
 from starlette import status
-from server.schemas import ItemCreate, ItemUpdate, ItemResponse, DecodedToken
+from server.app.schemas import ItemCreate, ItemUpdate, ItemResponse, DecodedToken
 from sqlalchemy.orm import Session
-from server.database import get_db
+from server.app.database import get_db
 from typing import Annotated
 
 # DbDependency = Annotated[Session, Depends(get_db)]
