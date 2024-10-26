@@ -30,8 +30,8 @@ class ItemResponse(BaseModel):
     user_id: int
 
 
-class UserCreate(BaseModel):
-    username: str = Field(min_length=2, examples=["user1"])
+class RestaurantCreate(BaseModel):
+    r_name: str = Field(min_length=2, examples=["user1"])
     password: str = Field(min_length=8, examples=["test1234"])
 
 class UserResponse(BaseModel):
@@ -46,5 +46,5 @@ class Token(BaseModel):
     token_type: str
 
 class DecodedToken(BaseModel):
-    username: str
-    user_id: int
+    name: str
+    id: int
