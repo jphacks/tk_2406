@@ -35,16 +35,32 @@ def get_dish_all(db:Session, r_id: int):
     )
     return dishes_all
 
-def get_dishes_by_tag(db: Session, r_id: int, tag: str):
+def get_dishes_by_tag(db: Session, r_id: int, t_id: int):
     # Fetch dishes for a restaurant ID that match a specific tag
-    dishes_by_tag = db.query(Food).filter(Food.r_id == r_id, Food.tag == tag).all()
+    dishes_by_tag = (
+        db.query(
+            Food.f_id, 
+            Food.f_name,
+            Food.price,
+            Food.is_alcohol,
+            Food.r_id,
+            Tag.t_name,
+            FoodAlcohol.degree,
+            FoodAlcohol.f_quantity
+        )
+        .outerjoin(FoodAlcohol, Food.f_id == FoodAlcohol.f_id)
+        .outerjoin(Tag, Food.t_id == Tag.t_id)
+        .filter(Food.r_id == r_id).filter(Food.t_id == t_id)
+        .all()
+    )
     return dishes_by_tag
 
 def create_tag(db: Session, r_id: int, t_name: str):
     # Create a new tag for a restaurant ID
-    new_tag = Tag(r_id=r_id, t_name=t_name)
-    if new_tag:
+    existing_tag = db.query(Tag).filter(Tag.r_id == r_id, Tag.t_name == t_name).first()
+    if existing_tag:
         return None
+    new_tag = Tag(r_id=r_id, t_name=t_name)
     db.add(new_tag)
     db.commit()
     db.refresh(new_tag)
