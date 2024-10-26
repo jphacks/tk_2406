@@ -65,9 +65,16 @@ function RestaurantOrder() {
   const [selectedCategory, setSelectedCategory] = useState("donburi");
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
-
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
   const currentMenuItems = menuCategories[selectedCategory];
-
+  const confirmOrder = () => {
+    setIsPopupVisible(true);
+    setTimeout(() => {
+      setIsPopupVisible(false);
+      setOrder([]);
+      setTotal(0);
+    }, 2000); // ポップアップが2秒間表示される
+  };
   const addToOrder = (item) => {
     const existingItem = order.find((orderItem) => orderItem.id === item.id);
     if (existingItem) {
@@ -189,12 +196,15 @@ function RestaurantOrder() {
               </div>
             ))}
             <h2>Total: ${total.toFixed(2)}</h2>
-            <button className="confirm-button">Confirm Order</button>
+            <button onClick={confirmOrder} className="confirm-button">
+              Confirm Order
+            </button>
           </div>
         ) : (
           <p>No items in the order</p>
         )}
       </div>
+      {isPopupVisible && <div className="popup">Order has been sent!</div>}
     </div>
   );
 }
