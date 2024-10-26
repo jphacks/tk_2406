@@ -16,10 +16,10 @@ http://0.0.0.0:8000
               "check"
           }
 
-### 'POST restaurant/url'
+### 'POST restaurant/url/{r_id}'
 - **説明**: check項目の検証
 - **リクエスト**:
-    - **ヘッダ**: JWTトークン
+    - **ヘッダ**:
     - **ボディ**:
         {
             "check"
