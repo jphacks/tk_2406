@@ -37,13 +37,26 @@ class CustomerCreate(BaseModel):
     c_name: str = Field(min_length=2, examples=["user1"])
     email: str = Field(examples=["test@example.com"])
     password: str = Field(min_length=8, examples=["test1234"])
-
+class DishCreate(BaseModel):
+    f_name: str = Field(min_length=2, examples=["Beer"])
+    price: int = Field(gt=0, examples=[500])
+    tag: Optional[str] = Field(None, examples=["drink"])
+    is_alcohol: bool = Field(examples=[True], default=False)
+    degree: Optional[float] = Field(None, examples=[5.0])
 # class UserResponse(BaseModel):
 #     id: int = Field(gt=0, examples=[1])
 #     username: str = Field(min_length=2, examples=["user1"])
 #     created_at: datetime
 #     updated_at: datetime
 #     model_config = ConfigDict(from_attributes=True)
+
+class FoodResponse(BaseModel):
+    f_id: int = Field(gt=0, examples=[1])
+    r_id: int = Field(gt=0, examples=[1])
+    f_name: str = Field(min_length=2, examples=["Beer"])
+    price: int = Field(gt=0, examples=[500])
+    tag: Optional[str] = Field(None, examples=["drink"])
+    is_alchohol: bool = Field(examples=[True], default=False)
 
 class Token(BaseModel):
     access_token: str

@@ -17,6 +17,7 @@ class Food(Base):
     f_name = Column(String(255), nullable=False, unique=True)
     price = Column(Integer, nullable=False)
     tag = Column(String(255), nullable=True)
+    is_alcohol = Column(Boolean, nullable=False)
     restaurant = relationship("Restaurant", back_populates="foods")
 
 Restaurant.foods = relationship("Food", order_by=Food.f_id, back_populates="restaurant")
