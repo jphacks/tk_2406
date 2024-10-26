@@ -20,10 +20,10 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 #         raise HTTPException(status_code=409, detail="User already has")
 #     return auth_cruds.create_user(db, user_create)
 
-@router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
-async def login(db: DbDependency, form_data: FormDependency):
-    user = auth_cruds.authenticate_user(db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(status_code=401, detail="Incorrect username or password")
-    token = auth_cruds.create_access_token(user.username, user.id, timedelta(minutes=120))
-    return {"access_token": token, "token_type": "bearer"}
+# @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
+# async def login(db: DbDependency, form_data: FormDependency):
+#     user = auth_cruds.authenticate_user(db, form_data.username, form_data.password)
+#     if not user:
+#         raise HTTPException(status_code=401, detail="Incorrect username or password")
+#     token = auth_cruds.create_access_token(user.username, user.id, timedelta(minutes=120))
+#     return {"access_token": token, "token_type": "bearer"}
