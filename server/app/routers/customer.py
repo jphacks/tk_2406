@@ -12,16 +12,17 @@ import os
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 
-router = APIRouter(prefix="/customers", tags=["Customers"])
+# router = APIRouter(prefix="/customers", tags=["Customers"])
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+# SECRET_KEY = os.getenv("SECRET_KEY")
 
-def create_access_token(data: dict):
-    to_encode = data.copy()
-    expire = datetime.now(datetime.timezone.utc) + timedelta(minutes=240)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
-    return encoded_jwt
+# def create_access_token(data: dict):
+#     to_encode = data.copy()
+#     expire = datetime.now(datetime.timezone.utc) + timedelta(minutes=240)
+#     to_encode.update({"exp": expire})
+#     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm="HS256")
+#     return encoded_jwt
+
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, form_data: FormDependency):
@@ -38,7 +39,4 @@ async def signup(db: DbDependency, user: UserCreate):
     token = auth_cruds.create_access_token(customer.username, customer.id, timedelta(minutes=120))
     return {"c_id": customer.c_id, "access_token": token, "token_type": "bearer"}
 
-# @router.post("/order/{r_id}", status_code=status.HTTP_200_OK)
-# async def order(r_id:str,authorization: Header([str])):
-#     if not authorization and authorization.split(" ")[0] != "Bearer":
-#         raise HTTPException(status_code=401, detail="Invalid token")
+
