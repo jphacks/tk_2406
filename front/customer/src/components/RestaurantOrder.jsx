@@ -1,61 +1,59 @@
 import { useState } from "react";
 import "./RestaurantOrder.css";
-
-// カテゴリごとのメニュー項目
 const menuCategories = {
   donburi: [
     {
       id: 1,
-      name: "Gyudon (Beef Bowl)",
-      price: 7.99,
+      name: "牛丼",
+      price: 800,
       img: "/images/gyudon.webp",
     },
     {
       id: 2,
-      name: "Katsudon (Pork Cutlet Bowl)",
-      price: 8.99,
+      name: "カツ丼",
+      price: 1000,
       img: "/images/katsudon.webp",
     },
   ],
   chicken: [
     {
       id: 3,
-      name: "Chicken Karaage",
-      price: 6.99,
+      name: "唐揚げ",
+      price: 500,
       img: "/images/karaage.webp",
     },
     {
       id: 4,
-      name: "Teriyaki Chicken",
-      price: 9.99,
+      name: "照り焼きチキン",
+      price: 750,
       img: "/images/teriyaki.webp",
     },
   ],
   otsumami: [
-    { id: 5, name: "Edamame", price: 4.99, img: "/images/edamame.webp" },
+    { id: 5, name: "枝豆", price: 800, img: "/images/edamame.webp" },
     {
       id: 6,
-      name: "Gyoza (Dumplings)",
-      price: 5.99,
+      name: "餃子",
+      price: 780,
       img: "/images/gyoza.webp",
     },
   ],
   alcohol: [
-    { id: 7, name: "Sake", price: 12.99, img: "/images/drink/Sake.webp" },
-    { id: 8, name: "Red Wine", price: 9.99, img: "/images/drink/redWine.webp" },
+    { id: 7, name: "日本酒", price: 1500, img: "/images/drink/Sake.webp" },
+    { id: 8, name: "赤ワイン", price: 900, img: "/images/drink/redWine.webp" },
     {
       id: 9,
-      name: "White Wine",
-      price: 9.99,
+      name: "白ワイン",
+      price: 900,
       img: "/images/drink/whiteWine.webp",
     },
   ],
   nonAlcohol: [
-    { id: 10, name: "コーラ", price: 4.99, img: "/images/drink/cola.webp" },
+    { id: 10, name: "コーラ", price: 500, img: "/images/drink/cola.webp" },
     {
       id: 11,
       name: "オレンジジュース",
-      price: 3.99,
+      price: 500,
       img: "/images/drink/orangeJuice.webp",
     },
   ],
@@ -131,16 +129,16 @@ function RestaurantOrder() {
 
       {/* カテゴリ選択部分 */}
       <div className="category-buttons">
-        <button onClick={() => setSelectedCategory("donburi")}>Donburi</button>
+        <button onClick={() => setSelectedCategory("donburi")}>どんぶり</button>
         <button onClick={() => setSelectedCategory("chicken")}>
-          Chicken Dishes
+          鶏系
         </button>
         <button onClick={() => setSelectedCategory("otsumami")}>
-          Otsumami
+          おつまみ
         </button>
-        <button onClick={() => setSelectedCategory("alcohol")}>Alcohol</button>
+        <button onClick={() => setSelectedCategory("alcohol")}>酒類</button>
         <button onClick={() => setSelectedCategory("nonAlcohol")}>
-          Non Alcohol
+          ノンアル
         </button>
       </div>
 
@@ -151,9 +149,10 @@ function RestaurantOrder() {
             <img src={item.img} alt={item.name} className="menu-img" />
             <div className="menu-details">
               <h3 className="menu-name">{item.name}</h3>
-              <p className="menu-price">${item.price.toFixed(2)}</p>
+              <p className="menu-price">¥{item.price}</p>
+
               <button onClick={() => addToOrder(item)} className="add-button">
-                Add to Order
+                追加
               </button>
             </div>
           </div>
@@ -162,7 +161,7 @@ function RestaurantOrder() {
 
       {/* カレントオーダー表示部分 */}
       <div className="order-list">
-        <h2>Current Order</h2>
+        <h2>注文リスト</h2>
         {order.length > 0 ? (
           <div>
             {order.map((item, index) => (
@@ -170,7 +169,7 @@ function RestaurantOrder() {
                 <img src={item.img} alt={item.name} className="order-img" />
                 <div className="order-details">
                   <h3 className="order-name">{item.name}</h3>
-                  <p className="order-price">${item.price.toFixed(2)}</p>
+                  <p className="order-price">¥{item.price}</p>
                   <div className="quantity-control">
                     <button
                       onClick={() => decreaseQuantity(item)}
@@ -191,17 +190,17 @@ function RestaurantOrder() {
                   onClick={() => removeFromOrder(item)}
                   className="remove-button"
                 >
-                  Remove
+                  削除
                 </button>
               </div>
             ))}
-            <h2>Total: ${total.toFixed(2)}</h2>
+            <h2>合計額: ¥{total}</h2>
             <button onClick={confirmOrder} className="confirm-button">
-              Confirm Order
+              注文確定
             </button>
           </div>
         ) : (
-          <p>No items in the order</p>
+          <p>注文する料理はまだありません</p>
         )}
       </div>
       {isPopupVisible && <div className="popup">Order has been sent!</div>}
