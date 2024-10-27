@@ -53,11 +53,17 @@ export const tryLogin = async (id, pw) => {
         }
       )
       .then((response) => {
-        return response;
+        console.log(response);
+        if (response.status === 200) {
+          return true;
+        } else {
+          return false;
+        }
       });
   } catch (error) {
     console.log("Error sending order:", error);
   }
+  return false;
 };
 // is checked が送られる
 // ログイン時に前回の飲み会を評価する
