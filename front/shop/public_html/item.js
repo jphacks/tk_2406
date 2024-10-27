@@ -1,7 +1,10 @@
 config = Config()
 
 let tags=[]
+let tag_sel=-1
 let foods=[]
+let food_sel=-1
+let addbtn_edit = false
 
 
 
@@ -23,7 +26,6 @@ const ele_reload = document.getElementById("reload")
 const ele_foods = document.getElementById("foods")
 const ele_tags = document.getElementById("tags")
 const ele_addbtn = document.getElementById("add_btn")
-let addbtn_edit = false
 
 //仮
 for(let i=0;i<100;i++){
@@ -33,8 +35,8 @@ setFood()
 tags=["A","BB","CCC","DDDD","BB","CCC","DDDD","BB","CCC","DDDD","BB","CCC","DDDD"]
 setTags()
 
-
 getAllTags()
+getAllItems()
 
 function del(id){
     const res=window.confirm(""+id+": 削除しますか?")
@@ -43,9 +45,11 @@ function del(id){
 
 
 function edit(id){
+    if(food_sel>=0) document.getElementById("food"+food_sel).style.backgroundColor=""
+    food_sel=Number(id)
     ele_addbtn.innerHTML = "更新"
     addbtn_edit = true
-    alert("edit"+id)
+    document.getElementById("food"+food_sel).style.backgroundColor="#ff0000"
 }
 
 function setTags(){
@@ -54,9 +58,13 @@ function setTags(){
 
     let i=0
     for (const tag of tags) {
+        let background=""
+        if(i==tag_sel){
+            background="background-color:#ff0000;"
+        }
 
         html += `
-        <div class="box4" id="tag${i}" style="left:0;position:relative;">
+        <div class="box4" id="tag${i}" style="left:0;position:relative;${background}" onclick="clickTag('${i}')">
 
         <div style="
         font-size: 2.7vh;
@@ -68,7 +76,7 @@ function setTags(){
         height: 8vh;
         overflow-wrap: break-word;
         overflow: hidden;
-        " onclick="clickTag('${i}')">
+        ">
         ${tag}
         </div>
 
@@ -79,6 +87,8 @@ function setTags(){
     }
 
     ele_tags.innerHTML = html
+
+
 
 }
 
@@ -91,6 +101,12 @@ function setFood() {
 
     let i=0
     for (const food of foods) {
+        let background=""
+
+        if(i==food_sel){
+            background="background-color:#ff0000;"
+        }
+
         let pos="49.5%"
         if(i%2==0){
             html+=`<div style="position: relative">`
@@ -100,7 +116,7 @@ function setFood() {
         const top=""+(Math.floor(i/2)*14)+"vh"
 
         html += `
-        <div class="box2" id="food${i}" style="left:${pos};top:${top};position:absolute;">
+        <div class="box2" id="food${i}" style="left:${pos};top:${top};position:absolute;${background}">
 
         <div style="
         left: 0.5vh;
@@ -177,7 +193,7 @@ function getAllItems(tag) {
                 const data = JSON.parse(xhr.responseText)
                 console.log(data)
             } else {
-                alert(xhr.responseText)
+                alert(""+xhr.status+"\n"+xhr.responseText)
             }
         }
     }
@@ -186,7 +202,7 @@ function getAllItems(tag) {
         ele_foods.innerHTML = "<div style='color:red;font-size: 5vh;'>サーバーに接続できません。ネットワーク環境をご確認ください。</div>"
     }
 
-    xhr.open("GET", config.server_ip + ":" + config.server_port + "/restaurant/dish")
+    xhr.open("GET", `${config.server_protocol}://${config.server_ip}:${config.server_port}/restaurant/dish`)
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.setRequestHeader("access_token", cookie_dict["access_token"])
     xhr.setRequestHeader("token_type", cookie_dict["token_type"])
@@ -194,10 +210,15 @@ function getAllItems(tag) {
 }
 
 function clickTag(tag) {
-    alert(tag)
+    if(tag_sel>=0) document.getElementById("tag"+tag_sel).style.backgroundColor=""
+    tag_sel=Number(tag)
+    food_sel=-1
+    document.getElementById("tag"+tag_sel).style.backgroundColor="#ff0000"
+    setFood()
 }
 
 function newItem() {
+    if(food_sel>=0) document.getElementById("food"+food_sel).style.backgroundColor=""
     addbtn_edit = false
     ele_addbtn.innerHTML = "新規追加"
 }
