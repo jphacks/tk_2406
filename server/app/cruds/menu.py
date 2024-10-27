@@ -79,6 +79,9 @@ def get_dishes_by_tag(db: Session, r_id: int, t_id: int):
     return dishes_by_tag
 
 def get_dishes_by_id(db: Session, r_id: int, f_id: int):
+    """
+    get one dish by f_id from a restaurant by r_id
+    """
     dishes_by_id = (
     db.query(
         Food.f_id, 
@@ -92,7 +95,7 @@ def get_dishes_by_id(db: Session, r_id: int, f_id: int):
     )
     .outerjoin(FoodAlcohol, Food.f_id == FoodAlcohol.f_id)
     .outerjoin(Tag, Food.t_id == Tag.t_id)
-    .filter(Food.f_id == f_id)  # Filter by f_id
+    .filter(Food.r_id==r_id, Food.f_id == f_id)  # Filter by f_id
     .first()  # Get only one result
     )
     return DishResponse(
@@ -117,7 +120,8 @@ def create_tag(db: Session, r_id: int, t_name: str):
     db.refresh(new_tag)
     return new_tag
 
-def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_alcohol: bool, degree: float):
+def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_alcohol: bool, degree: float, f_quantity: int):
+
     existing_dish = db.query(Food).filter(Food.r_id == r_id, Food.f_name == f_name).first()
     if existing_dish:
         return None
@@ -128,7 +132,7 @@ def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_a
     db.refresh(new_dish)
 
     if is_alcohol:      
-        new_alcohol = FoodAlcohol(f_id=new_dish.f_id, degree=degree, f_quantity=0)
+        new_alcohol = FoodAlcohol(f_id=new_dish.f_id, degree=degree, f_quantity=f_quantity)
         db.add(new_alcohol)
     db.commit()
     
