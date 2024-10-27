@@ -1,4 +1,4 @@
-
+x
 
 # API Documentation
 
@@ -220,7 +220,7 @@ http://0.0.0.0:8000
             "status"
         }
 
-### 'GET customer/review'
+### 'GET customer/evaluate'
 - **説明**: 前回の店が評価済かの確認
 - **リクエスト**:
     - **ヘッダ**: JWTトークン 
@@ -228,11 +228,10 @@ http://0.0.0.0:8000
     - **ステータスコード**: 200 OK
     - **ボディ**:
         {
-            "is_checked",
-              ["f_name", "quantity"],
+            "is_evaluated"
         }
 
-### 'POST customer/review'
+### 'POST customer/evaluate'
 - **説明**: 前回の店の評価
 - **リクエスト**:
     - **ヘッダ**: JWTトークン 
