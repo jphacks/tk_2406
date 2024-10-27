@@ -1,4 +1,5 @@
 export default function getAlcoholLevel(order) {
+  return order.length - 1;
   if (order.length > 0) {
     if (order[0].name === "白ワイン") {
       return 2;
