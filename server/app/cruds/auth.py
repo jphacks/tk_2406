@@ -1,58 +1,34 @@
-# from sqlalchemy.orm import Session
-# from app.schemas import UserCreate, DecodedToken
-# #from app.models import User
-# from datetime import datetime, timedelta
-# from typing import Annotated
-# from fastapi import Depends
-# from fastapi.security import OAuth2PasswordBearer
-# from jose import jwt, JWTError
-# from config import get_settings
-# import hashlib
-# import base64
-# import os
+from fastapi import Request, HTTPException
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from jose import jwt, JWTError
+from datetime import datetime, timedelta
+from config import get_settings
 
-# ALGORITHM = "HS256"
-# SECRET_KEY = get_settings().secret_key
+SECRET_KEY = get_settings().secret_key
+ALGORITHM = "HS256"
 
-# oauth2_schema = OAuth2PasswordBearer(tokenUrl="/auth/login")
+class JWTBearer(HTTPBearer):
+    def __init__(self, auto_error: bool = True):
+        super(JWTBearer, self).__init__(auto_error=auto_error)
 
-# def create_user(db: Session, user_create: UserCreate):
-#     existing_user = db.query(User).filter(User.username == user_create.username).first()
-#     if existing_user:
-#         return None
-#     salt = base64.b64encode(os.urandom(32))
-#     hashed_password = hashlib.pbkdf2_hmac("sha256", user_create.password.encode(), salt, 10).hex()
-#     new_user = User(
-#         username=user_create.username,
-#         password=hashed_password,
-#         salt=salt.decode()
-#     )
-#     db.add(new_user)
-#     db.commit()
-#     return new_user
+    async def __call__(self, request: Request):
+        credentials: HTTPAuthorizationCredentials = await super(JWTBearer, self).__call__(request)
+        if credentials:
+            if not credentials.scheme == "Bearer":
+                raise HTTPException(status_code=403, detail="Invalid authentication scheme")
+            if not self.verify_jwt(credentials.credentials):
+                raise HTTPException(status_code=403, detail="Invalid token")
+            return credentials.credentials
+        else:
+            raise HTTPException(status_code=403, detail="Invalid authorization code")
+        
+    def verify_jwt(self, jwt_token: str):
+        isTokenValid: bool = False
 
-# def authenticate_user(db: Session, username: str, password: str):
-#     user = db.query(User).filter(User.username == username).first()
-#     if not user:
-#         return None
-#     hashed_password = hashlib.pbkdf2_hmac("sha256", password.encode(), user.salt.encode(), 10).hex()
-#     if user.password != hashed_password:
-#         return None
-#     return user
+        try:
+            payload = jwt.decode(jwt_token, SECRET_KEY, algorithms=[ALGORITHM])
+            isTokenValid = True
+        except:
+            payload = None
 
-# def create_access_token(username: str, user_id: int, expires_delta: timedelta):
-#     expires = datetime.now() + expires_delta
-#     payload = {"sub": username, "id": user_id, "exp": expires}
-#     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-
-# def get_current_user(token: Annotated[str, Depends(oauth2_schema)]):
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-#         username = payload.get("sub")
-#         user_id = payload.get("id")
-#         if username is None or user_id is None:
-#             return None
-#         return DecodedToken(username=username, user_id=user_id)
-
-#     except JWTError:
-#         raise JWTError
+        return isTokenValid

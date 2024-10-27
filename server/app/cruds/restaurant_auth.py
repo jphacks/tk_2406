@@ -56,3 +56,4 @@ def get_current_restaurant(token: Annotated[str, Depends(oauth2_schema)]):
 
     except JWTError:
         raise JWTError
+    
