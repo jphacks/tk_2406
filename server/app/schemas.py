@@ -29,6 +29,15 @@ from datetime import datetime
 #     model_config = ConfigDict(from_attributes=True)
 #     user_id: int
 
+class TagCreate(BaseModel):
+    t_name: str = Field(min_length=1, examples=["drink"])
+
+class TagResponse(BaseModel):
+    t_id: int = Field(gt=0, examples=[1])
+    r_id: int = Field(gt=0, examples=[1])
+    t_name: str = Field(min_length=1, examples=["drink"])
+    model_config = ConfigDict(from_attributes=True)
+
 class RestaurantCreate(BaseModel):
     r_name: str = Field(min_length=2, examples=["user1"])
     password: str = Field(min_length=8, examples=["test1234"])
@@ -37,42 +46,6 @@ class CustomerCreate(BaseModel):
     c_name: str = Field(min_length=2, examples=["user1"])
     email: str = Field(examples=["test@example.com"])
     password: str = Field(min_length=8, examples=["test1234"])
-
-
-class TagCreate(BaseModel):
-    t_name: str = Field(min_length=2, examples=["drink"])
-    
-class DishCreate(BaseModel):
-    f_name: str = Field(min_length=2, examples=["Beer"])
-    price: int = Field(gt=0, examples=[500])
-    t_id: int = Field(gt=0, examples=[1])
-    is_alcohol: bool = Field(examples=[True], default=False)
-    degree: Optional[float] = Field(None, examples=[5.0])
-    f_quantity: Optional[int] = Field(None, examples=[100])
-
-class DishUpdate(BaseModel):
-    f_name: Optional[str] = Field(default=None, min_length=2, example="Beer")
-    price: Optional[int] = Field(default=None, gt=0, example=500)
-    is_alcohol: Optional[bool] = Field(default=None, example=True)
-    degree: Optional[float] = Field(default=None, example=5.0)
-    f_quantity: Optional[int] = Field(default=None, example=100)
-
-class DishResponse(BaseModel):
-    r_id: int = Field(gt=0, examples=[1])
-    f_id: int = Field(gt=0, examples=[1])
-    f_name: str = Field(min_length=2, examples=["Beer"])
-    price : int = Field(gt=0, examples=[500])
-    tag : str = Field(min_length=2, examples=["drink"])
-    is_alcohol: bool = Field(examples=[True], default=False)
-    degree: Optional[float] = Field(None, example=5.0)  # Optional field
-    f_quantity: Optional[int] = Field(None, example=100)  # Optional field
-
-# class UserResponse(BaseModel):
-#     id: int = Field(gt=0, examples=[1])
-#     username: str = Field(min_length=2, examples=["user1"])
-#     created_at: datetime
-#     updated_at: datetime
-#     model_config = ConfigDict(from_attributes=True)
 
 class OrderUnit(BaseModel):
     f_id: int = Field(gt=0, examples=[1])
@@ -100,3 +73,39 @@ class Token(BaseModel):
 class DecodedToken(BaseModel):
     name: str
     id: int
+
+class RestaurantCreate(BaseModel):
+    r_name: str = Field(min_length=2, examples=["user1"])
+    password: str = Field(min_length=8, examples=["test1234"])
+
+class CustomerCreate(BaseModel):
+    c_name: str = Field(min_length=2, examples=["user1"])
+    email: str = Field(examples=["test@example.com"])
+    password: str = Field(min_length=8, examples=["test1234"])
+
+
+    
+class DishCreate(BaseModel):
+    f_name: str = Field(min_length=2, examples=["Beer"])
+    price: int = Field(gt=0, examples=[500])
+    t_id: int = Field(gt=0, examples=[1])
+    is_alcohol: bool = Field(examples=[True], default=False)
+    degree: Optional[float] = Field(None, examples=[5.0])
+    f_quantity: Optional[int] = Field(None, examples=[100])
+
+class DishUpdate(BaseModel):
+    f_name: Optional[str] = Field(default=None, min_length=2, example="Beer")
+    price: Optional[int] = Field(default=None, gt=0, example=500)
+    is_alcohol: Optional[bool] = Field(default=None, example=True)
+    degree: Optional[float] = Field(default=None, example=5.0)
+    f_quantity: Optional[int] = Field(default=None, example=100)
+
+class DishResponse(BaseModel):
+    r_id: int = Field(gt=0, examples=[1])
+    f_id: int = Field(gt=0, examples=[1])
+    f_name: str = Field(min_length=2, examples=["Beer"])
+    price : int = Field(gt=0, examples=[500])
+    tag : str = Field(min_length=2, examples=["drink"])
+    is_alcohol: bool = Field(examples=[True], default=False)
+    degree: Optional[float] = Field(None, example=5.0)  # Optional field
+    f_quantity: Optional[int] = Field(None, example=100)  # Optional field
