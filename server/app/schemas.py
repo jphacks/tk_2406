@@ -38,6 +38,7 @@ class CustomerCreate(BaseModel):
     email: str = Field(examples=["test@example.com"])
     password: str = Field(min_length=8, examples=["test1234"])
 
+
 class TagCreate(BaseModel):
     t_name: str = Field(min_length=2, examples=["drink"])
     
