@@ -16,6 +16,7 @@ SECRET_KEY = get_settings().secret_key
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="/restaurant/login")
     
+
 def find_tags_all(db:Session, r_id: int):
     return db.query(Tag).filter(Tag.r_id == r_id).all()
 
