@@ -5,7 +5,8 @@
 }
 
 .menu-card {
-  background-color: #f9f9f9; /* カードの背景色を少し暗くしてコントラストを高める */
+  background-color: #f9f9f9;
+  /* カードの背景色を少し暗くしてコントラストを高める */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -29,11 +30,13 @@
 .menu-name {
   font-size: 1.2rem;
   /* margin: 10px 0; */
-  color: #333; /* 文字色を濃い色に変更 */
+  color: #333;
+  /* 文字色を濃い色に変更 */
 }
 
 .menu-price {
-  color: #555; /* 価格の文字色を濃い色に変更 */
+  color: #555;
+  /* 価格の文字色を濃い色に変更 */
   /* margin-bottom: 10px; */
 }
 
@@ -108,6 +111,7 @@
 .remove-button:hover {
   background-color: #d32f2f;
 }
+
 .fixed-footer {
   position: fixed;
   bottom: 0;
@@ -134,7 +138,8 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px; /* 合計金額との間隔を調整 */
+  margin-left: 10px;
+  /* 合計金額との間隔を調整 */
 }
 
 .confirm-button:hover {
@@ -160,7 +165,8 @@
 
 .order-item {
   margin-bottom: 10px;
-  color: white; /* 注文リストの文字色を白に変更 */
+  color: white;
+  /* 注文リストの文字色を白に変更 */
 }
 
 .remove-button {
@@ -214,11 +220,14 @@
 }
 
 .horizontal-container {
-  display: flex; /* Flexboxを有効にする */
-  justify-content: flex-start; /* アイテムを左揃え */
-  align-items: center; /* アイテムを垂直方向に中央揃え */
-  gap: 10px; /* アイテム間の間隔 */
-  padding: 20px; /* コンテナの内側の余白 */
+  display: flex;
+  /* Flexboxを有効にする */
+  justify-content: flex-start;
+  /* アイテムを左揃え */
+  align-items: center;
+  /* アイテムを垂直方向に中央揃え */
+  gap: 10px;
+  /* アイテム間の間隔 */
+  padding: 20px;
+  /* コンテナの内側の余白 */
 }
-
-

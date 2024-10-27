@@ -82,6 +82,12 @@ function RestaurantOrder() {
 
       <div className={styles.horizontalContainer}>
         <ConsumptionView alcLev={allev} setAlcoLev={setallev} />
+        {/* ロゴ表示 */}
+        <img
+          src="images/logo.png"
+          alt="logo"
+          className={styles.logo}
+        />
         <CartButton
           togglePopupCart={togglePopupCart}
           isPopupCart={isPopupCart}
