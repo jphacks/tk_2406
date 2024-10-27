@@ -13,7 +13,7 @@ FormDependency = Annotated[OAuth2PasswordRequestForm, Depends(restaurant_auth_cr
 
 router = APIRouter(prefix="/restaurant", tags=["restaurants"])
 
-@router.post("/tag",dependencies=[Depends(JWTBearer())], status_code=status.HTTP_201_CREATED)
+@router.post("/tag", status_code=status.HTTP_201_CREATED)
 async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depends(JWTBearer())):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:
@@ -24,7 +24,7 @@ async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depend
     return tag
 
 
-@router.get("/tag",dependencies=[Depends(JWTBearer())], status_code=status.HTTP_201_CREATED)
+@router.get("/tag", status_code=status.HTTP_201_CREATED)
 async def create_tag(db: DbDependency, token: str = Depends(JWTBearer())):
 #async def create_tag(db: DbDependency, token: FormDependency, tag_create: TagCreate):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
@@ -34,7 +34,7 @@ async def create_tag(db: DbDependency, token: str = Depends(JWTBearer())):
     return menu_cruds.find_tags_all(db, r_id[1])
 
     
-@router.get("/dish",dependencies=[Depends(JWTBearer())],response_model=List[DishResponse], status_code=status.HTTP_200_OK)
+@router.get("/dish",response_model=List[DishResponse], status_code=status.HTTP_200_OK)
 async def get_dish(db:DbDependency, t_id: Optional[int] = Query(None, gt=0, examples=[1]), token:str = Depends(JWTBearer())):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if t_id:
@@ -43,7 +43,7 @@ async def get_dish(db:DbDependency, t_id: Optional[int] = Query(None, gt=0, exam
         dishes = menu_cruds.get_dish_all(db, r_id[1])
     return dishes
 
-@router.post("/dish",dependencies=[Depends(JWTBearer())], response_model=DishResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/dish", response_model=DishResponse, status_code=status.HTTP_201_CREATED)
 async def create_dish(db: DbDependency, dish_create: DishCreate, token:str = Depends(JWTBearer())):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:
@@ -56,7 +56,7 @@ async def create_dish(db: DbDependency, dish_create: DishCreate, token:str = Dep
     
     return new_dish
 
-@router.put("/dish/{f_id}", dependencies=[Depends(JWTBearer())], response_model=DishResponse, status_code=status.HTTP_202_ACCEPTED)
+@router.put("/dish/{f_id}",  response_model=DishResponse, status_code=status.HTTP_202_ACCEPTED)
 async def update_dish(db: DbDependency, f_id: int, dish_update: DishUpdate, token:str = Depends(JWTBearer())):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:
@@ -72,6 +72,7 @@ async def update_dish(db: DbDependency, f_id: int, dish_update: DishUpdate, toke
         raise HTTPException(status_code=403, detail="Non-alcohol dish cannot have degree and f_quantity")
     
     return updated_dish
+
 @router.delete("/dish/{f_id}", status_code=status.HTTP_202_ACCEPTED)
 async def delete_dish(db: DbDependency, f_id: int, token:str = Depends(JWTBearer())):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
