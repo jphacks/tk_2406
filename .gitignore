@@ -1,0 +1,10 @@
+/server/migrations
+/server/migrations/*
+/server/migrations/*/*
+/server/docker/*
+venv
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+.pytest_cache
