@@ -3,51 +3,6 @@
 import axios from "axios";
 const API_URL = "http://10.10.2.47:8000";
 
-const production = true;
-// dish/{r_id}
-// 全取得
-// customer/dish/{r_id}?t_id=
-
-export async function getDish() {
-  if (production) {
-    console.log("ooo");
-    const r = await getDishON();
-    console.log(r);
-    return r.data;
-  } else {
-    return getDishOFF();
-  }
-}
-
-async function getDishOFF() {}
-async function getDishON() {
-  const res = await axios.get(`${API_URL}/customer/dish/4`, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      accept: "application/json",
-    },
-  });
-  return res;
-}
-
-export async function getDishTag() {
-  if (production) {
-    getDishTagON();
-  } else {
-    getDishTagOFF();
-  }
-}
-async function getDishTagOFF() {}
-async function getDishTagON() {
-  const res = await axios.get(`${API_URL}/customer/tag/1`, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      accept: "application/json",
-    },
-  });
-  return res;
-}
-
 // POST customer/order/{r_id}'
 // 説明: 料理の注文
 // リクエスト:
@@ -55,34 +10,7 @@ async function getDishTagON() {
 // ボディ: { "c_id", [{ "f_id" },]}
 // レスポンス:
 // ステータスコード: 200 OK
-export async function postCustomerOrder(order) {
-  if (production) {
-    postCustomerOrderOn(order);
-  } else {
-    postCustomerOrderOff(order);
-  }
-}
-
-async function postCustomerOrderOn(order, r_id) {
-  const token = localStorage.getItem("jwtToken");
-  console.log("jwt_token");
-  console.log(token);
-  const response = await axios.post(
-    API_URL + `/customer/order/${r_id}?c_id=1`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
-
-  if (response.status === 200) {
-    console.log("okokok, eval get");
-    return response.data;
-  }
-}
-async function postCustomerOrderOff(order) {}
+export async function postCustomerOrder(order) {}
 
 // Question これの使い道は？
 // 'POST customer/status/{r_id}'
@@ -112,13 +40,14 @@ export async function getCustomerStatus() {
 // ボディ: { "is_evaluated" }
 // レスポンス:
 // ステータスコード: 200 OK
+
 export async function getCustomerEvaluate() {
   const token = localStorage.getItem("jwtToken");
   try {
     const response = await axios.get(API_URL + "/customer/evaluate", {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
     });
 
@@ -202,7 +131,9 @@ export const tryLogin = async (id, pw) => {
         },
       }
     );
-
+    // dish/{r_id}
+    // 全取得
+    // customer/dish/{r_id}?t_id=
     console.log("response here");
     if (res.status === 200) {
       const { access_token } = res.data;

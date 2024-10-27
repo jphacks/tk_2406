@@ -5,7 +5,7 @@ import { useState } from "react";
 import FinalConfirm from "./FinalConfirm";
 import sendOrder from "./comm";
 import getAlcoholLevel from "../server/getLev";
-
+import { postCustomerOrder } from "./comm";
 function Cart({
   order,
   total,
@@ -28,12 +28,11 @@ function Cart({
   };
   const checkOrder = () => {
     // 注文を送信する関数
+    console.log("send check order ");
+    
     const alcoholLevel = getAlcoholLevel(order);
     setAlcohoLev(alcoholLevel);
-    console.log("lev", alcoholLevel);
-
     if (alcoholLevel == 2) {
-      console.log("final");
       setFinalConfirmPopup(true);
     } else {
       confirmOrder();
@@ -51,6 +50,7 @@ function Cart({
     }
     checkOrder();
     setIsOrderComplete(true);
+    postCustomerOrder(order);
     setTimeout(() => {
       setIsOrderComplete(false);
       onClose();

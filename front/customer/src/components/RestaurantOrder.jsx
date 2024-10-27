@@ -3,16 +3,18 @@ import styles from "./RestaurantOrder.module.css";
 import ConsumptionView from "./ConsumptionView";
 import Cart from "./Cart";
 import CartButton from "./CartButton";
-import menuCategories from "./data";
+// import menuCategories from "./data";
 
-function RestaurantOrder() {
-  const [selectedCategory, setSelectedCategory] = useState("donburi");
+function RestaurantOrder(dishData) {
+  const [selectedCategory, setSelectedCategory] = useState(
+    Object.keys(dishData.dishData)[0]
+  );
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
   const [isPopupCart, togglePopupCart] = useState(false);
   const [allev, setallev] = useState(0);
 
-  const currentMenuItems = menuCategories[selectedCategory];
+  const currentMenuItems = dishData.dishData[selectedCategory];
 
   const addToOrder = (item) => {
     const existingItem = order.find((orderItem) => orderItem.id === item.id);
@@ -105,45 +107,29 @@ function RestaurantOrder() {
 
       {/* カテゴリ選択部分 */}
       <div className={styles.categoryButtons}>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("donburi")}
-        >
-          どんぶり
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("chicken")}
-        >
-          鶏系
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("otsumami")}
-        >
-          おつまみ
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("alcohol")}
-        >
-          酒類
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("nonAlcohol")}
-        >
-          ノンアル
-        </button>
+        {Object.keys(dishData.dishData).map((category) => (
+          <button
+            key={category}
+            className={
+              category === selectedCategory
+                ? styles.selectedCategoryButton
+                : styles.categoryButton
+            }
+            onClick={() => setSelectedCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
       </div>
 
-      {/* メニュー表示部分 */}
       <div className={styles.menuGrid}>
         {currentMenuItems.map((item) => (
           <div className={styles.menuCard} key={item.id}>
             <img src={item.img} alt={item.name} className={styles.menuImg} />
             <div className={styles.menuDetails}>
-              <h3 className={styles.menuName}>{item.name}</h3>
+              <div className={styles.menuPlate}>
+                <h3 className={styles.menuName}>{item.name}</h3>
+              </div>
               <p className={styles.menuPrice}>¥{item.price}</p>
 
               <button

@@ -2,12 +2,15 @@ import { useState } from "react";
 import Login from "./components/Login";
 
 import "./App.css";
+import menuCategories from "./components/data";
 
 // メインアプリケーションのインポート（既存のメニュー画面や注文画面）
 import RestaurantOrder from "./components/RestaurantOrder"; // メインの注文画面コンポーネント
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [dishData, setDishData] = useState({ menuCategories });
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -17,10 +20,10 @@ function App() {
     <div className="app-container">
       {isLoggedIn ? (
         <div>
-          <RestaurantOrder />
+          <RestaurantOrder dishData={dishData} />
         </div>
       ) : (
-        <Login onLogin={handleLogin} />
+        <Login onLogin={handleLogin} setDishData={setDishData} />
       )}
     </div>
   );
