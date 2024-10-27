@@ -6,29 +6,36 @@
 
 <script type="text/javascript" src="config.js"></script>
 
-<body id="body" style="background-color: #FFFFFF;">
+<body id="body" style="background-color: #FFFFFF;position: relative;">
     <div class="title">
-        <p>店舗 料理一覧</p>
+        <p class="title_text">店舗 料理一覧</p>
         <button id="back" class="qr_btn" onclick="qr()" style="right: 0;top:0;position: absolute;">QR表示</button>
     </div>
 
-    <div style="position: absolute;">
-        <div class="boxtag" id="tags">
+    <div class="boxtag">
+        <div  id="tags" style="position: relative;margin: 0;padding: 0;">
         </div>
     </div>
 
 
-    <div class="box1" id="foods">
+    <div class="box1">
+        <div id="foods" style="position: relative;margin: 0;padding: 0;">
+        </div>
     </div>
 
-    <div style="
+
+    <div class="form_item" id="form_item">
+        <div style="padding: 1vh;">ss</div>
+
+        <div style="
         text-align: right;
         padding-left: 2vw;
         padding-right: 2vw;
         position: relative;
         ">
-        <button id="add_btn" class="add_btn" onclick="newItem()">新規追加</button>
+            <button id="add_btn" class="add_btn" onclick="newItem()">新規追加</button>
 
+        </div>
     </div>
 
 </body>

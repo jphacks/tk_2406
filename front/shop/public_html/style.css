@@ -3,17 +3,21 @@ body {
     margin: 0em 0em;
 }
 
-.title p {
-    margin: 0em 0em;
-    font-size: 3.6vw;
-}
-
 .title {
-    padding: 0.5em 1em;
-    margin: 0 0 0 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
     color: #ffffff;
     background: #000000;
-    height: 4em;
+    height: 7vh;
+    position: relative;
+}
+
+.title .title_text {
+    margin-left: 1vh;
+    margin-top: 1vh;
+    font-size: 4vh;
+    position: absolute;
 }
 
 .login {
@@ -45,8 +49,8 @@ body {
 
 .qr_btn {
     margin-top: 0;
-    width: 10em;
-    height: 6em;
+    width: 14vh;
+    height: 7vh;
     background-color: #333377;
     color: #FFFFFF;
     border: 0;
@@ -73,17 +77,17 @@ body {
 }
 
 .box1 {
-    margin-top: 0;
-    margin-left: 20vw;
-    margin-right: 0;
-    padding-top: 0;
-    padding-bottom: 1vw;
-    padding-left: 0;
-    padding-right: 0;
-    overflow: scroll;
-    height: calc(98vh - 8vw - 6em);
+    margin: 0;
+    padding:0;
+    border: 0;
+    left:20vw;
+    top:7vh;
+    width: 80vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 73vh;
     background-color: #777777;
-    position: relative;
+    position: absolute;
 }
 
 .box2 {
@@ -107,18 +111,17 @@ body {
 }
 
 .boxtag {
-    margin-top: 0;
-    margin-left: 0;
-    margin-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
-    overflow: scroll;
-    height: calc(98vh - 8vw - 6em);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    top:7vh;
+    left:0;
+    height: 73vh;
     width: 20vw;
     background-color: #995555;
-    position: relative;
+    position: absolute;
 }
 
 .box4 {
@@ -138,7 +141,8 @@ body {
 
 .box4:hover {
     cursor: pointer;
-    opacity: 0.7;
+    background-color: #333377;
+/*     opacity: 0.7; */
 
 }
 
@@ -146,4 +150,16 @@ body {
 .imgbtn:hover {
     cursor: pointer;
     opacity: 0.7;
+}
+
+
+.form_item{
+    margin: 0;
+    border: 0;
+    position: absolute;
+    width: 80vw;
+    height: 20vh;
+    bottom: 0;
+    left:20vw;
+    background-color: #468858;
 }
