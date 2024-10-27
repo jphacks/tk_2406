@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./Login.module.css";
 import { tryLogin, getDishTag, getDish } from "./comm";
 import Eval from "./Eval";
+import menuCategories from "./data";
 const formatData = (data) => {
   const formatted = {};
   data.forEach((item) => {
@@ -30,8 +31,18 @@ function Login({ onLogin, setDishData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (username === "" && password === "") {
-      onLogin(); // デバッグ用ログイン！
-      return;
+      const loginSuccess = await tryLogin("user1", "test1234");
+      const res = await getDish();
+      setDishData(formatData(res));
+      if (loginSuccess) {
+        onLogin();
+      } else {
+        setError("Invalid username or password.");
+      }
+    }
+    if (username === "db" && password === "") {
+      setDishData(menuCategories);
+      onLogin();
     }
     if (username === "re" && password === "") {
       setShouldEval(true);

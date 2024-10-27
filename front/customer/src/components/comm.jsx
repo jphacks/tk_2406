@@ -14,7 +14,6 @@ export async function getDish() {
     const r = await getDishON();
     console.log(r);
     return r.data;
-
   } else {
     return getDishOFF();
   }
@@ -57,16 +56,33 @@ async function getDishTagON() {
 // レスポンス:
 // ステータスコード: 200 OK
 export async function postCustomerOrder(order) {
-    if(production){
-        postCustomerOrderOn();
-    }else{
-        postCustomerOrderOff();
-
-    }
+  if (production) {
+    postCustomerOrderOn(order);
+  } else {
+    postCustomerOrderOff(order);
+  }
 }
-async function postCustomerOrderOff() {}
-async function postCustomerOrderOn() {}
 
+async function postCustomerOrderOn(order, r_id) {
+  const token = localStorage.getItem("jwtToken");
+  console.log("jwt_token");
+  console.log(token);
+  const response = await axios.post(
+    API_URL + `/customer/order/${r_id}?c_id=1`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+
+  if (response.status === 200) {
+    console.log("okokok, eval get");
+    return response.data;
+  }
+}
+async function postCustomerOrderOff(order) {}
 
 // Question これの使い道は？
 // 'POST customer/status/{r_id}'
@@ -102,7 +118,7 @@ export async function getCustomerEvaluate() {
     const response = await axios.get(API_URL + "/customer/evaluate", {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     });
 

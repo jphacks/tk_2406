@@ -6,14 +6,15 @@ import CartButton from "./CartButton";
 // import menuCategories from "./data";
 
 function RestaurantOrder(dishData) {
-  const [selectedCategory, setSelectedCategory] = useState("donburi");
+  const [selectedCategory, setSelectedCategory] = useState(
+    Object.keys(dishData.dishData)[0]
+  );
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
   const [isPopupCart, togglePopupCart] = useState(false);
   const [allev, setallev] = useState(0);
-  
 
-  const currentMenuItems = dishData[selectedCategory];
+  const currentMenuItems = dishData.dishData[selectedCategory];
 
   const addToOrder = (item) => {
     const existingItem = order.find((orderItem) => orderItem.id === item.id);
@@ -106,50 +107,21 @@ function RestaurantOrder(dishData) {
 
       {/* カテゴリ選択部分 */}
       <div className={styles.categoryButtons}>
-        {Object.keys(menuCategories).map((category) => (
+        {Object.keys(dishData.dishData).map((category) => (
           <button
             key={category}
-            className={category === selectedCategory ? styles.selectedCategoryButton : styles.categoryButton}
+            className={
+              category === selectedCategory
+                ? styles.selectedCategoryButton
+                : styles.categoryButton
+            }
             onClick={() => setSelectedCategory(category)}
           >
             {category}
           </button>
         ))}
       </div>
-      {/* <div className={styles.categoryButtons}>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("donburi")}
-        >
-          どんぶり
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("chicken")}
-        >
-          鶏系
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("otsumami")}
-        >
-          おつまみ
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("alcohol")}
-        >
-          酒類
-        </button>
-        <button
-          className={styles.categoryButton}
-          onClick={() => setSelectedCategory("nonAlcohol")}
-        >
-          ノンアル
-        </button>
-      </div> */}
 
-      {/* メニュー表示部分 */}
       <div className={styles.menuGrid}>
         {currentMenuItems.map((item) => (
           <div className={styles.menuCard} key={item.id}>
