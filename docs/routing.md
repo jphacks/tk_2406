@@ -159,7 +159,7 @@ http://0.0.0.0:8000
             "status"
         }
 
-### 'GET customer/review'
+### 'GET customer/check'
 - **説明**: 前回の店が評価済かの確認
 - **リクエスト**:
     - **ヘッダ**: JWTトークン 
@@ -170,7 +170,7 @@ http://0.0.0.0:8000
 - **レスポンス**: 
     - **ステータスコード**: 200 OK
 
-### 'POST customer/revier'
+### 'POST customer/check'
 - **説明**: 前回の店の評価
 - **リクエスト**:
     - **ヘッダ**: JWTトークン 
