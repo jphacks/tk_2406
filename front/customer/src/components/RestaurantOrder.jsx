@@ -83,25 +83,24 @@ function RestaurantOrder() {
       <div className={styles.horizontalContainer}>
         <ConsumptionView alcLev={allev} setAlcoLev={setallev} />
         {/* ロゴ表示 */}
-        <img
-          src="images/logo.png"
-          alt="logo"
-          className={styles.logo}
-        />
-        <CartButton
-          togglePopupCart={togglePopupCart}
-          isPopupCart={isPopupCart}
-          order_num={order.reduce((accumulator, orderItem) => {
-            return accumulator + orderItem.quantity;
-          }, 0)}
-        />
-      </div>
-      <div>注文確定はこちら</div>
-
-      <div>
-        {order.reduce((accumulator, orderItem) => {
-          return accumulator + orderItem.quantity;
-        }, 0)}
+        <img src="images/logo.png" alt="logo" className={styles.logo} />
+        <div className={styles.cartContainer}>
+          <div className={styles.cartContainer}>
+            <div className={styles.orderConfirmText}>注文確定はこちら</div>
+            <CartButton
+              togglePopupCart={togglePopupCart}
+              isPopupCart={isPopupCart}
+              order_num={order.reduce((accumulator, orderItem) => {
+                return accumulator + orderItem.quantity;
+              }, 0)}
+            />
+            <div className={styles.orderTotal}>
+              {order.reduce((accumulator, orderItem) => {
+                return accumulator + orderItem.price * orderItem.quantity;
+              }, 0)}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* カテゴリ選択部分 */}
