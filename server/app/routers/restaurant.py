@@ -2,7 +2,7 @@ from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from app.cruds import restaurant_auth as restaurant_auth_cruds, menu as menu_cruds
 from starlette import status
-from app.schemas import Token, RestaurantCreate,DishCreate, TagCreate, DishUpdate, DishResponse
+from app.schemas import Token, RestaurantCreate, DishCreate, TagCreate, DishUpdate, DishResponse, UrlResponse, UrlCheck, TagResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from typing import Annotated, List, Optional
@@ -22,6 +22,17 @@ async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depend
     if not tag:
         raise HTTPException(status_code=409, detail="Tag already exists")
     return tag
+
+
+@router.get("/tag",dependencies=[Depends(JWTBearer())], status_code=status.HTTP_201_CREATED)
+async def create_tag(db: DbDependency, token: str = Depends(JWTBearer())):
+#async def create_tag(db: DbDependency, token: FormDependency, tag_create: TagCreate):
+    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
+    if not r_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    return menu_cruds.find_tags_all(db, r_id[1])
+
     
 @router.get("/dish",dependencies=[Depends(JWTBearer())],response_model=List[DishResponse], status_code=status.HTTP_200_OK)
 async def get_dish(db:DbDependency, t_id: Optional[int] = Query(None, gt=0, examples=[1]), token:str = Depends(JWTBearer())):
