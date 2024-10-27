@@ -2,7 +2,7 @@ from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from app.cruds import restaurant_auth as restaurant_auth_cruds, restaurant_url as restaurant_url_cruds
 from starlette import status
-from app.schemas import Token, RestaurantCreate, UrlResponse
+from app.schemas import Token, RestaurantCreate, UrlResponse, UrlCheck
 from sqlalchemy.orm import Session
 from app.database import get_db
 from typing import Annotated
@@ -41,8 +41,8 @@ async def create_restaurant(db: DbDependency, form_data: FormDependency):
     return check
 
 @router.post("/url/{r_id}", response_model=Optional[dict], status_code=status.HTTP_200_OK)
-async def login(db: DbDependency, check: str, r_id: int=Path(gt=0)):
-    result = restaurant_url_cruds.confirm_check(db, r_id, check)
+async def login(db: DbDependency, check: UrlCheck, r_id: int=Path(gt=0)):
+    result = restaurant_url_cruds.confirm_check(db, r_id, check.check)
     if not result:
         raise HTTPException(status_code=400, detail="Incorrect url")
     return 
