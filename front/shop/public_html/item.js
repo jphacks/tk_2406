@@ -6,7 +6,8 @@ let foods = []
 let food_sel = -1
 let addbtn_edit = false
 
-
+const EDIT_COLOR = "#ff0000"
+const TAB_SEL_COLOR = "#00aa00"
 
 //cookie取得
 let cookie_dict = {}
@@ -78,14 +79,14 @@ function toEdit() {
     ele_addbtn.innerHTML = "更新"
     addbtn_edit = true
     const rem_ele = document.getElementById("food" + food_sel)
-    if (rem_ele !== null) rem_ele.style.backgroundColor = "#ff0000"
+    if (rem_ele !== null) rem_ele.style.backgroundColor = EDIT_COLOR
     document.getElementById("div_tag").style.display = "none"
 }
 function toAdd() {
     ele_addbtn.innerHTML = "新規追加"
     addbtn_edit = false
 
-    for(let i = 0; i < foods.length; i++) {
+    for (let i = 0; i < foods.length; i++) {
         const rem_ele = document.getElementById("food" + i)
         if (rem_ele !== null) rem_ele.style.backgroundColor = ""
     }
@@ -125,7 +126,7 @@ function clickTag(tag) {
     if (tag_sel >= 0) document.getElementById("tag" + tag_sel).style.backgroundColor = ""
     tag_sel = Number(tag)
     food_sel = -1
-    document.getElementById("tag" + tag_sel).style.backgroundColor = "#00ee00"
+    document.getElementById("tag" + tag_sel).style.backgroundColor = TAB_SEL_COLOR
     getAllItems(tags[tag].t_id)
 
 }
@@ -366,7 +367,7 @@ function setTags() {
     for (const tag of tags) {
         let background = ""
         if (i == tag_sel) {
-            background = "background-color:#00ee00;"
+            background = "background-color:" + TAB_SEL_COLOR + ";"
         }
 
         html += `
@@ -412,7 +413,7 @@ function setFood() {
         let background = ""
 
         if (i == food_sel && addbtn_edit) {
-            background = "background-color:#ff0000;"
+            background = "background-color:" + EDIT_COLOR + ";"
         }
 
         let pos = "49.5%"
