@@ -1,38 +1,27 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Header, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from app.cruds import customer_auth as customer_auth_cruds
+from app.cruds import customer_auth as customer_auth_cruds, menu as menu_cruds
 from starlette import status
-from app.schemas import CustomerCreate, Token
+from app.schemas import DishResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
-from typing import Annotated
-from datetime import datetime, timedelta
-from jose import JWTError, jwt
+from typing import Annotated, List, Optional
 from config import get_settings
+
 DbDependency = Annotated[Session, Depends(get_db)]
-FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
+FormDependency = Annotated[OAuth2PasswordRequestForm, Depends(customer_auth_cruds.get_current_customer)]
 
 router = APIRouter(prefix="/customer", tags=["Customers"])
 
 SECRET_KEY =get_settings().secret_key
 
-
-
-@router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
-async def login(db: DbDependency, form_data: FormDependency):
-    customer = customer_auth_cruds.authenticate_customer(db, form_data.username, form_data.password)
-    if not customer:
-        raise HTTPException(status_code=401, detail="Incorrect name or password")
-    token = customer_auth_cruds.create_access_token(customer.c_name, customer.c_id, timedelta(minutes=240))
-    return {"access_token": token, "token_type": "bearer"}
-
-@router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
-async def signup(db: DbDependency, customer: CustomerCreate):
-    customer = customer_auth_cruds.create_customer(db, customer)
-    if customer is None:
-        raise HTTPException(status_code=400, detail="Account already exists")
-    token = customer_auth_cruds.create_access_token(customer.c_name, customer.c_id, timedelta(minutes=240))
-    return {"c_id": customer.c_id, "access_token": token, "token_type": "bearer"}
+@router.get("/dish/{r_id}",response_model=List[DishResponse], status_code=status.HTTP_200_OK)
+async def get_dish(db:DbDependency, r_id: int, t_id: Optional[int] = Query(None, gt=0, examples=[1])):
+    if t_id:
+        dishes = menu_cruds.get_dishes_by_tag(db, r_id, t_id)
+    else:
+        dishes = menu_cruds.get_dish_all(db, r_id)
+    return dishes
 
 
 
