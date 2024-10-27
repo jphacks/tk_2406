@@ -5,7 +5,7 @@ from app.routers import restaurant, order, restaurant_auth
 from fastapi.middleware.cors import CORSMiddleware
 import time
 
-from server.app.routers import customer_auth
+from app.routers import customer_auth
 
 app = FastAPI()
 
