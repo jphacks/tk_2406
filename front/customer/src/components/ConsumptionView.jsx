@@ -28,29 +28,44 @@ const getBackgroundColor = (level) => {
 const ConsumptionView = ({ alcLev, setAlcoLev }) => {
   const faceImage = getFaceImage(alcLev);
   const backgroundColor = getBackgroundColor(alcLev);
+  const imageSize = 35;
+  const debug = false;
+  // debug時は倍率を1にする
+  const sizeMagnification = debug ? 1 : 1.5;
+
 
   const containerStyle = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: "200px",
-    width: "200px",
-    borderRadius: "10px",
+    height: `${imageSize * 2}px`,
+    width: `${imageSize * 2}px`,
+    borderRadius: `${imageSize / 10}px`,
     backgroundColor: backgroundColor,
     color: "white",
     flexDirection: "column",
+    fontSize: `${imageSize * sizeMagnification / 5}px`,
   };
 
   const imageStyle = {
-    width: "100px",
-    height: "100px",
+    width: `${imageSize * sizeMagnification}px`,
+    height: `${imageSize * sizeMagnification}px`,
   };
 
   return (
     <div style={containerStyle}>
       <img src={faceImage} alt={`${alcLev} face`} style={imageStyle} />
       <span>{alcLev === 0 ? "Safe" : alcLev === 1 ? "Caution" : "Danger"}</span>
-      <button onClick={() => setAlcoLev((alcLev + 1) % 3)}>for debug</button>
+      {debug && (
+        <button
+          onClick={() => {
+            console.log("fjdsaklfao", alcLev);
+            setAlcoLev((alcLev + 1) % 3);
+          }}
+        >
+          for debug
+        </button>
+      )}
     </div>
   );
 };

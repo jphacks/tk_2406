@@ -12,7 +12,13 @@ const FinalConfirm = ({ onClose, confirmOrder }) => {
         <button className="final-confirm-back" onClick={onClose}>
           戻る
         </button>
-        <button className="final-confirm-send" onClick={confirmOrder}>
+        <button
+          className="final-confirm-send"
+          onClick={() => {
+            confirmOrder();
+            onClose();
+          }}
+        >
           それでも注文
         </button>
       </div>
