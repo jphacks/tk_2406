@@ -17,7 +17,7 @@ SECRET_KEY = get_settings().secret_key
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="/restaurant/login")
     
 def fing_tags_all(db:Session, r_id: int):
-    return db.query(Tag).filter(Tag.r_id == r).all()
+    return db.query(Tag).filter(Tag.r_id == r_id).all()
 
 def get_dish_all(db:Session, r_id: int):
     dishes_all = (
