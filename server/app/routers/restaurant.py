@@ -24,7 +24,7 @@ async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depend
     return tag
 
 
-@router.get("/tag", status_code=status.HTTP_201_CREATED)
+@router.get("/tag", status_code=status.HTTP_200_OK)
 async def create_tag(db: DbDependency, token: str = Depends(JWTBearer())):
 #async def create_tag(db: DbDependency, token: FormDependency, tag_create: TagCreate):
     r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
