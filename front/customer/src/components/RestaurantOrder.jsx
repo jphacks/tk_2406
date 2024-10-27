@@ -143,7 +143,9 @@ function RestaurantOrder() {
           <div className={styles.menuCard} key={item.id}>
             <img src={item.img} alt={item.name} className={styles.menuImg} />
             <div className={styles.menuDetails}>
-              <h3 className={styles.menuName}>{item.name}</h3>
+              <div className={styles.menuPlate}>
+                <h3 className={styles.menuName}>{item.name}</h3>
+              </div>
               <p className={styles.menuPrice}>¥{item.price}</p>
 
               <button
