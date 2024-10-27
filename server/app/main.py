@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 
-from app.routers import restaurant, customer, order
+from app.routers import restaurant, customer, order, evaluate
 
 from fastapi.middleware.cors import CORSMiddleware
 import time
@@ -33,3 +33,4 @@ async def add_process_time_header(request: Request, call_next):
 app.include_router(restaurant.router)
 app.include_router(customer.router)
 app.include_router(order.router)
+app.include_router(evaluate.router)
