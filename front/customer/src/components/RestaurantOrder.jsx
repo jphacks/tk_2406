@@ -105,6 +105,17 @@ function RestaurantOrder() {
 
       {/* カテゴリ選択部分 */}
       <div className={styles.categoryButtons}>
+        {Object.keys(menuCategories).map((category) => (
+          <button
+            key={category}
+            className={category === selectedCategory ? styles.selectedCategoryButton : styles.categoryButton}
+            onClick={() => setSelectedCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+      {/* <div className={styles.categoryButtons}>
         <button
           className={styles.categoryButton}
           onClick={() => setSelectedCategory("donburi")}
@@ -135,7 +146,7 @@ function RestaurantOrder() {
         >
           ノンアル
         </button>
-      </div>
+      </div> */}
 
       {/* メニュー表示部分 */}
       <div className={styles.menuGrid}>
