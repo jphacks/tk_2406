@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.buttonGood {
+  background-color: #4caf50;
+  color: white;
+}
+
+.buttonGood:hover {
+  background-color: #388e3c;
+  transform: scale(1.05);
+}
+
+.buttonBad {
+  background-color: #f44336;
+  color: white;
+}
+
+.buttonBad:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
+
+.loginButton {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.loginButton:hover {
+  background-color: #1976d2;
+  transform: scale(1.05);
+}

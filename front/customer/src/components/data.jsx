@@ -35,6 +35,24 @@ const menuCategories = {
       price: 780,
       img: "/images/gyoza.webp",
     },
+    {
+      id: 15,
+      name: "だし巻き玉子",
+      price: 450,
+      img: "/images/egg.webp",
+    },
+    {
+      id: 16,
+      name: "フライドポテト",
+      price: 450,
+      img: "/images/friedPoteto.webp",
+    },
+    {
+      id: 17,
+      name: "ポテトサラダ",
+      price: 450,
+      img: "/images/potatoSalada.webp",
+    },
   ],
   alcohol: [
     { id: 7, name: "日本酒", price: 1500, img: "/images/drink/Sake.webp" },
@@ -45,14 +63,32 @@ const menuCategories = {
       price: 900,
       img: "/images/drink/whiteWine.webp",
     },
+    {
+      id: 99,
+      name: "ハイボール",
+      price: 580,
+      img: "/images/drink/highball.webp",
+    },
   ],
   nonAlcohol: [
     { id: 10, name: "コーラ", price: 500, img: "/images/drink/cola.webp" },
     {
       id: 11,
       name: "オレンジジュース",
-      price: 500,
+      price: 280,
       img: "/images/drink/orangeJuice.webp",
+    },
+    {
+      id: 12,
+      name: "緑茶",
+      price: 250,
+      img: "/images/drink/greentea.webp",
+    },
+    {
+      id: 13,
+      name: "リンゴジュース",
+      price: 280,
+      img: "/images/drink/applejuice.webp",
     },
   ],
 };

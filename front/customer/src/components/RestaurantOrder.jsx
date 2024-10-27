@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./RestaurantOrder.module.css"; // CSS Modules のインポート
+import styles from "./RestaurantOrder.module.css";
 import ConsumptionView from "./ConsumptionView";
 import Cart from "./Cart";
 import CartButton from "./CartButton";
@@ -95,6 +95,13 @@ function RestaurantOrder() {
             return accumulator + orderItem.quantity;
           }, 0)}
         />
+      </div>
+      <div>注文確定はこちら</div>
+
+      <div>
+        {order.reduce((accumulator, orderItem) => {
+          return accumulator + orderItem.quantity;
+        }, 0)}
       </div>
 
       {/* カテゴリ選択部分 */}
