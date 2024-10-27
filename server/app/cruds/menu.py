@@ -169,3 +169,14 @@ def update_dish(db: Session,f_id:int, r_id: int, updated_items: dict):
         degree=update_dish.degree,
         f_quantity=update_dish.f_quantity
     )
+
+def delete_dish(db: Session, f_id: int, r_id: int):
+    existing_dish = db.query(Food).filter(Food.r_id == r_id, Food.f_id == f_id).first()
+    if not existing_dish:
+        return None
+    if existing_dish.is_alcohol:
+        existing_alcohol = db.query(FoodAlcohol).filter(FoodAlcohol.f_id == f_id).first()
+        db.delete(existing_alcohol)
+    db.delete(existing_dish)
+    db.commit()
+    return True

@@ -15,7 +15,7 @@ router = APIRouter(prefix="/restaurant", tags=["restaurants"])
 
 @router.post("/tag",dependencies=[Depends(JWTBearer())], status_code=status.HTTP_201_CREATED)
 async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depends(JWTBearer())):
-    r_name, r_id = restaurant_auth_cruds.decode_token(token)
+    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     tag = menu_cruds.create_tag(db, r_id[1], tag_create.t_name)
@@ -25,7 +25,7 @@ async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depend
     
 @router.get("/dish",dependencies=[Depends(JWTBearer())],response_model=List[DishResponse], status_code=status.HTTP_200_OK)
 async def get_dish(db:DbDependency, t_id: Optional[int] = Query(None, gt=0, examples=[1]), token:str = Depends(JWTBearer())):
-    r_name, r_id = restaurant_auth_cruds.decode_token(token)
+    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if t_id:
         dishes = menu_cruds.get_dishes_by_tag(db, r_id[1], t_id)
     else:
@@ -34,11 +34,11 @@ async def get_dish(db:DbDependency, t_id: Optional[int] = Query(None, gt=0, exam
 
 @router.post("/dish",dependencies=[Depends(JWTBearer())], response_model=DishResponse, status_code=status.HTTP_201_CREATED)
 async def create_dish(db: DbDependency, dish_create: DishCreate, token:str = Depends(JWTBearer())):
-    r_name, r_id = restaurant_auth_cruds.decode_token(token)
+    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:
         raise HTTPException(status_code=401, detail="Invalid token")
-    f_name, price, t_id, is_alcohol,degree = dish_create.f_name, dish_create.price, dish_create.t_id, dish_create.is_alcohol, dish_create.degree
-    new_dish = menu_cruds.create_dish(db, r_id[1], f_name, price, t_id, is_alcohol, degree)
+    f_name, price, t_id, is_alcohol,degree,f_quantity = dish_create.f_name, dish_create.price, dish_create.t_id, dish_create.is_alcohol, dish_create.degree, dish_create.f_quantity
+    new_dish = menu_cruds.create_dish(db, r_id[1], f_name, price, t_id, is_alcohol, degree,f_quantity)
 
     if not new_dish:
         raise HTTPException(status_code=409, detail="Dish already exists")
@@ -47,10 +47,11 @@ async def create_dish(db: DbDependency, dish_create: DishCreate, token:str = Dep
 
 @router.put("/dish/{f_id}", dependencies=[Depends(JWTBearer())], response_model=DishResponse, status_code=status.HTTP_202_ACCEPTED)
 async def update_dish(db: DbDependency, f_id: int, dish_update: DishUpdate, token:str = Depends(JWTBearer())):
-    r_name, r_id = restaurant_auth_cruds.decode_token(token)
+    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
     if not r_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     
+    print(dish_update.__dict__)
     # Filter out None values from the update dictionary
     update_data = {k: v for k, v in dish_update.__dict__.items() if v is not None}
     
@@ -60,3 +61,12 @@ async def update_dish(db: DbDependency, f_id: int, dish_update: DishUpdate, toke
         raise HTTPException(status_code=403, detail="Non-alcohol dish cannot have degree and f_quantity")
     
     return updated_dish
+@router.delete("/dish/{f_id}", status_code=status.HTTP_202_ACCEPTED)
+async def delete_dish(db: DbDependency, f_id: int, token:str = Depends(JWTBearer())):
+    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
+    if not r_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    deleted = menu_cruds.delete_dish(db, f_id, r_id[1])
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Dish not found")
+    return HTTPException(status_code=202, detail=f"Dish with f_id {f_id} deleted")
