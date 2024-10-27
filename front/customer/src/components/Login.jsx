@@ -1,9 +1,27 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import styles from "./Login.module.css";
-import { tryLogin, getCustomerEvaluate, getDish } from "./comm";
+import { tryLogin, getDishTag, getDish } from "./comm";
 import Eval from "./Eval";
-
-function Login({ onLogin }) {
+const formatData = (data) => {
+  const formatted = {};
+  data.forEach((item) => {
+    const { tag, f_id, f_name, price } = item;
+    // タグが存在しない場合は新しく作成
+    if (!formatted[tag]) {
+      formatted[tag] = [];
+    }
+    // 整形したデータを追加
+    formatted[tag].push({
+      id: f_id,
+      name: f_name,
+      price: price,
+      img: null, // 画像の情報があればここに追加
+    });
+  });
+  return formatted;
+};
+function Login({ onLogin, setDishData }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [shouldEval, setShouldEval] = useState(false);
@@ -25,9 +43,10 @@ function Login({ onLogin }) {
       console.log("通信開始", username, password);
       const loginSuccess = await tryLogin(username, password);
       console.log("tryLogin終了", loginSuccess);
-      const rrr = await getDish();
-      const r22rr = await getDishTag();
-      console.log()
+      const res = await getDish();
+      console.log("ok get", res);
+      setDishData(formatData(res));
+      console.log(formatData(res));
       if (loginSuccess) {
         onLogin();
       } else {

@@ -10,14 +10,18 @@ const production = true;
 
 export async function getDish() {
   if (production) {
-    getDishON();
+    console.log("ooo");
+    const r = await getDishON();
+    console.log(r);
+    return r.data;
+
   } else {
-    getDishOFF();
+    return getDishOFF();
   }
 }
 
-export async function getDishOFF() {}
-export async function getDishON() {
+async function getDishOFF() {}
+async function getDishON() {
   const res = await axios.get(`${API_URL}/customer/dish/1`, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -34,8 +38,8 @@ export async function getDishTag() {
     getDishTagOFF();
   }
 }
-export async function getDishTagOFF() {}
-export async function getDishTagON() {
+async function getDishTagOFF() {}
+async function getDishTagON() {
   const res = await axios.get(`${API_URL}/customer/tag/1`, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -52,7 +56,17 @@ export async function getDishTagON() {
 // ボディ: { "c_id", [{ "f_id" },]}
 // レスポンス:
 // ステータスコード: 200 OK
-export async function postCustomerOrder(order) {}
+export async function postCustomerOrder(order) {
+    if(production){
+        postCustomerOrderOn();
+    }else{
+        postCustomerOrderOff();
+
+    }
+}
+async function postCustomerOrderOff() {}
+async function postCustomerOrderOn() {}
+
 
 // Question これの使い道は？
 // 'POST customer/status/{r_id}'
@@ -82,7 +96,6 @@ export async function getCustomerStatus() {
 // ボディ: { "is_evaluated" }
 // レスポンス:
 // ステータスコード: 200 OK
-
 export async function getCustomerEvaluate() {
   const token = localStorage.getItem("jwtToken");
   try {

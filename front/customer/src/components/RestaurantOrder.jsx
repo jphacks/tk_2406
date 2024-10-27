@@ -3,16 +3,17 @@ import styles from "./RestaurantOrder.module.css";
 import ConsumptionView from "./ConsumptionView";
 import Cart from "./Cart";
 import CartButton from "./CartButton";
-import menuCategories from "./data";
+// import menuCategories from "./data";
 
-function RestaurantOrder() {
+function RestaurantOrder(dishData) {
   const [selectedCategory, setSelectedCategory] = useState("donburi");
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
   const [isPopupCart, togglePopupCart] = useState(false);
   const [allev, setallev] = useState(0);
+  
 
-  const currentMenuItems = menuCategories[selectedCategory];
+  const currentMenuItems = dishData[selectedCategory];
 
   const addToOrder = (item) => {
     const existingItem = order.find((orderItem) => orderItem.id === item.id);
