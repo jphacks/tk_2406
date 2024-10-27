@@ -45,7 +45,7 @@ def create_access_token(r_name: str, r_id: int, expires_delta: timedelta):
     payload = {"sub": r_name, "id": r_id, "exp": expires}
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
-def decode_token(token: Annotated[str, Depends(oauth2_schema)]):
+def get_current_restaurant(token: Annotated[str, Depends(oauth2_schema)]):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         r_name = payload.get("sub")
@@ -56,5 +56,4 @@ def decode_token(token: Annotated[str, Depends(oauth2_schema)]):
 
     except JWTError:
         raise JWTError
-    
     
