@@ -24,7 +24,6 @@ def get_current_restaurant(token: Annotated[str, Depends(oauth2_schema)]):
 
     except JWTError:
         raise JWTError
-    
 
 def create_check(db: Session, r_id: int):
     restaurant = db.query(Restaurant).filter(Restaurant.r_id == r_id).first()
@@ -33,7 +32,7 @@ def create_check(db: Session, r_id: int):
     check_origin = str(r_id) + restaurant.password
     hashed_check = hashlib.pbkdf2_hmac("sha256", check_origin.encode(), restaurant.salt.encode(), 10).hex()
     print(hashed_check)
-    return UrlResponse(check=hashed_check)
+    return UrlResponse(r_id=r_id, check=hashed_check)
     
 def confirm_check(db: Session, r_id: int, check: str):
     restaurant = db.query(Restaurant).filter(Restaurant.r_id == r_id).first()
