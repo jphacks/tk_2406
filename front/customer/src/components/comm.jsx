@@ -1,5 +1,4 @@
 // 通信系をひとまとめにする
-
 import axios from "axios";
 const API_URL = "http://10.10.2.47:8000";
 
@@ -64,11 +63,12 @@ export async function postCustomerOrder(order) {
 }
 
 async function postCustomerOrderOn(order, r_id) {
+  r_id = 4;
   const token = localStorage.getItem("jwtToken");
   console.log("jwt_token");
   console.log(token);
   const response = await axios.post(
-    API_URL + `/customer/order/${r_id}?c_id=1`,
+    API_URL + `/customer/order/${r_id}?c_id=2`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
