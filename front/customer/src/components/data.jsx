@@ -63,6 +63,12 @@ const menuCategories = {
       price: 900,
       img: "/images/drink/whiteWine.webp",
     },
+    {
+      id: 99,
+      name: "ハイボール",
+      price: 580,
+      img: "/images/drink/highball.webp",
+    },
   ],
   nonAlcohol: [
     { id: 10, name: "コーラ", price: 500, img: "/images/drink/cola.webp" },

@@ -56,4 +56,21 @@ export const tryLogin = async (id, pw) => {
     console.log("Error sending order:", error);
   }
 };
+// is checked が送られる
+// ログイン時に前回の飲み会を評価する
+// jwt tokenと 前回の飲み会が良し悪し
+export const getCustomerReview = async (order) => {
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8000/calculate-alcohol/",
+      {
+        items: order,
+      }
+    );
+    console.log("通信！", response.data.intensity);
+    return response.data.lev;
+  } catch (error) {
+    console.error("Error sending order:", error);
+  }
+};
 export default sendOrder;

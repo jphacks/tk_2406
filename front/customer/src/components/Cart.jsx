@@ -4,16 +4,8 @@ import { useState } from "react";
 
 import FinalConfirm from "./FinalConfirm";
 import sendOrder from "./comm";
+import getAlcoholLevel from "../server/getLev";
 
-function getAlcoholLevel(order) {
-  if (order.length > 0) {
-    console.log(order[0]);
-    if (order[0].name === "白ワイン") {
-      return 2;
-    }
-  }
-  return Math.floor(Math.random() * 2);
-}
 function Cart({
   order,
   total,
