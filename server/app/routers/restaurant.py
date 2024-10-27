@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from app.cruds import restaurant_auth as restaurant_auth_cruds, menu as menu_cruds
+from app.cruds import restaurant_auth as restaurant_auth_cruds, menu as menu_cruds, restaurant_url as restaurant_url_cruds
 from starlette import status
 from app.schemas import Token, RestaurantCreate, DishCreate, TagCreate, DishUpdate, DishResponse, UrlResponse, UrlCheck, TagResponse
 from sqlalchemy.orm import Session
@@ -81,3 +81,19 @@ async def delete_dish(db: DbDependency, f_id: int, token:str = Depends(JWTBearer
     if not deleted:
         raise HTTPException(status_code=404, detail="Dish not found")
     return HTTPException(status_code=202, detail=f"Dish with f_id {f_id} deleted")
+
+@router.get("/url", response_model=UrlResponse, status_code=status.HTTP_201_CREATED)
+async def create_restaurant(db: DbDependency, form_data: FormDependency):
+     check = restaurant_url_cruds.create_check(db, form_data.id)
+     print(check)
+     if not check:
+         raise HTTPException(status_code=400, detail="Restaurant doesn't Has")
+     print(check.check)
+     return check
+
+@router.post("/url/{r_id}", response_model=Optional[dict], status_code=status.HTTP_200_OK)
+async def login(db: DbDependency, check: UrlCheck, r_id: int=Path(gt=0)):
+     result = restaurant_url_cruds.confirm_check(db, r_id, check.check)
+     if not result:
+         raise HTTPException(status_code=400, detail="Incorrect url")
+     return 
