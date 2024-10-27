@@ -164,7 +164,8 @@ http://0.0.0.0:8000
     - **ヘッダ**: JWTトークン 
     - **ボディ**:
         {
-            "status"}
+            "status"
+      }
 - **レスポンス**: 
     - **ステータスコード**: 200 OK
 
@@ -187,7 +188,8 @@ http://0.0.0.0:8000
     - **ステータスコード**: 200 OK
     - **ボディ**:
         {
-            "is_checked"
+            "is_checked",
+              ["f_name", "quantity"],
         }
 
 ### 'POST customer/review'
