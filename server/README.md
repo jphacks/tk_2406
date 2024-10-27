@@ -1,4 +1,4 @@
-# DB Documentation
+ # DB Documentation
 
 ## Database Configuration
 - **Database Type**: PostgreSQL
@@ -8,10 +8,11 @@
 1. **restaurants** - レストラン情報
 2. **foods** - 料理情報
 3. **food_alcohol** - アルコールの情報
-4. **guests** - 客情報
-5. **orders** - 注文情報
-6. **order_items** - 注文の料理情報
-7. **evaluations** - 評価情報
+4. **tags** - タグの情報
+5. **guests** - 客情報
+6. **orders** - 注文情報
+7. **order_items** - 注文の料理情報
+8. **evaluations** - 評価情報
 
 
 ## Table: `restaurants`
@@ -33,7 +34,8 @@
 | `r_id`    | INT (Foreign Key)  | 非負整数 |  提供するレストランのID        |
 | `f_name`    | VARCHAR(255)       | 1~255文字, 重複なし |  食品の名前                   |
 | `price`   | INT     | 非負整数 |  価格                         |
-| `tag`     | VARCHAR(255)       | 1~255文字, 重複なし |  タグやカテゴリー名           |
+| `t_id`     | INT (Foreign Key)  | 非負整数 |  提供するレストランのID        |
+| `is_alcohol`     | BOOLEAN  | |  アルコールかどうかの判別子       |
 
 ## Table: `food_alcohol`
 - **説明**: アルコール含有食品の詳細を保存するテーブル
@@ -43,6 +45,15 @@
 | `f_id`       | INT (Primary Key, Foreign Key)  | 非負整数 |  対応する食品のID             |
 | `degree`     | FLOAT              | 非負　|  アルコール度数               |
 | `f_quantity` | INT                | 非負整数 |  アルコールの量               |
+
+## Table: `tags`
+- **説明**: 食品のタグを保存するテーブル
+
+| カラム名   | データ型          | 制約               | 説明                |
+|------------|-------------------|---------------------|---------------------|
+| `t_id`       | INT (Primary Key, Foreign Key)  | 非負整数 |  対応するタグの一意の識別子             |
+| `r_id`       | INT (Primary Key, Foreign Key)  | 非負整数 |  対応するレストランのID             |
+| `t_name`     | VARCHAR(255)              | 1~255文字, 重複なし　|  タグの名前               |
 
 ## Table: `customers`
 - **説明**: 客の情報を保存するテーブル
