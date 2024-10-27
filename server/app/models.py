@@ -59,6 +59,7 @@ class Order(Base):
     o_id = Column(Integer, primary_key=True)
     c_id = Column(Integer, ForeignKey("customers.c_id", ondelete="CASCADE"), nullable=False)
     r_id = Column(Integer, ForeignKey("restaurants.r_id", ondelete="CASCADE"), nullable=False)
+    is_evaluated = Column(Boolean, default=False)
     o_datetime = Column(DateTime, default=datetime.now)
 
     customer = relationship("Customer", back_populates="orders")

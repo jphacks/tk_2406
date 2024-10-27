@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 
-from app.routers import restaurant, order, restaurant_auth, customer, customer_auth
+from app.routers import restaurant, customer, order, evaluate, status, restaurant_auth, customer_auth
+
 
 from fastapi.middleware.cors import CORSMiddleware
 import time
@@ -35,3 +36,5 @@ app.include_router(restaurant.router)
 app.include_router(customer_auth.router)
 app.include_router(customer.router)
 app.include_router(order.router)
+app.include_router(evaluate.router)
+app.include_router(status.router)
