@@ -48,11 +48,9 @@ class OrderCreate(BaseModel):
         {"f_id": 2, "quantity": 10}
     ]])
 
-class CheckResponse(BaseModel):
-    check: str = Field(min_length=1, examples=["HASHEDIDANDPASSWORD"])
 
 class UrlResponse(BaseModel):
-    pass
+    check: str = Field(min_length=1, examples=["HASHEDIDANDPASSWORD"])
 
 class OrderResponse(BaseModel):
     pass

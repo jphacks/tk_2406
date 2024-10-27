@@ -32,6 +32,7 @@ def create_check(db: Session, r_id: int):
         return None
     check_origin = str(r_id) + restaurant.password
     hashed_check = hashlib.pbkdf2_hmac("sha256", check_origin.encode(), restaurant.salt.encode(), 10).hex()
+    print(hashed_check)
     return UrlResponse(check=hashed_check)
     
 def confilm_check(db: Session, r_id: int, check: str):
