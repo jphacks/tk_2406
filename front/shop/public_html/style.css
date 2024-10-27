@@ -161,5 +161,16 @@ body {
     height: 20vh;
     bottom: 0;
     left:20vw;
-    background-color: #468858;
+    background-color: #9fe6b2;
+}
+
+.form_tag{
+    margin: 0;
+    border: 0;
+    position: absolute;
+    width: 20vw;
+    height: 20vh;
+    bottom: 0;
+    left: 0;
+    background-color: #f394e3;
 }

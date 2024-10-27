@@ -13,7 +13,7 @@
     </div>
 
     <div class="boxtag">
-        <div  id="tags" style="position: relative;margin: 0;padding: 0;">
+        <div id="tags" style="position: relative;margin: 0;padding: 0;">
         </div>
     </div>
 
@@ -25,16 +25,61 @@
 
 
     <div class="form_item" id="form_item">
-        <div style="padding: 1vh;">ss</div>
+        <div style="padding: 1vh;">品物追加</div>
+
+        <div style="position: absolute;margin: 0;padding: 0;top :4vh;left: 1vw;">
+            <div style="padding: 2vh;">名前</div>
+            <input type="text" id="item_name_input" style="margin-left: 2vw;width: 8vw;position: relative;">
+        </div>
+
+
+        <div style="position: absolute;margin: 0;padding: 0;top :4vh;left: 10.5vw;" id="div_tag">
+            <div style="padding: 2vh;">タブ</div>
+            <select id="item_tag" style="margin-left: 2vw;width: 8vw;position: relative;">
+            </select>
+        </div>
+
+        
+        <div style="position: absolute;margin: 0;padding: 0;top :4vh;left: 20vw;">
+            <div style="padding: 2vh;">￥価格</div>
+            <input id="item_value" style="margin-left: 2vw;width: 11vw;position: relative;" type='number' step='1'
+                min='0'>
+        </div>
+
+        <div style="position: absolute;margin: 0;padding: 0;top :4vh;left: 32vw;">
+            <div style="padding: 2vh;">アルコール</div>
+            <input id="item_chk" style="margin-left: 5vw;width: 2vw;position: relative;" type='checkbox'>
+        </div>
+
+        <div style="position: absolute;margin: 0;padding: 0;top :4vh;left: 42vw;display: none;" id="div_deg">
+            <div style="padding: 2vh;">度数(%)</div>
+            <input type='number' min='0' id="item_deg" style="margin-left: 2vw;width: 5vw;position: relative;">
+        </div>
+
+        <div style="position: absolute;margin: 0;padding: 0;top :4vh;left: 50vw;display: none;" id="div_vol">
+            <div style="padding: 2vh;">内容量(ml)</div>
+            <input type='number' step='1' min='0' id="item_vol" style="margin-left: 2vw;width: 7vw;position: relative;">
+        </div>
 
         <div style="
         text-align: right;
         padding-left: 2vw;
         padding-right: 2vw;
-        position: relative;
+        position: absolute;
+        right: 2vw;
+        bottom: 2vw;
         ">
             <button id="add_btn" class="add_btn" onclick="newItem()">新規追加</button>
 
+        </div>
+    </div>
+
+    <div class="form_tag" id="form_tag">
+        <div style="position: relative;margin: 0;padding: 0;">
+            <div style="padding: 1vh;">タブ追加</div>
+            <input type="text" id="tag_input" style="margin-left: 2vw;width: 16vw;position: relative;">
+            <button id="add_tag_btn" class="add_btn" onclick="newTag()"
+                style="left:2vw; width: 16vw;height: 6vh;position: relative;">タブ追加</button>
         </div>
     </div>
 
