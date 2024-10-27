@@ -1,17 +1,12 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-
 from app.cruds import restaurant_auth as restaurant_auth_cruds
 from starlette import status
 from app.schemas import Token, RestaurantCreate
-
 from sqlalchemy.orm import Session
 from app.database import get_db
-from typing import Annotated, List, Optional
+from typing import Annotated
 from datetime import timedelta
-from app.cruds.auth import JWTBearer
-
-from typing import Optional
 
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
@@ -19,7 +14,7 @@ FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 router = APIRouter(prefix="/restaurant", tags=["restaurants"])
 
 @router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
-async def create_restaurant(db: DbDependency, restaurant_create: RestaurantCreate):
+async def create_restaurant(db: DbDependency, restaurant_create: RestaurantCreate): # type: ignore
     restaurant = restaurant_auth_cruds.create_restaurant(db, restaurant_create)
     if not restaurant:
         raise HTTPException(status_code=409, detail="Restaurant already has")

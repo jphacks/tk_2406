@@ -1,25 +1,17 @@
-from sqlalchemy.orm import Session, joinedload
-from app.schemas import  DecodedToken, DishResponse
+from sqlalchemy.orm import Session
+from app.schemas import  DishResponse
 from app.models import Food, FoodAlcohol, Tag
-from datetime import datetime, timedelta
-from typing import Annotated
-from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
-from jose import jwt, JWTError
 from config import get_settings
-import hashlib
-import base64
-import os
-
 ALGORITHM = "HS256"
 SECRET_KEY = get_settings().secret_key
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="/restaurant/login")
-    
-def fing_tags_all(db:Session, r_id: int):
-    return db.query(Tag).filter(Tag.r_id == r).all()
 
-def get_dish_all(db:Session, r_id: int):
+def find_tags_all(db:Session, r_id: int) -> list[Tag]:
+    return db.query(Tag).filter(Tag.r_id == r_id).all()
+
+def get_dish_all(db:Session, r_id: int) -> list[DishResponse]:
     dishes_all = (
         db.query(
             Food.f_id, 
@@ -49,8 +41,8 @@ def get_dish_all(db:Session, r_id: int):
     
     return dishes_all
 
-def get_dishes_by_tag(db: Session, r_id: int, t_id: int):
-    # Fetch dishes for a restaurant ID that match a specific tag
+def get_dishes_by_tag(db: Session, r_id: int, t_id: int) -> list[DishResponse]:
+    "Get all dishes with the specified tag"
     dishes_by_tag = (
         db.query(
             Food.f_id, 
@@ -65,7 +57,6 @@ def get_dishes_by_tag(db: Session, r_id: int, t_id: int):
         .filter(Food.r_id == r_id, Food.t_id == t_id)
         .outerjoin(FoodAlcohol, Food.f_id == FoodAlcohol.f_id)
         .outerjoin(Tag, Food.t_id == Tag.t_id)
-        
         .all()
     )
     dishes_by_tag = [ DishResponse(
@@ -81,7 +72,7 @@ def get_dishes_by_tag(db: Session, r_id: int, t_id: int):
         for item in dishes_by_tag]
     return dishes_by_tag
 
-def get_dishes_by_id(db: Session, r_id: int, f_id: int):
+def get_dishes_by_id(db: Session, r_id: int, f_id: int)  -> DishResponse:
     """
     get one dish by f_id from a restaurant by r_id
     """
@@ -95,10 +86,9 @@ def get_dishes_by_id(db: Session, r_id: int, f_id: int):
         Tag.t_name,
         FoodAlcohol.degree,
         FoodAlcohol.f_quantity
-    )
+    ).filter(Food.r_id==r_id, Food.f_id == f_id)  # Filter by f_id
     .outerjoin(FoodAlcohol, Food.f_id == FoodAlcohol.f_id)
     .outerjoin(Tag, Food.t_id == Tag.t_id)
-    .filter(Food.r_id==r_id, Food.f_id == f_id)  # Filter by f_id
     .first()  # Get only one result
     )
     return DishResponse(
@@ -112,7 +102,7 @@ def get_dishes_by_id(db: Session, r_id: int, f_id: int):
         f_quantity = dishes_by_id[7]
     )
 
-def create_tag(db: Session, r_id: int, t_name: str):
+def create_tag(db: Session, r_id: int, t_name: str) -> Tag:
     # Create a new tag for a restaurant ID
     existing_tag = db.query(Tag).filter(Tag.r_id == r_id, Tag.t_name == t_name).first()
     if existing_tag:
@@ -123,8 +113,7 @@ def create_tag(db: Session, r_id: int, t_name: str):
     db.refresh(new_tag)
     return new_tag
 
-def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_alcohol: bool, degree: float, f_quantity: int):
-
+def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_alcohol: bool, degree: float, f_quantity: int)-> DishResponse:
     existing_dish = db.query(Food).filter(Food.r_id == r_id, Food.f_name == f_name).first()
     if existing_dish:
         return None
@@ -138,11 +127,9 @@ def create_dish(db: Session, r_id: int, f_name: str, price: int, t_id: int, is_a
         new_alcohol = FoodAlcohol(f_id=new_dish.f_id, degree=degree, f_quantity=f_quantity)
         db.add(new_alcohol)
     db.commit()
-    
-
     return get_dishes_by_id(db, r_id, new_dish.f_id)
 
-def update_dish(db: Session,f_id:int, r_id: int, updated_items: dict):
+def update_dish(db: Session,f_id:int, r_id: int, updated_items: dict) -> DishResponse:
     existing_dish = db.query(Food).filter(Food.r_id == r_id, Food.f_id == f_id).first()
     if not existing_dish:
         return None
@@ -162,18 +149,9 @@ def update_dish(db: Session,f_id:int, r_id: int, updated_items: dict):
     
     db.commit()
     update_dish = get_dishes_by_id(db, r_id, f_id)
-    return DishResponse(
-        f_id=update_dish.f_id,
-        f_name=update_dish.f_name,
-        price=update_dish.price,
-        is_alcohol=update_dish.is_alcohol,
-        r_id=update_dish.r_id,
-        tag=update_dish.tag,
-        degree=update_dish.degree,
-        f_quantity=update_dish.f_quantity
-    )
+    return update_dish
 
-def delete_dish(db: Session, f_id: int, r_id: int):
+def delete_dish(db: Session, f_id: int, r_id: int) -> bool:
     existing_dish = db.query(Food).filter(Food.r_id == r_id, Food.f_id == f_id).first()
     if not existing_dish:
         return None
