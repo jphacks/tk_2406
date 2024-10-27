@@ -8,7 +8,7 @@ body {
     margin: 0;
     border: 0;
     color: #ffffff;
-    background: #000000;
+    background: #313131;
     height: 7vh;
     position: relative;
 }
@@ -35,9 +35,9 @@ body {
     margin-left: 20vw;
     width: 20vw;
     height: 6vw;
-    background-color: #333377;
+    background-color: #3ac157;
     color: #FFFFFF;
-    border: #7777ee 0.2vw solid;
+    border: #3ac157 0.2vw solid;
     border-radius: 1vw;
 }
 
@@ -51,9 +51,9 @@ body {
     margin-top: 0;
     width: 14vh;
     height: 7vh;
-    background-color: #333377;
-    color: #FFFFFF;
-    border: 0;
+    background-color: #313131;
+    color: #ffffff;
+    border-left: #868686 0.2vw solid;
 }
 
 .qr_btn:hover {
@@ -65,9 +65,9 @@ body {
     margin-top: 1vw;
     width: 10em;
     height: 3em;
-    background-color: #333377;
+    background-color: #3ac157;
     color: #FFFFFF;
-    border: #7777ee 0.2vw solid;
+    border: #3ac157 0.2vw solid;
     border-radius: 1vw;
 }
 
@@ -120,7 +120,7 @@ body {
     left:0;
     height: 73vh;
     width: 20vw;
-    background-color: #995555;
+    background-color: #777777;
     position: absolute;
 }
 
@@ -161,7 +161,7 @@ body {
     height: 20vh;
     bottom: 0;
     left:20vw;
-    background-color: #9fe6b2;
+    background-color: #cbcbcb;
 }
 
 .form_tag{
@@ -172,5 +172,5 @@ body {
     height: 20vh;
     bottom: 0;
     left: 0;
-    background-color: #f394e3;
+    background-color: #c8e8d8;
 }
