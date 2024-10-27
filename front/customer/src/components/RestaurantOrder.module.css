@@ -45,6 +45,11 @@
   background-color: #45a049;
 }
 
+.selectedCategoryButton {
+  background-color: #025906;
+  color: #ffffff;
+}
+
 .menuGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -124,11 +129,13 @@
 .addButton:hover {
   background-color: #45a049;
 }
+
 .cartContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px; /* 要素間のスペースを設定 */
+  gap: 10px;
+  /* 要素間のスペースを設定 */
 }
 
 .orderConfirmText {
