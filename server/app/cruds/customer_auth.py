@@ -49,7 +49,7 @@ def create_access_token(c_name: str, c_id: int, expires_delta: timedelta):
 def get_current_customer(token: Annotated[str, Depends(oauth2_schema)]):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        c_name = payload.get("name")
+        c_name = payload.get("sub")
         c_id = payload.get("id")
         if c_name is None or c_id is None:
             return None
