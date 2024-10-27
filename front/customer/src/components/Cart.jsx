@@ -27,7 +27,6 @@ function Cart({
 }) {
   const [isFinalConfirmPopup, setFinalConfirmPopup] = useState(false);
 
-
   const confirmOrder = () => {
     sendOrder(order);
     setTimeout(() => {
@@ -51,6 +50,13 @@ function Cart({
   const [isOrderComplete, setIsOrderComplete] = useState(false);
 
   const handleOrderClick = () => {
+    if (
+      order.reduce((accumulator, orderItem) => {
+        return accumulator + orderItem.quantity;
+      }, 0) === 0
+    ) {
+      return;
+    }
     checkOrder();
     setIsOrderComplete(true);
     setTimeout(() => {

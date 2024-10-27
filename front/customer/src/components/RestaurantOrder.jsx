@@ -90,6 +90,13 @@ function RestaurantOrder() {
           }, 0)}
         />
       </div>
+      <div>注文確定はこちら</div>
+
+      <div>
+        {order.reduce((accumulator, orderItem) => {
+          return accumulator + orderItem.quantity;
+        }, 0)}
+      </div>
 
       {/* カテゴリ選択部分 */}
       <div className={styles.categoryButtons}>
