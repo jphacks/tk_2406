@@ -27,8 +27,9 @@ function Login({ onLogin }) {
       }
     // customer/
     if (username && password) {
+      console.log("通信開始", username, password);
       const loginSuccess = await tryLogin(username, password);
-      console.log(loginSuccess);
+      console.log("tryLogin終了",loginSuccess);
       if (loginSuccess) {
         onLogin();
       } else {
