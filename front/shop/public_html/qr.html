@@ -1,0 +1,33 @@
+<html>
+<meta charset='utf-8' />
+<title>店舗 QR</title>
+<!--<link rel="icon" href="favicon.ico">-->
+<link rel="stylesheet" href="style.css">
+
+<script type="text/javascript" src="config.js"></script>
+
+<body id="body" style="background-color: #FFFFFF;position: relative;">
+    <div class="title">
+        <p class="title_text">店舗 QR</p>
+    </div>
+
+    <div id="qrcode"
+        style="margin: 1vh; position: absolute; width: 256px; height: 256px; left: calc((100vw - 256px)/2);top:calc((93vh - 256px)/2);">
+    </div>
+    
+    <div id="url"
+        style="margin: 0; position: relative; text-align: center;top:calc((93vh - 256px)/2 + 256px);font-size: 4vh;">
+    </div>
+    <div id="print" style="margin: 0; position: relative; text-align: center;top:calc((93vh - 256px)/2 + 256px + 6vh);font-size: 4vh;">
+        <button onclick="
+            document.getElementById('print').style.display = 'none';
+            window.print();
+            document.getElementById('print').style.display = 'block';
+            return false;
+            " style="width: 25vh; height: 5vh;">このページを印刷する</button>
+    </div>
+</body>
+<script type="text/javascript" src="qrcode.min.js"></script>
+<script type="text/javascript" src="qr.js"></script>
+
+</html>
