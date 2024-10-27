@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Login.css";
-import axios from "axios";
+import { tryLogin } from "./comm";
 
 // eslint-disable-next-line react/prop-types
 function Login({ onLogin }) {
@@ -9,25 +9,10 @@ function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      axios
-        .post(
-          "http://10.10.2.47:8000/customer/login",
-          new URLSearchParams({ username: username, password: password }), // データをフォーム形式で送信
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response);
-        });
-    } catch (error) {
-      console.log("Error sending order:", error);
+    if (username === "" && password === "") {
+      onLogin(); // デバッグ用ログイン！
     }
-
-    if (username && password) {
+    if (username && password && tryLogin(username, password)) {
       onLogin();
     } else {
       alert("Please enter both username and password.");
