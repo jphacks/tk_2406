@@ -49,6 +49,9 @@ class OrderCreate(BaseModel):
     ]])
 
 
+class UrlResponse(BaseModel):
+    check: str = Field(min_length=1, examples=["HASHEDIDANDPASSWORD"])
+
 class OrderResponse(BaseModel):
     pass
 
