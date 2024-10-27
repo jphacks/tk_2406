@@ -24,7 +24,7 @@ http://0.0.0.0:8000
     - **ステータスコード**: 200 OK
     - - **ボディ**:
         {
-            ["t_id", "t_name"]
+            ["t_id", "r_id", "t_name"]
         }
 
 ### 'GET restaurant/url'
