@@ -1,63 +1,18 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-<<<<<<<<< Temporary merge branch 1
-from app.cruds import restaurant_auth as restaurant_auth_cruds, restaurant_url as restaurant_url_cruds
-from starlette import status
-from app.schemas import Token, RestaurantCreate, UrlResponse, UrlCheck
-=========
 from app.cruds import restaurant_auth as restaurant_auth_cruds, menu as menu_cruds
 from starlette import status
-from app.schemas import Token, RestaurantCreate, DishCreate, TagCreate, DishUpdate, DishResponse
->>>>>>>>> Temporary merge branch 2
+from app.schemas import Token, RestaurantCreate,DishCreate, TagCreate, DishUpdate, DishResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from typing import Annotated, List, Optional
-from datetime import timedelta
-<<<<<<<<< Temporary merge branch 1
-from typing import Optional
-
-=========
 from app.cruds.auth import JWTBearer
->>>>>>>>> Temporary merge branch 2
 
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends(restaurant_auth_cruds.get_current_restaurant)]
 
 router = APIRouter(prefix="/restaurant", tags=["restaurants"])
 
-@router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
-async def create_restaurant(db: DbDependency, restaurant_create: RestaurantCreate):
-    restaurant = restaurant_auth_cruds.create_restaurant(db, restaurant_create)
-    if not restaurant:
-        raise HTTPException(status_code=409, detail="Restaurant already has")
-    token = restaurant_auth_cruds.create_access_token(restaurant.r_name, restaurant.r_id, timedelta(minutes=240))
-    return {"access_token": token, "token_type": "bearer"}
-
-@router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
-async def login(db: DbDependency, form_data: FormDependency):
-    restaurant = restaurant_auth_cruds.authenticate_restaurant(db, form_data.username, form_data.password)
-    if not restaurant:
-        raise HTTPException(status_code=401, detail="Incorrect name or password")
-    token = restaurant_auth_cruds.create_access_token(restaurant.r_name, restaurant.r_id, timedelta(minutes=240))
-    return {"access_token": token, "token_type": "bearer"}
-
-<<<<<<<<< Temporary merge branch 1
-@router.get("/url", response_model=UrlResponse, status_code=status.HTTP_201_CREATED)
-async def create_restaurant(db: DbDependency, form_data: FormDependency):
-    check = restaurant_url_cruds.create_check(db, form_data.id)
-    print(check)
-    if not check:
-        raise HTTPException(status_code=400, detail="Restaurant doesn't Has")
-    print(check.check)
-    return check
-
-@router.post("/url/{r_id}", response_model=Optional[dict], status_code=status.HTTP_200_OK)
-async def login(db: DbDependency, check: UrlCheck, r_id: int=Path(gt=0)):
-    result = restaurant_url_cruds.confirm_check(db, r_id, check.check)
-    if not result:
-        raise HTTPException(status_code=400, detail="Incorrect url")
-    return 
-=========
 @router.post("/tag",dependencies=[Depends(JWTBearer())], status_code=status.HTTP_201_CREATED)
 async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depends(JWTBearer())):
     r_name, r_id = restaurant_auth_cruds.decode_token(token)
@@ -105,4 +60,3 @@ async def update_dish(db: DbDependency, f_id: int, dish_update: DishUpdate, toke
         raise HTTPException(status_code=403, detail="Non-alcohol dish cannot have degree and f_quantity")
     
     return updated_dish
->>>>>>>>> Temporary merge branch 2
