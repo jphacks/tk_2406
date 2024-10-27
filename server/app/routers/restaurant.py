@@ -42,7 +42,7 @@ async def create_restaurant(db: DbDependency, form_data: FormDependency):
 
 @router.post("/url/{r_id}", response_model=Optional[dict], status_code=status.HTTP_200_OK)
 async def login(db: DbDependency, check: str, r_id: int=Path(gt=0)):
-    result = restaurant_url_cruds.confilm_check(db, r_id, check)
+    result = restaurant_url_cruds.confirm_check(db, r_id, check)
     if not result:
         raise HTTPException(status_code=400, detail="Incorrect url")
     return 

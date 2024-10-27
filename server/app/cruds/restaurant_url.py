@@ -35,7 +35,7 @@ def create_check(db: Session, r_id: int):
     print(hashed_check)
     return UrlResponse(check=hashed_check)
     
-def confilm_check(db: Session, r_id: int, check: str):
+def confirm_check(db: Session, r_id: int, check: str):
     restaurant = db.query(Restaurant).filter(Restaurant.r_id == r_id).first()
     if not restaurant:
         return None
