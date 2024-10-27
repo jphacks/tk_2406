@@ -61,6 +61,7 @@ class UrlCheck(BaseModel):
     check: str = Field(min_length=1, examples=["HASHEDIDANDPASSWORD"])
 
 class UrlResponse(BaseModel):
+    r_id:  int = Field(gt=0, examples=[1])
     check: str = Field(min_length=1, examples=["HASHEDIDANDPASSWORD"])
 
 class OrderResponse(BaseModel):

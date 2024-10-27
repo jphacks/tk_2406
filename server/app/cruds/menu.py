@@ -178,8 +178,8 @@ def delete_dish(db: Session, f_id: int, r_id: int):
     existing_dish = db.query(Food).filter(Food.r_id == r_id, Food.f_id == f_id).first()
     if not existing_dish:
         return None
-    if existing_dish.is_alcohol:
-        existing_alcohol = db.query(FoodAlcohol).filter(FoodAlcohol.f_id == f_id).first()
+    existing_alcohol = db.query(FoodAlcohol).filter(FoodAlcohol.f_id == f_id).first()
+    if existing_alcohol:
         db.delete(existing_alcohol)
     db.delete(existing_dish)
     db.commit()

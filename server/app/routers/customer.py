@@ -8,6 +8,8 @@ from app.database import get_db
 from typing import Annotated, List, Optional
 from config import get_settings
 
+
+
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends(customer_auth_cruds.get_current_customer)]
 
@@ -23,6 +25,6 @@ async def get_dish(db:DbDependency, r_id: int, t_id: Optional[int] = Query(None,
         dishes = menu_cruds.get_dish_all(db, r_id)
     return dishes
 
-
-
-
+@router.get("/tag/{r_id}", status_code=status.HTTP_200_OK)
+async def get_tag(db:DbDependency, r_id: int):
+    return menu_cruds.find_tags_all(db, r_id)
