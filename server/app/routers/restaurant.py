@@ -1,18 +1,18 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from app.cruds import restaurant_auth as restaurant_auth_cruds
-from app.cruds import menu
+from app.cruds import restaurant_auth as restaurant_auth_cruds, menu as menu_cruds
 from starlette import status
-from app.schemas import Token, RestaurantCreate, DishCreate, TagCreate, DishView, DishResponse
+from app.schemas import Token, RestaurantCreate, DishCreate, TagCreate, DishUpdate, DishResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from typing import Annotated, List, Optional
 from datetime import timedelta
+from app.cruds.auth import JWTBearer
 
 DbDependency = Annotated[Session, Depends(get_db)]
 FormDependency = Annotated[OAuth2PasswordRequestForm, Depends()]
 
-router = APIRouter(prefix="/restaurant", tags=["auth"])
+router = APIRouter(prefix="/restaurant", tags=["restaurants"])
 
 @router.post("/signup", response_model=Token, status_code=status.HTTP_201_CREATED)
 async def create_restaurant(db: DbDependency, restaurant_create: RestaurantCreate):
@@ -30,69 +30,50 @@ async def login(db: DbDependency, form_data: FormDependency):
     token = restaurant_auth_cruds.create_access_token(restaurant.r_name, restaurant.r_id, timedelta(minutes=240))
     return {"access_token": token, "token_type": "bearer"}
 
-@router.post("/tag", status_code=status.HTTP_201_CREATED)
-async def create_tag(db: DbDependency, token: Annotated[str, Depends(restaurant_auth_cruds.oauth2_schema)],tag_create: TagCreate):
-    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
+@router.post("/tag",dependencies=[Depends(JWTBearer())], status_code=status.HTTP_201_CREATED)
+async def create_tag(db: DbDependency, tag_create: TagCreate, token:str = Depends(JWTBearer())):
+    r_name, r_id = restaurant_auth_cruds.decode_token(token)
     if not r_id:
         raise HTTPException(status_code=401, detail="Invalid token")
-    tag = menu.create_tag(db, r_id[1], tag_create.t_name)
+    tag = menu_cruds.create_tag(db, r_id[1], tag_create.t_name)
     if not tag:
         raise HTTPException(status_code=409, detail="Tag already exists")
     return tag
     
-@router.get("/dish", status_code=status.HTTP_200_OK)
-async def get_dish(db:DbDependency, token: Annotated[str, Depends(restaurant_auth_cruds.oauth2_schema)], dish_view: DishView):
-    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
-    if dish_view.t_id:
-        dishes = menu.get_dishes_by_tag(db, r_id[1], dish_view.t_id)
+@router.get("/dish",dependencies=[Depends(JWTBearer())],response_model=List[DishResponse], status_code=status.HTTP_200_OK)
+async def get_dish(db:DbDependency, t_id: Optional[int] = Query(None, gt=0, examples=[1]), token:str = Depends(JWTBearer())):
+    r_name, r_id = restaurant_auth_cruds.decode_token(token)
+    if t_id:
+        dishes = menu_cruds.get_dishes_by_tag(db, r_id[1], t_id)
     else:
-        dishes = menu.get_dish_all(db, r_id[1])
-    
-    dishes =  [
-        DishResponse(
-            f_id = item[0],
-            f_name = item[1],
-            price = item[2],
-            is_alcohol = item[3],
-            r_id = item[4],
-            tag = item[5],
-            degree = item[6],
-            f_quantity = item[7]
-        )
-        for item in dishes
-    ]
+        dishes = menu_cruds.get_dish_all(db, r_id[1])
     return dishes
 
-@router.post("/dish",response_model=DishResponse, status_code=status.HTTP_201_CREATED)
-async def create_dish(db: DbDependency, token: Annotated[str, Depends(restaurant_auth_cruds.oauth2_schema)], dish_create: DishCreate):
-    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
+@router.post("/dish",dependencies=[Depends(JWTBearer())], response_model=DishResponse, status_code=status.HTTP_201_CREATED)
+async def create_dish(db: DbDependency, dish_create: DishCreate, token:str = Depends(JWTBearer())):
+    r_name, r_id = restaurant_auth_cruds.decode_token(token)
     if not r_id:
         raise HTTPException(status_code=401, detail="Invalid token")
     f_name, price, t_id, is_alcohol,degree = dish_create.f_name, dish_create.price, dish_create.t_id, dish_create.is_alcohol, dish_create.degree
-    new_dish = menu.create_dish(db, r_id[1], f_name, price, t_id, is_alcohol, degree)
-    if isinstance(new_dish, int):
-        new_dish = menu.get_dishes_by_id(db, r_id[1], new_dish)
-       
-        return  DishResponse(
-            f_id = new_dish[0],
-            f_name = new_dish[1],
-            price = new_dish[2],
-            is_alcohol = new_dish[3],
-            r_id = new_dish[4],
-            tag = new_dish[5],
-            degree = new_dish[6],
-            f_quantity = new_dish[7]
-        )
-    else:
-        raise HTTPException(status_code=409, detail="Dish already exists")
+    new_dish = menu_cruds.create_dish(db, r_id[1], f_name, price, t_id, is_alcohol, degree)
 
-@router.put("/dishxx/{f_id}", response_model=DishResponse, status_code=status.HTTP_200_OK)
-async def update_dish(db: DbDependency, token: Annotated[str, Depends(restaurant_auth_cruds.oauth2_schema)], t_id: int, f_id: int = Path(..., title="Food ID"), f_name: Optional[str] = None, price: Optional[int] = None):
-    r_name, r_id = restaurant_auth_cruds.get_current_restaurant(token)
+    if not new_dish:
+        raise HTTPException(status_code=409, detail="Dish already exists")
+    
+    return new_dish
+
+@router.put("/dish/{f_id}", dependencies=[Depends(JWTBearer())], response_model=DishResponse, status_code=status.HTTP_202_ACCEPTED)
+async def update_dish(db: DbDependency, f_id: int, dish_update: DishUpdate, token:str = Depends(JWTBearer())):
+    r_name, r_id = restaurant_auth_cruds.decode_token(token)
     if not r_id:
         raise HTTPException(status_code=401, detail="Invalid token")
-    print(1)
-    dish = menu.update_dish(db, f_id, r_id, f_name, price, t_id)
-    if not dish:
-        raise HTTPException(status_code=404, detail="Dish not found")
-    return dish
+    
+    # Filter out None values from the update dictionary
+    update_data = {k: v for k, v in dish_update.__dict__.items() if v is not None}
+    
+    # Update the dish with only the provided fields
+    updated_dish = menu_cruds.update_dish(db, f_id, r_id[1], updated_items=update_data)
+    if updated_dish == -1:
+        raise HTTPException(status_code=403, detail="Non-alcohol dish cannot have degree and f_quantity")
+    
+    return updated_dish

@@ -47,9 +47,14 @@ class DishCreate(BaseModel):
     t_id: int = Field(gt=0, examples=[1])
     is_alcohol: bool = Field(examples=[True], default=False)
     degree: Optional[float] = Field(None, examples=[5.0])
+    f_quantity: Optional[int] = Field(None, examples=[100])
 
-class DishView(BaseModel):
-    t_id: Optional[int] = Field(default=None, gt=0, examples=[1])
+class DishUpdate(BaseModel):
+    f_name: Optional[str] = Field(default=None, min_length=2, example="Beer")
+    price: Optional[int] = Field(default=None, gt=0, example=500)
+    is_alcohol: Optional[bool] = Field(default=None, example=True)
+    degree: Optional[float] = Field(default=None, example=5.0)
+    f_quantity: Optional[int] = Field(default=None, example=100)
 
 class DishResponse(BaseModel):
     r_id: int = Field(gt=0, examples=[1])
