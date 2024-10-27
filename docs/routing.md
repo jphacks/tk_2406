@@ -38,7 +38,7 @@ http://0.0.0.0:8000
             "f_id", "r_id", "f_name", "price", "tag", "is_alcolol", "degree", "f_quantity"
         },]
 
-### 'GET restaurant/dish'
+### 'GET restaurant/dish?t_id=??'
 - **説明**: 料理のタグ毎の取得
 - **リクエスト**:
     - **ヘッダ**: JWTトークン 
@@ -46,7 +46,7 @@ http://0.0.0.0:8000
     - **ステータスコード**: 200 OK
     - **ボディ**:
         [{
-            "f_id", "r_id", "f_name", "price", "is_alcohol", "degree", "f_quantity"
+            "f_id", "r_id", "f_name", "price",  "tag", "is_alcohol", "degree", "f_quantity"
         },]
 
 ### 'POST restaurant/dish'
