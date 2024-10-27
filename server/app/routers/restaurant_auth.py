@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Path, Query, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.cruds import restaurant_auth as restaurant_auth_cruds, menu as menu_cruds, restaurant_url as restaurant_url_cruds
+from app.cruds import restaurant_auth as restaurant_auth_cruds
 from starlette import status
-from app.schemas import Token, RestaurantCreate, DishCreate, TagCreate, DishUpdate, DishResponse, UrlResponse, UrlCheck
+from app.schemas import Token, RestaurantCreate
 
 from sqlalchemy.orm import Session
 from app.database import get_db
