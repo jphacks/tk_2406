@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Login.module.css";
-import { tryLogin } from "./comm";
+import { tryLogin, getCustomerEvaluate } from "./comm";
 import Eval from "./Eval";
 
 function Login({ onLogin }) {
@@ -21,15 +21,16 @@ function Login({ onLogin }) {
       return;
     }
     if (username === "u1" && password === "00") {
-        setShouldEval(true);
-        //   onLogin(); // デバッグ用 評価画面へ！
-        return;
-      }
+      setShouldEval(true);
+      //   onLogin(); // デバッグ用 評価画面へ！
+      return;
+    }
     // customer/
     if (username && password) {
       console.log("通信開始", username, password);
       const loginSuccess = await tryLogin(username, password);
-      console.log("tryLogin終了",loginSuccess);
+      console.log("tryLogin終了", loginSuccess);
+      getCustomerEvaluate();
       if (loginSuccess) {
         onLogin();
       } else {

@@ -52,6 +52,7 @@ export async function getCustomerEvaluate() {
     });
 
     if (response.status === 200) {
+      console.log("okokok, eval get");
       return response.data;
     }
   } catch (error) {
@@ -113,7 +114,7 @@ export const confirmOrder = async (order) => {
 export const tryLogin = async (id, pw) => {
   try {
     console.log("trying login");
-    await axios.post(
+    const res = await axios.post(
       `${API_URL}/customer/login`,
       new URLSearchParams({
         grant_type: "password",
@@ -130,19 +131,20 @@ export const tryLogin = async (id, pw) => {
         },
       }
     );
-
-((response) => {
-        console.log("response here");
-        if (response.status === 200) {
-          const { access_token } = response.data;
-          localStorage.setItem("jwtToken", access_token);
-          return true;
-        } else {
-          console.log("fjlajfla");
-          localStorage.setItem("jwtToken", "jdfoiweroiojfioaji");
-          return false;
-        }
-      });
+    // dish/{r_id}
+    // 全取得
+    // customer/dish/{r_id}?t_id=
+    console.log("response here");
+    if (res.status === 200) {
+      const { access_token } = res.data;
+      localStorage.setItem("jwtToken", access_token);
+      console.log("ログイン成功🎉🎉🎉🎉");
+      return true;
+    } else {
+      console.log("fjlajfla");
+      localStorage.setItem("jwtToken", "jdfoiweroiojfioaji");
+      return false;
+    }
   } catch (error) {
     console.log("Error Catch");
 
